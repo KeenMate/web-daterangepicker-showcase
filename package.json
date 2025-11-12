@@ -23,6 +23,7 @@
 		"vite": "^7.1.10"
 	},
 	"dependencies": {
+		"@keenmate/svelte-docs": "^1.0.0-rc06",
 		"@keenmate/web-daterangepicker": "1.0.0-rc03",
 		"bootstrap": "^5.3.8"
 	}
