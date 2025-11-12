@@ -191,7 +191,7 @@ const picker = new PureDatePicker(inputElement, {
 
 			<p>
 				For complete debugging documentation, see the
-				<a href="/api#debugging--logging">Debugging & Logging</a> section in the API reference.
+				<a href="https://github.com/keenmate/web-daterangepicker/blob/main/API.md#debugging--logging" target="_blank">Debugging & Logging</a> section in the API reference.
 			</p>
 		</section>
 
