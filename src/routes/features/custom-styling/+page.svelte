@@ -349,7 +349,7 @@ date-range-picker input:focus {
 				<div class="mt-3">
 					<p class="mb-0">
 						<strong>📚 Complete documentation:</strong> See the
-						<a href="/api#known-limitations" class="alert-link">Known Limitations</a>
+						<a href="https://github.com/keenmate/web-daterangepicker/blob/main/API.md#known-limitations" class="alert-link" target="_blank">Known Limitations</a>
 						section in the API reference for detailed examples and workarounds.
 					</p>
 				</div>
