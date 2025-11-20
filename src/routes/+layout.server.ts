@@ -1,5 +1,6 @@
 import type { PartialDocsConfig } from '@keenmate/svelte-docs';
 import { mergeConfig, defaultConfig, generateSSRStyles } from '@keenmate/svelte-docs';
+import pkg from '@keenmate/web-daterangepicker/package.json';
 
 // Enable prerendering for all routes
 export const prerender = true;
@@ -66,6 +67,7 @@ export async function load() {
 
 	return {
 		config: mergedConfig,
-		ssrStyles
+		ssrStyles,
+		version: pkg.version
 	};
 }
