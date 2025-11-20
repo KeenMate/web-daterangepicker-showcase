@@ -30,12 +30,12 @@
 			descriptionColumnTitle="Details"
 		>
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
 					locale="auto"
 					placeholder="Automatic locale detection"
 				>
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">
 					Automatically uses your browser's language setting (navigator.language)
 				</p>
@@ -44,11 +44,11 @@
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
   locale="auto"
   placeholder="Auto locale">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -98,24 +98,24 @@ const picker = new PureDatePicker(inputElement, {
 			descriptionColumnTitle="Available Locales"
 		>
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="range"
 					locale="es"
 					visible-months-count="2"
 					placeholder="Selecciona un rango de fechas"
 				>
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Spanish locale with localized UI</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="range"
 					locale="de"
 					visible-months-count="2"
 					placeholder="Wählen Sie einen Datumsbereich"
 				>
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">German locale with localized UI</p>
 			{/snippet}
 
@@ -151,14 +151,14 @@ const picker = new PureDatePicker(inputElement, {
 			descriptionColumnTitle="Details"
 		>
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
 					locale="es"
 					date-format-mask="YYYY-MM-DD"
 					display-format-mask="dd/mm/aaaa"
 					placeholder="dd/mm/aaaa"
 				>
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">
 					Shows "dd/mm/aaaa" to Spanish users while validating with YYYY-MM-DD
 				</p>
@@ -167,28 +167,28 @@ const picker = new PureDatePicker(inputElement, {
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Spanish: aaaa = año (year) -->
-<date-range-picker
+<web-daterangepicker
   locale="es"
   date-format-mask="YYYY-MM-DD"
   display-format-mask="dd/mm/aaaa"
   placeholder="dd/mm/aaaa">
-</date-range-picker>
+</web-daterangepicker>
 
 <!-- German: jjjj = jahr (year), tt = tag (day) -->
-<date-range-picker
+<web-daterangepicker
   locale="de"
   date-format-mask="DD.MM.YYYY"
   display-format-mask="tt.mm.jjjj"
   placeholder="tt.mm.jjjj">
-</date-range-picker>
+</web-daterangepicker>
 
 <!-- French: jj = jour (day), aa = année (year) -->
-<date-range-picker
+<web-daterangepicker
   locale="fr"
   date-format-mask="DD/MM/YYYY"
   display-format-mask="jj/mm/aaaa"
   placeholder="jj/mm/aaaa">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>

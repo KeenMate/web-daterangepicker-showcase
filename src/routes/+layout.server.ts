@@ -36,12 +36,14 @@ const config: PartialDocsConfig = {
 					{ label: 'Internationalization', href: '/features/internationalization' },
 					{ label: 'Date Restrictions', href: '/features/date-restrictions' },
 					{ label: 'Special Dates & Badges', href: '/features/special-dates' },
+					{ label: 'Custom Rendering (Slots)', href: '/features/custom-rendering' },
 					{ label: 'Range Disabled Handling', href: '/features/range-disabled-handling' },
 					{ label: 'Positioning Modes', href: '/features/positioning-modes' },
 					{ label: 'Input Masking', href: '/features/input-masking' },
 					{ label: 'Keyboard Navigation', href: '/features/keyboard-navigation' },
 					{ label: 'Custom Summary Formatting', href: '/features/custom-summary' },
-					{ label: 'Custom Styling & Theming', href: '/features/custom-styling' }
+					{ label: 'Custom Styling & Theming', href: '/features/custom-styling' },
+					{ label: 'Logging & Debugging', href: '/features/logging-debugging' }
 				]
 			},
 			{

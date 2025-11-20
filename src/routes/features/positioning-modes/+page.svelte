@@ -14,35 +14,41 @@
 	<div class="py-1">
 		<section class="mb-5">
 			<p class="lead">
-				Choose between dropdown, inline, and modal positioning modes to fit your UI requirements.
-				Each mode offers different user interaction patterns and space usage.
+				Choose between floating and inline positioning modes to fit your UI requirements.
+				Floating mode (default) shows a popup calendar, while inline mode embeds it directly in the page.
 			</p>
 		</section>
 
 		<ShowcaseSection
-			titleText="Dropdown Mode (Default)"
+			titleText="Floating Mode (Default)"
 			subtitleText="Calendar appears as a popup below the input"
 			demoColumnTitle="Live Demo"
 			controlsColumnTitle="Code Examples"
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
-					positioning-mode="dropdown"
+					positioning-mode="floating"
 					placeholder="Click to open calendar">
-				</date-range-picker>
-				<p class="mt-3 small text-muted">Click the input to open the dropdown calendar</p>
+				</web-daterangepicker>
+				<p class="mt-3 small text-muted">Click the input to open the floating calendar popup</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
-  positioning-mode="dropdown"
+  positioning-mode="floating"
   placeholder="Click to open calendar">
-</date-range-picker>`}
+</web-daterangepicker>
+
+<!-- positioning-mode="floating" is the default, so you can omit it -->
+<web-daterangepicker
+  selection-mode="single"
+  placeholder="Click to open calendar">
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -52,8 +58,7 @@
 import { PureDatePicker } from '@keenmate/web-daterangepicker';
 
 const picker = new PureDatePicker(inputElement, {
-  positioningMode: 'dropdown',
-  dropdownPlacement: 'bottom'
+  positioningMode: 'floating' // Default value
 });`}
 					languageType="javascript"
 					titleText="JavaScript"
@@ -69,10 +74,11 @@ const picker = new PureDatePicker(inputElement, {
 						<li><strong>Space-efficient</strong> - Calendar only visible when needed</li>
 					</ul>
 
-					<h5>Key Options</h5>
+					<h5>Key Features</h5>
 					<ul>
-						<li><code>positioning-mode="dropdown"</code> - Default mode</li>
-						<li><code>dropdown-placement</code> - top, bottom, or auto</li>
+						<li><code>positioning-mode="floating"</code> - Default mode (can be omitted)</li>
+						<li>Uses Floating UI for smart positioning</li>
+						<li>Automatically flips if not enough space</li>
 					</ul>
 				</div>
 			{/snippet}
@@ -86,22 +92,22 @@ const picker = new PureDatePicker(inputElement, {
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
 					positioning-mode="inline"
 					visible-months-count="2">
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Calendar is always visible</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
   positioning-mode="inline"
   visible-months-count="2">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -131,68 +137,6 @@ const picker = new PureDatePicker(inputElement, {
 					<h5>Key Option</h5>
 					<ul>
 						<li><code>positioning-mode="inline"</code> - Embeds calendar in page</li>
-					</ul>
-				</div>
-			{/snippet}
-		</ShowcaseSection>
-
-		<ShowcaseSection
-			titleText="Modal Mode"
-			subtitleText="Calendar appears in a centered modal overlay"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
-
-			{#snippet demoContent()}
-				<date-range-picker
-					selection-mode="range"
-					positioning-mode="modal"
-					visible-months-count="2"
-					placeholder="Click to open modal">
-				</date-range-picker>
-				<p class="mt-3 small text-muted">Calendar opens in a modal dialog</p>
-			{/snippet}
-
-			{#snippet controlsContent()}
-				<CodeBlock
-					codeContent={`<!-- Web Component -->
-<date-range-picker
-  selection-mode="range"
-  positioning-mode="modal"
-  visible-months-count="2"
-  placeholder="Click to open modal">
-</date-range-picker>`}
-					languageType="html"
-					titleText="HTML"
-				/>
-
-				<CodeBlock
-					codeContent={`// JavaScript API
-import { PureDatePicker } from '@keenmate/web-daterangepicker';
-
-const picker = new PureDatePicker(inputElement, {
-  positioningMode: 'modal',
-  visibleMonthsCount: 2,
-  modalCloseOnBackdropClick: true
-});`}
-					languageType="javascript"
-					titleText="JavaScript"
-				/>
-			{/snippet}
-
-			{#snippet descriptionContent()}
-				<div class="prose">
-					<h5>Use Cases</h5>
-					<ul>
-						<li><strong>Mobile interfaces</strong> - Full-screen date selection</li>
-						<li><strong>Complex ranges</strong> - Focus user on date selection task</li>
-						<li><strong>Multi-month views</strong> - Provides space for large calendars</li>
-					</ul>
-
-					<h5>Key Options</h5>
-					<ul>
-						<li><code>positioning-mode="modal"</code> - Opens in modal</li>
-						<li><code>modal-close-on-backdrop-click</code> - Allow closing by clicking outside</li>
 					</ul>
 				</div>
 			{/snippet}

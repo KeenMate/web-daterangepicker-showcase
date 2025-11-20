@@ -29,20 +29,20 @@
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
 					placeholder="Select a date">
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Click on any date to select it</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
   placeholder="Select a date">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -95,22 +95,22 @@ const picker = new PureDatePicker(inputElement, {
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="range"
 					visible-months-count="2"
 					placeholder="Select date range">
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Click-click or drag to select a range</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="range"
   visible-months-count="2"
   placeholder="Select date range">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -169,7 +169,7 @@ const picker = new PureDatePicker(inputElement, {
 
 			{#snippet demoContent()}
 				<CodeBlock
-					codeContent={`const picker = document.querySelector('date-range-picker');
+					codeContent={`const picker = document.querySelector('web-daterangepicker');
 
 picker.addEventListener('date-select', (e) => {
   console.log('Selected date:', e.detail.date);
@@ -190,7 +190,7 @@ picker.addEventListener('date-select', (e) => {
 
 			{#snippet controlsContent()}
 				<CodeBlock
-					codeContent={`const picker = document.querySelector('date-range-picker');
+					codeContent={`const picker = document.querySelector('web-daterangepicker');
 
 picker.addEventListener('range-select', (e) => {
   console.log('Start date:', e.detail.startDate);

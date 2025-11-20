@@ -29,36 +29,36 @@
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
-					date-format="MM/DD/YYYY"
+					date-format-mask="MM/DD/YYYY"
 					placeholder="MM/DD/YYYY">
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">US format: Month/Day/Year</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component - US Format -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
-  date-format="MM/DD/YYYY"
+  date-format-mask="MM/DD/YYYY"
   placeholder="MM/DD/YYYY">
-</date-range-picker>
+</web-daterangepicker>
 
 <!-- European Format -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
-  date-format="DD/MM/YYYY"
+  date-format-mask="DD/MM/YYYY"
   placeholder="DD/MM/YYYY">
-</date-range-picker>
+</web-daterangepicker>
 
 <!-- ISO Format -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
-  date-format="YYYY-MM-DD"
+  date-format-mask="YYYY-MM-DD"
   placeholder="YYYY-MM-DD">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -69,17 +69,17 @@ import { PureDatePicker } from '@keenmate/web-daterangepicker';
 
 // US format
 const picker1 = new PureDatePicker(input1, {
-  dateFormat: 'MM/DD/YYYY'
+  dateFormatMask: 'MM/DD/YYYY'
 });
 
 // European format
 const picker2 = new PureDatePicker(input2, {
-  dateFormat: 'DD/MM/YYYY'
+  dateFormatMask: 'DD/MM/YYYY'
 });
 
 // ISO format
 const picker3 = new PureDatePicker(input3, {
-  dateFormat: 'YYYY-MM-DD'
+  dateFormatMask: 'YYYY-MM-DD'
 });`}
 					languageType="javascript"
 					titleText="JavaScript"
@@ -110,116 +110,41 @@ const picker3 = new PureDatePicker(input3, {
 			{/snippet}
 		</ShowcaseSection>
 
-		<!-- Range Formats -->
+		<!-- Supported Formats -->
 		<ShowcaseSection
-			titleText="Range Format Separator"
-			subtitleText="Customize how date ranges are displayed"
+			titleText="Supported Formats"
+			subtitleText="Only numeric date formats are currently supported"
 			demoColumnTitle="Live Demo"
 			controlsColumnTitle="Code Examples"
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
-					selection-mode="range"
-					date-format="MM/DD/YYYY"
-					range-separator=" to "
-					visible-months-count="2"
-					placeholder="Select date range">
-				</date-range-picker>
-				<p class="mt-3 small text-muted">Custom separator: "to" instead of default "-"</p>
-			{/snippet}
-
-			{#snippet controlsContent()}
-				<CodeBlock
-					codeContent={`<!-- Web Component -->
-<date-range-picker
-  selection-mode="range"
-  date-format="MM/DD/YYYY"
-  range-separator=" to "
-  placeholder="Select date range">
-</date-range-picker>
-
-<!-- Arrow separator -->
-<date-range-picker
-  selection-mode="range"
-  date-format="DD/MM/YYYY"
-  range-separator=" → "
-  placeholder="Select date range">
-</date-range-picker>`}
-					languageType="html"
-					titleText="HTML"
-				/>
-
-				<CodeBlock
-					codeContent={`// JavaScript API
-import { PureDatePicker } from '@keenmate/web-daterangepicker';
-
-const picker = new PureDatePicker(inputElement, {
-  selectionMode: 'range',
-  dateFormat: 'MM/DD/YYYY',
-  rangeSeparator: ' to ',
-  onSelect: (startDate, endDate) => {
-    // Display: "12/01/2024 to 12/15/2024"
-    console.log('Range selected');
-  }
-});`}
-					languageType="javascript"
-					titleText="JavaScript"
-				/>
-			{/snippet}
-
-			{#snippet descriptionContent()}
-				<div class="prose">
-					<h5>Separator Options</h5>
-					<ul>
-						<li><code>" - "</code> - Dash (default)</li>
-						<li><code>" to "</code> - Text separator</li>
-						<li><code>" → "</code> - Arrow symbol</li>
-						<li><code>" / "</code> - Slash separator</li>
-					</ul>
-
-					<h5>Use Cases</h5>
-					<ul>
-						<li><strong>Reports</strong> - "January 1 to January 31"</li>
-						<li><strong>Bookings</strong> - "Check-in → Check-out"</li>
-						<li><strong>Analytics</strong> - "Start - End"</li>
-					</ul>
-				</div>
-			{/snippet}
-		</ShowcaseSection>
-
-		<!-- Long Date Formats -->
-		<ShowcaseSection
-			titleText="Long Date Formats"
-			subtitleText="Verbose date formatting with month names"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
-
-			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
-					date-format="MMMM DD, YYYY"
+					date-format-mask="MM/DD/YYYY"
 					placeholder="Select a date">
-				</date-range-picker>
-				<p class="mt-3 small text-muted">Long format: December 31, 2024</p>
+				</web-daterangepicker>
+				<p class="mt-3 small text-muted">Note: Month names (MMMM/MMM) are not supported. Use numeric formats (MM/DD/YYYY)</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
-					codeContent={`<!-- Web Component -->
-<date-range-picker
-  selection-mode="single"
-  date-format="MMMM DD, YYYY"
-  placeholder="Select a date">
-</date-range-picker>
+					codeContent={`<!-- Note: Month names (MMMM/MMM) are NOT supported -->
+<!-- The component only supports numeric formats -->
 
-<!-- Short month name -->
-<date-range-picker
+<!-- Numeric month format (SUPPORTED) -->
+<web-daterangepicker
   selection-mode="single"
-  date-format="MMM DD, YYYY"
-  placeholder="Select a date">
-</date-range-picker>`}
+  date-format-mask="MM/DD/YYYY"
+  placeholder="MM/DD/YYYY">
+</web-daterangepicker>
+
+<!-- Alternative numeric formats -->
+<web-daterangepicker
+  selection-mode="single"
+  date-format-mask="DD/MM/YYYY"
+  placeholder="DD/MM/YYYY">
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -228,16 +153,19 @@ const picker = new PureDatePicker(inputElement, {
 					codeContent={`// JavaScript API
 import { PureDatePicker } from '@keenmate/web-daterangepicker';
 
-// Long format
+// Note: Month names (MMMM/MMM) are NOT supported
+// Only numeric formats are supported
+
+// US numeric format (SUPPORTED)
 const picker1 = new PureDatePicker(input1, {
-  dateFormat: 'MMMM DD, YYYY'
-  // Output: "December 31, 2024"
+  dateFormatMask: 'MM/DD/YYYY'
+  // Output: "12/31/2024"
 });
 
-// Short month format
+// European numeric format (SUPPORTED)
 const picker2 = new PureDatePicker(input2, {
-  dateFormat: 'MMM DD, YYYY'
-  // Output: "Dec 31, 2024"
+  dateFormatMask: 'DD/MM/YYYY'
+  // Output: "31/12/2024"
 });`}
 					languageType="javascript"
 					titleText="JavaScript"
@@ -246,18 +174,24 @@ const picker2 = new PureDatePicker(input2, {
 
 			{#snippet descriptionContent()}
 				<div class="prose">
-					<h5>Month Name Tokens</h5>
+					<h5>Current Limitations</h5>
+					<p>
+						<strong>Month names (MMMM/MMM) are NOT currently supported.</strong>
+						The date picker only supports numeric formats at this time.
+					</p>
+
+					<h5>Supported Tokens</h5>
 					<ul>
-						<li><code>MMMM</code> - Full month name (December)</li>
-						<li><code>MMM</code> - Short month name (Dec)</li>
-						<li><code>MM</code> - Numeric month (12)</li>
+						<li><code>YYYY</code> / <code>YY</code> - 4-digit or 2-digit year</li>
+						<li><code>MM</code> / <code>M</code> - 2-digit or 1-digit month (01-12 or 1-12)</li>
+						<li><code>DD</code> / <code>D</code> - 2-digit or 1-digit day (01-31 or 1-31)</li>
 					</ul>
 
-					<h5>Use Cases</h5>
+					<h5>Supported Separators</h5>
 					<ul>
-						<li><strong>Formal documents</strong> - Full month names for clarity</li>
-						<li><strong>User-facing displays</strong> - More readable than numeric dates</li>
-						<li><strong>International audiences</strong> - Avoid date format confusion</li>
+						<li><code>/</code> - Slash (12/31/2024)</li>
+						<li><code>-</code> - Hyphen (2024-12-31)</li>
+						<li><code>.</code> - Period (31.12.2024)</li>
 					</ul>
 				</div>
 			{/snippet}

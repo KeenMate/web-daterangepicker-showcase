@@ -29,13 +29,13 @@
 			descriptionColumnTitle="Details"
 		>
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="range"
 					visible-months-count="2"
 					month-layout="horizontal"
 					placeholder="Select date range"
 				>
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">
 					Two months displayed horizontally for easy range selection
 				</p>
@@ -44,12 +44,12 @@
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="range"
   visible-months-count="2"
   month-layout="horizontal"
   placeholder="Select date range">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -104,7 +104,7 @@ const picker = new PureDatePicker(inputElement, {
 			descriptionColumnTitle="Details"
 		>
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
 					visible-months-count="6"
 					month-layout="grid"
@@ -113,14 +113,14 @@ const picker = new PureDatePicker(inputElement, {
 					positioning-mode="inline"
 					placeholder="Select a date"
 				>
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">6 months in a 2×3 grid for broader overview</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
   visible-months-count="6"
   month-layout="grid"
@@ -128,7 +128,7 @@ const picker = new PureDatePicker(inputElement, {
   grid-columns="3"
   positioning-mode="inline"
   placeholder="Select a date">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -186,25 +186,25 @@ const picker = new PureDatePicker(inputElement, {
 			descriptionColumnTitle="Details"
 		>
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="range"
 					visible-months-count="3"
 					month-layout="horizontal"
 					placeholder="Select date range"
 				>
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Three consecutive months for extended planning</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="range"
   visible-months-count="3"
   month-layout="horizontal"
   placeholder="Select date range">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>

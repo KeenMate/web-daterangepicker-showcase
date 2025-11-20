@@ -45,17 +45,17 @@
 <html>
 <head>
   <link rel="stylesheet" href="node_modules/@keenmate/web-daterangepicker/dist/style.css">
-  <script type="module" src="node_modules/@keenmate/web-daterangepicker/dist/date-range-picker.js"></script>
+  <script type="module" src="node_modules/@keenmate/web-daterangepicker/dist/web-daterangepicker.js"></script>
 </head>
 <body>
-  <date-range-picker
+  <web-daterangepicker
     selection-mode="single"
     date-format-mask="YYYY-MM-DD"
     placeholder="Select a date">
-  </date-range-picker>
+  </web-daterangepicker>
 
   <script>
-    const picker = document.querySelector('date-range-picker');
+    const picker = document.querySelector('web-daterangepicker');
     picker.addEventListener('date-select', (e) => {
       console.log('Selected:', e.detail.date);
     });
@@ -68,11 +68,11 @@
 
 			<div class="demo-container mt-4">
 				<h4>Try it:</h4>
-				<date-range-picker
+				<web-daterangepicker
 					id="demo-picker"
 					selection-mode="single"
 					placeholder="Select a date"
-				></date-range-picker>
+				></web-daterangepicker>
 				{#if demoValue}
 					<div class="demo-output">Selected: {demoValue}</div>
 				{/if}
@@ -131,6 +131,12 @@ const picker = new PureDatePicker(inputElement, {
 							<td>Format for date values</td>
 						</tr>
 						<tr>
+							<td><code>calendarOpenTrigger</code></td>
+							<td><code>'focus' | 'typing' | 'manual'</code></td>
+							<td><code>'focus'</code></td>
+							<td>When to open calendar: on focus, when typing, or manually via button</td>
+						</tr>
+						<tr>
 							<td><code>visibleMonthsCount</code></td>
 							<td><code>number</code></td>
 							<td><code>1</code></td>
@@ -154,10 +160,10 @@ const picker = new PureDatePicker(inputElement, {
 
 			<CodeBlock
 				codeContent={`<!-- Add show-debug-info attribute -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="range"
   show-debug-info>
-</date-range-picker>`}
+</web-daterangepicker>`}
 				languageType="html"
 				titleText="Enable Debugging"
 			/>

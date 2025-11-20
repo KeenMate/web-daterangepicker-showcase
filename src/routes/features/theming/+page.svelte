@@ -9,7 +9,7 @@
 
 <style>
 	/* Dark Theme */
-	:global(date-range-picker.theme-dark) {
+	:global(web-daterangepicker.theme-dark) {
 		--drp-card-bg: #1e293b;
 		--drp-text-primary: #f1f5f9;
 		--drp-text-secondary: #cbd5e1;
@@ -23,7 +23,7 @@
 	}
 
 	/* Pastel Theme */
-	:global(date-range-picker.theme-pastel) {
+	:global(web-daterangepicker.theme-pastel) {
 		--drp-card-bg: #fef3c7;
 		--drp-text-primary: #78350f;
 		--drp-text-secondary: #92400e;
@@ -37,13 +37,13 @@
 	}
 
 	/* Green Theme */
-	:global(date-range-picker.theme-green) {
+	:global(web-daterangepicker.theme-green) {
 		--drp-accent-color: #10b981;
 		--drp-accent-color-hover: #059669;
 	}
 
 	/* Purple Theme */
-	:global(date-range-picker.theme-purple) {
+	:global(web-daterangepicker.theme-purple) {
 		--drp-accent-color: #8b5cf6;
 		--drp-accent-color-hover: #7c3aed;
 	}
@@ -103,30 +103,30 @@
 				<div class="dark-theme-container">
 					<div class="mb-3">
 						<label>Single Date Selection</label>
-						<date-range-picker
+						<web-daterangepicker
 							class="theme-dark"
 							selection-mode="single"
 							placeholder="Select a date">
-						</date-range-picker>
+						</web-daterangepicker>
 					</div>
 
 					<div class="mb-3">
 						<label>Range Selection</label>
-						<date-range-picker
+						<web-daterangepicker
 							class="theme-dark"
 							selection-mode="range"
 							visible-months-count="2"
 							placeholder="Select date range">
-						</date-range-picker>
+						</web-daterangepicker>
 					</div>
 
 					<div>
 						<label>Calendar Only Mode</label>
-						<date-range-picker
+						<web-daterangepicker
 							class="theme-dark"
 							selection-mode="single"
 							positioning-mode="inline">
-						</date-range-picker>
+						</web-daterangepicker>
 					</div>
 				</div>
 			{/snippet}
@@ -134,7 +134,7 @@
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`/* CSS */
-date-range-picker.theme-dark {
+web-daterangepicker.theme-dark {
   /* Dark backgrounds */
   --drp-card-bg: #1e293b;
   --drp-primary-bg: #334155;
@@ -161,11 +161,11 @@ date-range-picker.theme-dark {
 
 				<CodeBlock
 					codeContent={`<!-- HTML -->
-<date-range-picker
+<web-daterangepicker
   class="theme-dark"
   selection-mode="range"
   visible-months-count="2">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="Usage"
 				/>
@@ -212,30 +212,30 @@ date-range-picker.theme-dark {
 				<div class="pastel-theme-container">
 					<div class="mb-3">
 						<label>Single Date Selection</label>
-						<date-range-picker
+						<web-daterangepicker
 							class="theme-pastel"
 							selection-mode="single"
 							placeholder="Select a date">
-						</date-range-picker>
+						</web-daterangepicker>
 					</div>
 
 					<div class="mb-3">
 						<label>Range Selection</label>
-						<date-range-picker
+						<web-daterangepicker
 							class="theme-pastel"
 							selection-mode="range"
 							visible-months-count="2"
 							placeholder="Select date range">
-						</date-range-picker>
+						</web-daterangepicker>
 					</div>
 
 					<div>
 						<label>Calendar Only Mode</label>
-						<date-range-picker
+						<web-daterangepicker
 							class="theme-pastel"
 							selection-mode="single"
 							positioning-mode="inline">
-						</date-range-picker>
+						</web-daterangepicker>
 					</div>
 				</div>
 			{/snippet}
@@ -243,7 +243,7 @@ date-range-picker.theme-dark {
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`/* CSS */
-date-range-picker.theme-pastel {
+web-daterangepicker.theme-pastel {
   /* Warm pastel backgrounds */
   --drp-card-bg: #fef3c7;        /* Amber-50 */
   --drp-primary-bg: #fed7aa;     /* Amber-200 */
@@ -270,10 +270,10 @@ date-range-picker.theme-pastel {
 
 				<CodeBlock
 					codeContent={`<!-- HTML -->
-<date-range-picker
+<web-daterangepicker
   class="theme-pastel"
   selection-mode="single">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="Usage"
 				/>
@@ -324,20 +324,20 @@ date-range-picker.theme-pastel {
 				<div class="row g-3">
 					<div class="col-md-6">
 						<label class="form-label fw-bold">Green Theme</label>
-						<date-range-picker
+						<web-daterangepicker
 							class="theme-green"
 							selection-mode="single"
 							placeholder="Green accent">
-						</date-range-picker>
+						</web-daterangepicker>
 					</div>
 
 					<div class="col-md-6">
 						<label class="form-label fw-bold">Purple Theme</label>
-						<date-range-picker
+						<web-daterangepicker
 							class="theme-purple"
 							selection-mode="single"
 							placeholder="Purple accent">
-						</date-range-picker>
+						</web-daterangepicker>
 					</div>
 				</div>
 			{/snippet}
@@ -345,17 +345,17 @@ date-range-picker.theme-pastel {
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`/* CSS - Just override accent colors */
-date-range-picker.theme-green {
+web-daterangepicker.theme-green {
   --drp-accent-color: #10b981;
   --drp-accent-color-hover: #059669;
 }
 
-date-range-picker.theme-purple {
+web-daterangepicker.theme-purple {
   --drp-accent-color: #8b5cf6;
   --drp-accent-color-hover: #7c3aed;
 }
 
-date-range-picker.theme-red {
+web-daterangepicker.theme-red {
   --drp-accent-color: #ef4444;
   --drp-accent-color-hover: #dc2626;
 }`}
@@ -408,7 +408,7 @@ date-range-picker.theme-red {
 				<h6 class="mt-3">Step 2: Create CSS Class</h6>
 				<CodeBlock
 					codeContent={`/* Your theme CSS */
-date-range-picker.my-custom-theme {
+web-daterangepicker.my-custom-theme {
   --drp-card-bg: /* your background */;
   --drp-text-primary: /* your text color */;
   --drp-accent-color: /* your accent color */;
@@ -420,8 +420,8 @@ date-range-picker.my-custom-theme {
 
 				<h6 class="mt-3">Step 3: Apply Theme Class</h6>
 				<CodeBlock
-					codeContent={`<date-range-picker class="my-custom-theme">
-</date-range-picker>`}
+					codeContent={`<web-daterangepicker class="my-custom-theme">
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML Usage"
 				/>

@@ -27,22 +27,22 @@
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
-					keyboard-navigation="true"
 					placeholder="Click input, then use arrow keys">
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Click input, then try: Arrow keys, Enter, Escape, Tab</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
-  keyboard-navigation="true"
   placeholder="Use keyboard to navigate">
-</date-range-picker>`}
+</web-daterangepicker>
+
+<!-- Keyboard navigation works automatically -->`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -52,11 +52,12 @@
 import { PureDatePicker } from '@keenmate/web-daterangepicker';
 
 const picker = new PureDatePicker(inputElement, {
-  keyboardNavigation: true,
-  onKeyboardSelect: (date) => {
-    console.log('Selected via keyboard:', date);
+  onSelect: (date) => {
+    console.log('Selected date:', date);
   }
-});`}
+});
+
+// Keyboard navigation is always enabled`}
 					languageType="javascript"
 					titleText="JavaScript"
 				/>
@@ -81,10 +82,8 @@ const picker = new PureDatePicker(inputElement, {
 					<h5>Accessibility</h5>
 					<p>Keyboard navigation is essential for accessibility and power users who prefer keyboard-only interaction.</p>
 
-					<h5>Key Option</h5>
-					<ul>
-						<li><code>keyboard-navigation="true"</code> - Enables keyboard controls (default: true)</li>
-					</ul>
+					<h5>Always Enabled</h5>
+					<p>Keyboard navigation is always enabled by default. No configuration needed.</p>
 				</div>
 			{/snippet}
 		</ShowcaseSection>
@@ -97,25 +96,24 @@ const picker = new PureDatePicker(inputElement, {
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="range"
-					keyboard-navigation="true"
-					keyboard-shortcuts="true"
 					visible-months-count="2"
 					placeholder="Try keyboard shortcuts">
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Try: T (today), PageUp/PageDown (months), Home/End</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="range"
-  keyboard-navigation="true"
-  keyboard-shortcuts="true"
-  placeholder="Keyboard shortcuts enabled">
-</date-range-picker>`}
+  placeholder="Keyboard shortcuts work by default">
+</web-daterangepicker>
+
+<!-- Keyboard navigation is always enabled -->
+<!-- No special attributes needed -->`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -124,21 +122,16 @@ const picker = new PureDatePicker(inputElement, {
 					codeContent={`// JavaScript API
 import { PureDatePicker } from '@keenmate/web-daterangepicker';
 
+// Keyboard shortcuts work automatically
 const picker = new PureDatePicker(inputElement, {
-  keyboardNavigation: true,
-  keyboardShortcuts: true,
-  customShortcuts: {
-    'ctrl+t': () => {
-      // Custom shortcut: Ctrl+T for today
-      picker.selectDate(new Date());
-    },
-    'shift+home': () => {
-      // Custom: Shift+Home for start of year
-      const year = new Date().getFullYear();
-      picker.goToDate(new Date(year, 0, 1));
-    }
+  selectionMode: 'range',
+  onSelect: (dateRange) => {
+    console.log('Selected:', dateRange);
   }
-});`}
+});
+
+// No special keyboard options needed
+// T, Home, End, PageUp, PageDown work out of the box`}
 					languageType="javascript"
 					titleText="JavaScript"
 				/>
@@ -157,97 +150,8 @@ const picker = new PureDatePicker(inputElement, {
 						<li><code>Ctrl + End</code> - Last day of year</li>
 					</ul>
 
-					<h5>Range Mode Shortcuts</h5>
-					<ul>
-						<li><code>Shift + Arrow</code> - Extend selection</li>
-						<li><code>Ctrl + A</code> - Select full month</li>
-					</ul>
-
-					<h5>Custom Shortcuts</h5>
-					<p>Define your own keyboard shortcuts using the <code>customShortcuts</code> option.</p>
-				</div>
-			{/snippet}
-		</ShowcaseSection>
-
-		<ShowcaseSection
-			titleText="Screen Reader Support"
-			subtitleText="Full ARIA compliance for accessibility"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
-
-			{#snippet demoContent()}
-				<CodeBlock
-					codeContent={`<!-- Calendar has full ARIA attributes -->
-<date-range-picker
-  selection-mode="single"
-  keyboard-navigation="true"
-  aria-label="Select appointment date"
-  placeholder="Accessible date picker">
-</date-range-picker>
-
-<!-- Screen reader announces: -->
-<!-- "Date picker, Select appointment date" -->
-<!-- "Calendar grid, November 2024" -->
-<!-- "Monday, November 7, 2024" (as user navigates) -->
-<!-- "Selected Monday, November 7, 2024" (on selection) -->`}
-					languageType="html"
-					titleText="ARIA Example"
-				/>
-			{/snippet}
-
-			{#snippet controlsContent()}
-				<CodeBlock
-					codeContent={`// JavaScript API
-import { PureDatePicker } from '@keenmate/web-daterangepicker';
-
-const picker = new PureDatePicker(inputElement, {
-  keyboardNavigation: true,
-  ariaLabel: 'Select appointment date',
-  ariaDescribedBy: 'date-instructions',
-  announceSelections: true,
-  
-  // Custom announcements
-  customAnnouncements: {
-    dateSelected: (date) => {
-      return \`Selected \${date.toLocaleDateString()}\`;
-    },
-    monthChanged: (month, year) => {
-      return \`Showing \${month} \${year}\`;
-    }
-  }
-});`}
-					languageType="javascript"
-					titleText="JavaScript"
-				/>
-			{/snippet}
-
-			{#snippet descriptionContent()}
-				<div class="prose">
-					<h5>ARIA Attributes</h5>
-					<ul>
-						<li><code>role="dialog"</code> - Calendar popup identified as dialog</li>
-						<li><code>role="grid"</code> - Calendar dates in grid structure</li>
-						<li><code>aria-label</code> - Descriptive label for calendar</li>
-						<li><code>aria-selected</code> - Marks selected dates</li>
-						<li><code>aria-disabled</code> - Marks disabled dates</li>
-					</ul>
-
-					<h5>Announcements</h5>
-					<p>Screen readers announce:</p>
-					<ul>
-						<li>Date focused during navigation</li>
-						<li>Date selected</li>
-						<li>Month/year changes</li>
-						<li>Disabled dates with reason</li>
-					</ul>
-
-					<h5>Standards Compliance</h5>
-					<ul>
-						<li>WCAG 2.1 Level AA compliant</li>
-						<li>ARIA 1.2 date picker pattern</li>
-						<li>Tested with NVDA, JAWS, VoiceOver</li>
-					</ul>
+					<h5>Always Enabled</h5>
+					<p>Keyboard navigation and shortcuts are always enabled by default. No configuration required.</p>
 				</div>
 			{/snippet}
 		</ShowcaseSection>

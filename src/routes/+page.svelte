@@ -114,13 +114,13 @@
 <html>
 <head>
   <link rel="stylesheet" href="node_modules/@keenmate/web-daterangepicker/dist/style.css">
-  <script type="module" src="node_modules/@keenmate/web-daterangepicker/dist/date-range-picker.js"></script>
+  <script type="module" src="node_modules/@keenmate/web-daterangepicker/dist/web-daterangepicker.js"></script>
 </head>
 <body>
-  <date-range-picker
+  <web-daterangepicker
     selection-mode="range"
     placeholder="Select dates">
-  </date-range-picker>
+  </web-daterangepicker>
 </body>
 </html>`}
 				languageType="html"

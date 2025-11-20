@@ -27,24 +27,24 @@
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
-					date-format="MM/DD/YYYY"
+					date-format-mask="MM/DD/YYYY"
 					enable-input-mask="true"
 					placeholder="MM/DD/YYYY">
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Try typing: 12252024 - it becomes 12/25/2024</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
-  date-format="MM/DD/YYYY"
+  date-format-mask="MM/DD/YYYY"
   enable-input-mask="true"
   placeholder="MM/DD/YYYY">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -54,7 +54,7 @@
 import { PureDatePicker } from '@keenmate/web-daterangepicker';
 
 const picker = new PureDatePicker(inputElement, {
-  dateFormat: 'MM/DD/YYYY',
+  dateFormatMask: 'MM/DD/YYYY',
   enableInputMask: true,
   onInvalidInput: (value) => {
     console.log('Invalid input:', value);
@@ -97,34 +97,34 @@ const picker = new PureDatePicker(inputElement, {
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
-					date-format="YYYY-MM-DD"
+					date-format-mask="YYYY-MM-DD"
 					enable-input-mask="true"
 					placeholder="YYYY-MM-DD">
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">ISO format: type 20241225 → 2024-12-25</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- US Format -->
-<date-range-picker
-  date-format="MM/DD/YYYY"
+<web-daterangepicker
+  date-format-mask="MM/DD/YYYY"
   enable-input-mask="true">
-</date-range-picker>
+</web-daterangepicker>
 
 <!-- European Format -->
-<date-range-picker
-  date-format="DD.MM.YYYY"
+<web-daterangepicker
+  date-format-mask="DD.MM.YYYY"
   enable-input-mask="true">
-</date-range-picker>
+</web-daterangepicker>
 
 <!-- ISO Format -->
-<date-range-picker
-  date-format="YYYY-MM-DD"
+<web-daterangepicker
+  date-format-mask="YYYY-MM-DD"
   enable-input-mask="true">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -135,19 +135,19 @@ import { PureDatePicker } from '@keenmate/web-daterangepicker';
 
 // US format with /
 const picker1 = new PureDatePicker(input1, {
-  dateFormat: 'MM/DD/YYYY',
+  dateFormatMask: 'MM/DD/YYYY',
   enableInputMask: true
 });
 
 // European format with .
 const picker2 = new PureDatePicker(input2, {
-  dateFormat: 'DD.MM.YYYY',
+  dateFormatMask: 'DD.MM.YYYY',
   enableInputMask: true
 });
 
 // ISO format with -
 const picker3 = new PureDatePicker(input3, {
-  dateFormat: 'YYYY-MM-DD',
+  dateFormatMask: 'YYYY-MM-DD',
   enableInputMask: true
 });`}
 					languageType="javascript"
@@ -166,7 +166,7 @@ const picker3 = new PureDatePicker(input3, {
 					</ul>
 
 					<h5>Automatic Separator Detection</h5>
-					<p>The mask automatically uses the separator defined in your <code>date-format</code> property.</p>
+					<p>The mask automatically uses the separator defined in your <code>date-format-mask</code> property.</p>
 
 					<h5>Supported Separators</h5>
 					<ul>
@@ -188,7 +188,7 @@ const picker3 = new PureDatePicker(input3, {
 
 			{#snippet demoContent()}
 				<CodeBlock
-					codeContent={`const picker = document.querySelector('date-range-picker');
+					codeContent={`const picker = document.querySelector('web-daterangepicker');
 
 picker.addEventListener('input-invalid', (e) => {
   console.log('Invalid input detected:', e.detail.value);
@@ -214,15 +214,15 @@ import { PureDatePicker } from '@keenmate/web-daterangepicker';
 
 const picker = new PureDatePicker(inputElement, {
   enableInputMask: true,
-  dateFormat: 'MM/DD/YYYY',
+  dateFormatMask: 'MM/DD/YYYY',
   validateOnInput: true,
-  
+
   onInvalidInput: (value, reason) => {
     // value: what user typed
     // reason: 'format', 'range', 'date-invalid'
     console.log('Invalid:', value, reason);
   },
-  
+
   onValidInput: (date) => {
     console.log('Valid date:', date);
   }

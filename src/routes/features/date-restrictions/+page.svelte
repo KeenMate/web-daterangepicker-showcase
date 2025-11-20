@@ -29,25 +29,25 @@
 			descriptionColumnTitle="Details"
 		>
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
 					min-date="2025-01-01"
 					max-date="2025-12-31"
 					placeholder="Select date in 2025"
 				>
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Only dates in 2025 are selectable</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
   min-date="2025-01-01"
   max-date="2025-12-31"
   placeholder="Select date in 2025">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -101,28 +101,28 @@ const picker = new PureDatePicker(inputElement, {
 			descriptionColumnTitle="Details"
 		>
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
 					disabled-weekdays="0,6"
 					placeholder="Weekdays only"
 				>
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Weekends (Saturday and Sunday) are disabled</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component (comma-separated string) -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
   disabled-weekdays="0,6"
   placeholder="Weekdays only">
-</date-range-picker>
+</web-daterangepicker>
 
 <!-- Disable Monday and Tuesday -->
-<date-range-picker
+<web-daterangepicker
   disabled-weekdays="1,2">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>

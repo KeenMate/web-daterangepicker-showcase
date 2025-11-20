@@ -31,58 +31,79 @@
 			{#snippet demoContent()}
 				<div class="mb-3">
 					<label class="form-label fw-bold">Small</label>
-					<date-range-picker
+					<web-daterangepicker
 						selection-mode="single"
-						size="sm"
+						spacing="sm"
+						font-size="sm"
 						placeholder="Small picker">
-					</date-range-picker>
+					</web-daterangepicker>
 				</div>
 
 				<div class="mb-3">
 					<label class="form-label fw-bold">Medium (Default)</label>
-					<date-range-picker
+					<web-daterangepicker
 						selection-mode="single"
 						placeholder="Default picker">
-					</date-range-picker>
+					</web-daterangepicker>
 				</div>
 
 				<div>
 					<label class="form-label fw-bold">Large</label>
-					<date-range-picker
+					<web-daterangepicker
 						selection-mode="single"
-						size="lg"
+						spacing="lg"
+						font-size="lg"
 						placeholder="Large picker">
-					</date-range-picker>
+					</web-daterangepicker>
 				</div>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Small -->
-<date-range-picker
-  size="sm"
+<web-daterangepicker
+  spacing="sm"
+  font-size="sm"
   placeholder="Small picker">
-</date-range-picker>
+</web-daterangepicker>
 
 <!-- Medium (default) -->
-<date-range-picker
-  placeholder="Default picker">
-</date-range-picker>
+<web-daterangepicker placeholder="Default picker"></web-daterangepicker>
 
 <!-- Large -->
-<date-range-picker
-  size="lg"
+<web-daterangepicker
+  spacing="lg"
+  font-size="lg"
   placeholder="Large picker">
-</date-range-picker>`}
+</web-daterangepicker>
+
+<!-- Extra Large -->
+<web-daterangepicker
+  spacing="xl"
+  font-size="xl"
+  placeholder="Extra large picker">
+</web-daterangepicker>
+
+<!-- Independent control: Large text, compact spacing -->
+<web-daterangepicker
+  spacing="sm"
+  font-size="lg">
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-const picker = new PureDatePicker(inputElement, {
-  size: 'lg' // 'sm', 'md' (default), 'lg', 'xl'
-});`}
+const picker = document.querySelector('web-daterangepicker');
+
+// Set via properties
+picker.spacing = 'lg';
+picker.fontSize = 'xl';
+
+// Or via attributes
+picker.setAttribute('spacing', 'sm');
+picker.setAttribute('font-size', 'lg');`}
 					languageType="javascript"
 					titleText="JavaScript"
 				/>
@@ -90,20 +111,35 @@ const picker = new PureDatePicker(inputElement, {
 
 			{#snippet descriptionContent()}
 				<div class="prose">
+					<h5>How It Works</h5>
+					<p>Use <code>spacing</code> and <code>font-size</code> attributes to control calendar size:</p>
+					<ul>
+						<li><code>spacing</code> - Controls gaps, padding, and calendar width</li>
+						<li><code>font-size</code> - Controls all text sizing</li>
+					</ul>
+
 					<h5>Available Sizes</h5>
 					<ul>
-						<li><code>xs</code> - Extra small (compact views)</li>
-						<li><code>sm</code> - Small (mobile-friendly)</li>
-						<li><code>md</code> - Medium (default)</li>
-						<li><code>lg</code> - Large (desktop applications)</li>
-						<li><code>xl</code> - Extra large (presentations)</li>
+						<li><code>xs</code> - Extra small (compact views, 0.7× scale)</li>
+						<li><code>sm</code> - Small (mobile-friendly, 0.85× scale)</li>
+						<li><code>md</code> - Medium (default, 1.0× scale)</li>
+						<li><code>lg</code> - Large (desktop applications, 1.2× scale)</li>
+						<li><code>xl</code> - Extra large (presentations, 1.4× scale)</li>
 					</ul>
 
 					<h5>Use Cases</h5>
 					<ul>
-						<li><strong>Mobile</strong> - Use sm or xs for mobile devices</li>
-						<li><strong>Desktop</strong> - Use lg for desktop applications</li>
-						<li><strong>Admin panels</strong> - Use xl for data entry forms</li>
+						<li><strong>Mobile</strong> - <code>spacing="sm" font-size="sm"</code></li>
+						<li><strong>Desktop</strong> - <code>spacing="lg" font-size="lg"</code></li>
+						<li><strong>Presentations</strong> - <code>spacing="xl" font-size="xl"</code></li>
+						<li><strong>Compact tables</strong> - <code>spacing="xs" font-size="xs"</code></li>
+					</ul>
+
+					<h5>Independent Control</h5>
+					<p>Control font and spacing independently for fine-tuned layouts:</p>
+					<ul>
+						<li><code>spacing="sm" font-size="lg"</code> - Large readable text, compact layout</li>
+						<li><code>spacing="lg" font-size="sm"</code> - Small text, generous spacing</li>
 					</ul>
 				</div>
 			{/snippet}
@@ -146,7 +182,7 @@ const picker = new PureDatePicker(inputElement, {
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`/* Custom theme in your CSS */
-date-range-picker {
+web-daterangepicker {
   --drp-accent-color: #10b981;
   --drp-accent-color-hover: #059669;
   --drp-border-color: #d1d5db;
@@ -154,7 +190,7 @@ date-range-picker {
 }
 
 /* Dark theme */
-date-range-picker.dark-theme {
+web-daterangepicker.dark-theme {
   --drp-card-bg: #1e293b;
   --drp-text-primary: #f1f5f9;
   --drp-text-secondary: #cbd5e1;
@@ -168,7 +204,7 @@ date-range-picker.dark-theme {
 }
 
 /* Brand colors */
-date-range-picker.branded {
+web-daterangepicker.branded {
   --drp-accent-color: #ff6b6b;
   --drp-accent-color-hover: #ee5a52;
 }`}
@@ -204,31 +240,31 @@ date-range-picker.branded {
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
 					class="custom-picker-theme"
 					placeholder="Custom styled picker">
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Picker with custom CSS class applied</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Add custom class -->
-<date-range-picker
+<web-daterangepicker
   class="custom-picker-theme"
   selection-mode="single">
-</date-range-picker>
+</web-daterangepicker>
 
 <style>
   /* Target the custom class */
-  date-range-picker.custom-picker-theme {
+  web-daterangepicker.custom-picker-theme {
     --drp-accent-color: #8b5cf6;
     --drp-border-radius: 1rem;
   }
 
   /* Or use more specific selectors */
-  date-range-picker.custom-picker-theme::part(calendar) {
+  web-daterangepicker.custom-picker-theme::part(calendar) {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   }
 </style>`}
@@ -290,7 +326,7 @@ inputElement.classList.add('custom-picker-theme');`}
 
 				<CodeBlock
 					codeContent={`/* Your global CSS */
-date-range-picker input {
+web-daterangepicker input {
   padding: 0.75rem;
   border: 1px solid #e5e7eb;
   border-radius: 0.375rem;
@@ -298,7 +334,7 @@ date-range-picker input {
   width: 100%;
 }
 
-date-range-picker input:focus {
+web-daterangepicker input:focus {
   outline: none;
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
@@ -311,13 +347,13 @@ date-range-picker input:focus {
 				<p class="mb-2">You can provide a pre-styled input element:</p>
 
 				<CodeBlock
-					codeContent={`<date-range-picker>
+					codeContent={`<web-daterangepicker>
   <input
     type="text"
     class="form-control"
     placeholder="Select date"
   />
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="Custom Input"
 				/>
@@ -327,9 +363,9 @@ date-range-picker input:focus {
 					<div class="col-md-6">
 						<strong>Tailwind CSS:</strong>
 						<CodeBlock
-							codeContent={`<date-range-picker>
+							codeContent={`<web-daterangepicker>
   <input class="px-4 py-2 border rounded-lg" />
-</date-range-picker>`}
+</web-daterangepicker>`}
 							languageType="html"
 							titleText="Tailwind"
 						/>
@@ -337,9 +373,9 @@ date-range-picker input:focus {
 					<div class="col-md-6">
 						<strong>Bootstrap:</strong>
 						<CodeBlock
-							codeContent={`<date-range-picker>
+							codeContent={`<web-daterangepicker>
   <input class="form-control" />
-</date-range-picker>`}
+</web-daterangepicker>`}
 							languageType="html"
 							titleText="Bootstrap"
 						/>

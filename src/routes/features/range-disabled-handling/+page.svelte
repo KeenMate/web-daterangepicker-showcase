@@ -29,24 +29,24 @@
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
 					selection-mode="single"
 					min-date="2024-11-01"
 					max-date="2024-12-31"
 					placeholder="Select a date">
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Only dates from Nov 1 to Dec 31, 2024 are selectable</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
 					codeContent={`<!-- Web Component -->
-<date-range-picker
+<web-daterangepicker
   selection-mode="single"
   min-date="2024-11-01"
   max-date="2024-12-31"
   placeholder="Select a date">
-</date-range-picker>`}
+</web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -98,23 +98,42 @@ const picker = new PureDatePicker(inputElement, {
 			descriptionColumnTitle="Details">
 
 			{#snippet demoContent()}
-				<date-range-picker
+				<web-daterangepicker
+					id="future-dates-picker"
 					selection-mode="range"
-					min-date="today"
 					visible-months-count="2"
 					placeholder="Select future date range">
-				</date-range-picker>
+				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Only today and future dates are selectable</p>
+				<script>
+					if (typeof window !== 'undefined') {
+						setTimeout(() => {
+							const picker = document.getElementById('future-dates-picker');
+							if (picker) {
+								// Set min-date to today dynamically
+								const today = new Date();
+								const todayStr = today.toISOString().split('T')[0];
+								picker.setAttribute('min-date', todayStr);
+							}
+						}, 100);
+					}
+				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
-					codeContent={`<!-- Web Component -->
-<date-range-picker
+					codeContent={`<!-- Web Component - Set dynamically -->
+<web-daterangepicker
+  id="future-picker"
   selection-mode="range"
-  min-date="today"
   placeholder="Select future date range">
-</date-range-picker>`}
+</web-daterangepicker>
+
+<script>
+  const picker = document.getElementById('future-picker');
+  const today = new Date().toISOString().split('T')[0];
+  picker.setAttribute('min-date', today);
+</script>`}
 					languageType="html"
 					titleText="HTML"
 				/>
@@ -123,17 +142,18 @@ const picker = new PureDatePicker(inputElement, {
 					codeContent={`// JavaScript API
 import { PureDatePicker } from '@keenmate/web-daterangepicker';
 
+// Set minDate to today
 const picker = new PureDatePicker(inputElement, {
   selectionMode: 'range',
   minDate: new Date(), // Today
-  onSelect: (startDate, endDate) => {
-    console.log('Future range:', startDate, 'to', endDate);
+  onSelect: (dateRange) => {
+    console.log('Future range:', dateRange.start, 'to', dateRange.end);
   }
 });
 
-// Or with offset
+// Or with offset (7 days from now)
 const picker2 = new PureDatePicker(input2, {
-  minDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days from now
+  minDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
 });`}
 					languageType="javascript"
 					titleText="JavaScript"
@@ -149,13 +169,15 @@ const picker2 = new PureDatePicker(input2, {
 						<li><strong>Shipping dates</strong> - Select delivery dates</li>
 					</ul>
 
-					<h5>Special Value</h5>
+					<h5>Implementation</h5>
+					<p>Set <code>min-date</code> dynamically to today's date:</p>
 					<ul>
-						<li><code>min-date="today"</code> - Automatically sets to current date</li>
+						<li><strong>Web Component</strong>: Use JavaScript to set attribute with today's ISO date</li>
+						<li><strong>JavaScript API</strong>: Pass <code>new Date()</code> to minDate option</li>
 					</ul>
 
-					<h5>Dynamic Updates</h5>
-					<p>The "today" value updates automatically each day, ensuring past dates remain disabled.</p>
+					<h5>Note</h5>
+					<p>The component doesn't support a special "today" string value. Use dynamic JavaScript to set today's date when initializing the picker.</p>
 				</div>
 			{/snippet}
 		</ShowcaseSection>
@@ -171,7 +193,7 @@ const picker2 = new PureDatePicker(input2, {
 			{#snippet demoContent()}
 				<CodeBlock
 					codeContent={`// Disable weekends
-const picker = document.querySelector('date-range-picker');
+const picker = document.querySelector('web-daterangepicker');
 picker.disabledDates = (date) => {
   const day = date.getDay();
   return day === 0 || day === 6; // Sunday or Saturday
