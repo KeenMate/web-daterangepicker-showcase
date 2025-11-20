@@ -65,20 +65,20 @@
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-import { PureDatePicker } from '@keenmate/web-daterangepicker';
+import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
 // US format
-const picker1 = new PureDatePicker(input1, {
+const picker1 = new DateRangePicker(input1, {
   dateFormatMask: 'MM/DD/YYYY'
 });
 
 // European format
-const picker2 = new PureDatePicker(input2, {
+const picker2 = new DateRangePicker(input2, {
   dateFormatMask: 'DD/MM/YYYY'
 });
 
 // ISO format
-const picker3 = new PureDatePicker(input3, {
+const picker3 = new DateRangePicker(input3, {
   dateFormatMask: 'YYYY-MM-DD'
 });`}
 					languageType="javascript"
@@ -101,8 +101,13 @@ const picker3 = new PureDatePicker(input3, {
 						<li><code>YYYY</code> - 4-digit year (2024)</li>
 						<li><code>YY</code> - 2-digit year (24)</li>
 						<li><code>MM</code> - 2-digit month (01-12)</li>
+						<li><code>M</code> - 1 or 2-digit month (1-12)</li>
 						<li><code>DD</code> - 2-digit day (01-31)</li>
+						<li><code>D</code> - 1 or 2-digit day (1-31)</li>
 					</ul>
+					<p class="small text-muted">
+						<strong>Tip:</strong> Use single-digit tokens (<code>M/D/YYYY</code>) to allow flexible input like <code>1/5/2024</code> instead of requiring <code>01/05/2024</code>
+					</p>
 
 					<h5>Separators</h5>
 					<p>Use any separator: <code>/</code>, <code>-</code>, <code>.</code>, or space</p>
@@ -151,19 +156,19 @@ const picker3 = new PureDatePicker(input3, {
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-import { PureDatePicker } from '@keenmate/web-daterangepicker';
+import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
 // Note: Month names (MMMM/MMM) are NOT supported
 // Only numeric formats are supported
 
 // US numeric format (SUPPORTED)
-const picker1 = new PureDatePicker(input1, {
+const picker1 = new DateRangePicker(input1, {
   dateFormatMask: 'MM/DD/YYYY'
   // Output: "12/31/2024"
 });
 
 // European numeric format (SUPPORTED)
-const picker2 = new PureDatePicker(input2, {
+const picker2 = new DateRangePicker(input2, {
   dateFormatMask: 'DD/MM/YYYY'
   // Output: "31/12/2024"
 });`}

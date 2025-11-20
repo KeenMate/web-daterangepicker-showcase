@@ -77,6 +77,81 @@
 					<div class="demo-output">Selected: {demoValue}</div>
 				{/if}
 			</div>
+
+			<!-- Shadow DOM & Custom Styles Warning -->
+			<div class="alert alert-warning mt-4">
+				<h4 class="alert-heading">⚠️ Important: Shadow DOM & Custom Styles</h4>
+				<p>
+					<strong>The date picker uses Shadow DOM</strong>, which means custom styles must be injected using the <code>customStylesCallback</code> property.
+				</p>
+
+				<hr />
+
+				<h6>Why This Matters</h6>
+				<p>
+					Your global CSS cannot penetrate the Shadow DOM boundary. If you want to customize the calendar's appearance (day cells, badges, tooltips, etc.),
+					you must use <code>customStylesCallback</code>.
+				</p>
+
+				<h6>How to Inject Custom Styles</h6>
+				<CodeBlock
+					codeContent={`<web-daterangepicker id="my-picker"></web-daterangepicker>
+
+<script>
+  const picker = document.getElementById('my-picker');
+
+  // Inject custom CSS into Shadow DOM
+  picker.customStylesCallback = () => \`
+    /* Your custom styles here */
+    .drp-date-picker__day--weekend {
+      background-color: #f0f9ff;
+      color: #0369a1;
+    }
+
+    .drp-date-picker__badge.holiday {
+      background-color: #fef3c7;
+      color: #92400e;
+    }
+
+    .drp-date-picker__day--selected {
+      background-color: #10b981 !important;
+    }
+  \`;
+</script>`}
+					languageType="html"
+					titleText="Custom Styles Example"
+				/>
+
+				<h6 class="mt-3">What You CAN Style Without customStylesCallback</h6>
+				<ul>
+					<li><strong>Input element</strong> - Regular CSS works (not in Shadow DOM)</li>
+					<li><strong>CSS custom properties</strong> - Theme colors using <code>--drp-*</code> variables</li>
+				</ul>
+
+				<CodeBlock
+					codeContent={`/* These work from your global CSS */
+web-daterangepicker {
+  /* Theme via CSS custom properties */
+  --drp-accent-color: #10b981;
+  --drp-border-radius: 0.5rem;
+}
+
+/* Style the input element */
+web-daterangepicker input {
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+}`}
+					languageType="css"
+					titleText="Global CSS (Without customStylesCallback)"
+				/>
+
+				<p class="mb-0 mt-3">
+					<strong>📚 Learn more:</strong>
+					<a href="/features/custom-styling" class="alert-link">Custom Styling & Theming</a> |
+					<a href="/features/special-dates" class="alert-link">Custom Styles for Special Dates</a>
+				</p>
+			</div>
 		</section>
 
 		<!-- JavaScript API Usage -->

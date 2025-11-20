@@ -49,9 +49,9 @@
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-import { PureDatePicker } from '@keenmate/web-daterangepicker';
+import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   onSelect: (date) => {
     console.log('Selected date:', date);
   }
@@ -120,10 +120,10 @@ const picker = new PureDatePicker(inputElement, {
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-import { PureDatePicker } from '@keenmate/web-daterangepicker';
+import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
 // Keyboard shortcuts work automatically
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   selectionMode: 'range',
   onSelect: (dateRange) => {
     console.log('Selected:', dateRange);
@@ -146,8 +146,12 @@ const picker = new PureDatePicker(inputElement, {
 						<li><code>End</code> - Last day of current month</li>
 						<li><code>Page Up</code> - Previous month</li>
 						<li><code>Page Down</code> - Next month</li>
+						<li><code>Ctrl/Cmd + Left Arrow</code> - Previous month</li>
+						<li><code>Ctrl/Cmd + Right Arrow</code> - Next month</li>
 						<li><code>Ctrl + Home</code> - First day of year</li>
 						<li><code>Ctrl + End</code> - Last day of year</li>
+						<li><code>Tab</code> - Switch to next month column (multi-month mode)</li>
+						<li><code>Shift + Tab</code> - Switch to previous month column (multi-month mode)</li>
 					</ul>
 
 					<h5>Always Enabled</h5>

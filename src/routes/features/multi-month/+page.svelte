@@ -56,9 +56,9 @@
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-import { PureDatePicker } from '@keenmate/web-daterangepicker';
+import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   selectionMode: 'range',
   visibleMonthsCount: 2,
   monthLayout: 'horizontal',
@@ -135,7 +135,7 @@ const picker = new PureDatePicker(inputElement, {
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   selectionMode: 'single',
   visibleMonthsCount: 6,
   monthLayout: 'grid',
@@ -165,13 +165,25 @@ const picker = new PureDatePicker(inputElement, {
 					<ul>
 						<li><code>grid-rows</code> - Number of rows (e.g., 2)</li>
 						<li><code>grid-columns</code> - Number of columns (e.g., 3)</li>
-						<li><code>visible-months-count</code> - Should equal rows × columns</li>
+						<li><code>visible-months-count</code> - <strong>Must equal grid-rows × grid-columns</strong></li>
+					</ul>
+
+					<div class="alert alert-warning mt-3">
+						<strong>Important:</strong> The <code>visible-months-count</code> must equal <code>grid-rows × grid-columns</code>.
+						For example, a 2×3 grid requires <code>visible-months-count="6"</code> (2 rows × 3 columns = 6 months).
+					</div>
+
+					<h5>Common Grid Configurations</h5>
+					<ul>
+						<li><strong>2×2 grid:</strong> <code>grid-rows="2" grid-columns="2" visible-months-count="4"</code></li>
+						<li><strong>2×3 grid:</strong> <code>grid-rows="2" grid-columns="3" visible-months-count="6"</code></li>
+						<li><strong>3×4 grid:</strong> <code>grid-rows="3" grid-columns="4" visible-months-count="12"</code></li>
 					</ul>
 
 					<h5>Best Practices</h5>
 					<ul>
 						<li>Use inline mode for grid layouts to keep them always visible</li>
-						<li>Common grids: 2×2 (4 months), 2×3 (6 months), 3×4 (12 months)</li>
+						<li>Ensure visible-months-count matches the grid dimensions</li>
 					</ul>
 				</div>
 			{/snippet}
@@ -211,7 +223,7 @@ const picker = new PureDatePicker(inputElement, {
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   selectionMode: 'range',
   visibleMonthsCount: 3,
   monthLayout: 'horizontal',

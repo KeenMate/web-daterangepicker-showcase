@@ -55,9 +55,9 @@
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-import { PureDatePicker } from '@keenmate/web-daterangepicker';
+import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   positioningMode: 'floating' // Default value
 });`}
 					languageType="javascript"
@@ -79,6 +79,85 @@ const picker = new PureDatePicker(inputElement, {
 						<li><code>positioning-mode="floating"</code> - Default mode (can be omitted)</li>
 						<li>Uses Floating UI for smart positioning</li>
 						<li>Automatically flips if not enough space</li>
+					</ul>
+				</div>
+			{/snippet}
+		</ShowcaseSection>
+
+		<ShowcaseSection
+			titleText="Calendar Placement"
+			subtitleText="Control where the floating calendar appears"
+			demoColumnTitle="Live Demo"
+			controlsColumnTitle="Code Examples"
+			descriptionColumnTitle="Details">
+
+			{#snippet demoContent()}
+				<web-daterangepicker
+					selection-mode="single"
+					calendar-placement="top-start"
+					placeholder="Calendar opens above input">
+				</web-daterangepicker>
+				<p class="mt-3 small text-muted">Click to see calendar open above the input</p>
+			{/snippet}
+
+			{#snippet controlsContent()}
+				<CodeBlock
+					codeContent={`<!-- Web Component -->
+<web-daterangepicker
+  selection-mode="single"
+  calendar-placement="bottom-start"
+  placeholder="Default placement">
+</web-daterangepicker>
+
+<!-- Top placement -->
+<web-daterangepicker
+  selection-mode="single"
+  calendar-placement="top-start"
+  placeholder="Opens above">
+</web-daterangepicker>
+
+<!-- Right placement -->
+<web-daterangepicker
+  selection-mode="single"
+  calendar-placement="right"
+  placeholder="Opens to the right">
+</web-daterangepicker>`}
+					languageType="html"
+					titleText="HTML"
+				/>
+
+				<CodeBlock
+					codeContent={`// JavaScript API
+import { DateRangePicker } from '@keenmate/web-daterangepicker';
+
+const picker = new DateRangePicker(inputElement, {
+  calendarPlacement: 'top-start'  // Opens above
+});`}
+					languageType="javascript"
+					titleText="JavaScript"
+				/>
+			{/snippet}
+
+			{#snippet descriptionContent()}
+				<div class="prose">
+					<h5>Available Placements</h5>
+					<ul>
+						<li><code>bottom</code> - Below, centered</li>
+						<li><code>bottom-start</code> - Below, left-aligned (default)</li>
+						<li><code>bottom-end</code> - Below, right-aligned</li>
+						<li><code>top</code> - Above, centered</li>
+						<li><code>top-start</code> - Above, left-aligned</li>
+						<li><code>top-end</code> - Above, right-aligned</li>
+						<li><code>left</code> - To the left</li>
+						<li><code>right</code> - To the right</li>
+					</ul>
+
+					<h5>Smart Positioning</h5>
+					<p>Uses Floating UI for automatic flipping and shifting when there's not enough space in the viewport.</p>
+
+					<h5>Key Options</h5>
+					<ul>
+						<li><code>calendar-placement</code> - Preferred placement (will flip if needed)</li>
 					</ul>
 				</div>
 			{/snippet}
@@ -114,9 +193,9 @@ const picker = new PureDatePicker(inputElement, {
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-import { PureDatePicker } from '@keenmate/web-daterangepicker';
+import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   positioningMode: 'inline',
   visibleMonthsCount: 2
 });`}

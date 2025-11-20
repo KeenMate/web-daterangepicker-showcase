@@ -49,9 +49,9 @@
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-import { PureDatePicker } from '@keenmate/web-daterangepicker';
+import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   selectionMode: 'single',
   onSelect: (date) => {
     console.log('Selected:', date);
@@ -80,8 +80,8 @@ const picker = new PureDatePicker(inputElement, {
 						<li><code>selection-mode="single"</code> - Enables single date selection</li>
 					</ul>
 
-					<h5>Event</h5>
-					<p>Emits <code>date-select</code> event with <code>event.detail.date</code></p>
+					<h5>Events</h5>
+					<p>Emits <code>date-select</code> (or <code>change</code>) event with <code>event.detail.date</code> and <code>event.detail.formattedValue</code></p>
 				</div>
 			{/snippet}
 		</ShowcaseSection>
@@ -117,9 +117,9 @@ const picker = new PureDatePicker(inputElement, {
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-import { PureDatePicker } from '@keenmate/web-daterangepicker';
+import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   selectionMode: 'range',
   visibleMonthsCount: 2,
   onSelect: (startDate, endDate) => {
@@ -153,8 +153,8 @@ const picker = new PureDatePicker(inputElement, {
 						<li><code>visible-months-count="2"</code> - Shows 2 months (optional, improves UX for ranges)</li>
 					</ul>
 
-					<h5>Event</h5>
-					<p>Emits <code>range-select</code> event with <code>event.detail.startDate</code> and <code>event.detail.endDate</code></p>
+					<h5>Events</h5>
+					<p>Emits <code>date-select</code> (or <code>change</code>) event with <code>event.detail.dateRange</code> (containing <code>start</code> and <code>end</code> dates) and <code>event.detail.formattedValue</code></p>
 				</div>
 			{/snippet}
 		</ShowcaseSection>
@@ -215,21 +215,32 @@ picker.addEventListener('range-select', (e) => {
 				<div class="prose">
 					<h5>Event Types</h5>
 					<ul>
-						<li><code>date-select</code> - Single mode event</li>
-						<li><code>range-select</code> - Range mode event</li>
+						<li><code>date-select</code> - Fired when date(s) selected (both modes)</li>
+						<li><code>change</code> - Alias of <code>date-select</code> (for compatibility)</li>
 					</ul>
+
+					<p class="small text-muted">
+						<strong>Note:</strong> Both <code>date-select</code> and <code>change</code> events fire with identical data.
+						Use whichever fits your naming convention.
+					</p>
 
 					<h5>Event Data</h5>
 					<p><strong>Single mode:</strong></p>
 					<ul>
 						<li><code>event.detail.date</code> - JavaScript Date object</li>
+						<li><code>event.detail.formattedValue</code> - Formatted date string</li>
 					</ul>
 
 					<p><strong>Range mode:</strong></p>
 					<ul>
-						<li><code>event.detail.startDate</code> - Start Date object</li>
-						<li><code>event.detail.endDate</code> - End Date object</li>
+						<li><code>event.detail.dateRange</code> - Object with <code>start</code> and <code>end</code> Date objects</li>
+						<li><code>event.detail.formattedValue</code> - Formatted date range string</li>
 					</ul>
+
+					<p class="small text-muted">
+						In range mode with <code>disabled-dates-handling</code> modes like 'allow' or 'split',
+						the event detail may also include <code>enabledDates</code>, <code>disabledDates</code>, or additional arrays.
+					</p>
 
 					<h5>Date Object</h5>
 					<p>All dates are native JavaScript Date objects, giving you access to all standard Date methods and formatting options.</p>

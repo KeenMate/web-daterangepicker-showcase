@@ -55,7 +55,7 @@
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   selectionMode: 'single',
   locale: 'auto',  // Detects browser language
   onSelect: (date) => {
@@ -195,7 +195,7 @@ const picker = new PureDatePicker(inputElement, {
 
 				<CodeBlock
 					codeContent={`// JavaScript API
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   locale: 'es',
   dateFormatMask: 'YYYY-MM-DD',      // Validation format
   displayFormatMask: 'dd/mm/aaaa',   // Visual hint
@@ -233,6 +233,99 @@ const picker = new PureDatePicker(inputElement, {
 						Both masks must represent the same format structure, just with different language
 						tokens. The validation always uses English tokens internally.
 					</p>
+				</div>
+			{/snippet}
+		</ShowcaseSection>
+
+		<!-- Custom Strings -->
+		<ShowcaseSection
+			titleText="Custom UI Strings (JavaScript API Only)"
+			subtitleText="Override built-in button labels using the JavaScript API"
+			demoColumnTitle="Limitation"
+			controlsColumnTitle="Code Examples"
+			descriptionColumnTitle="Details"
+		>
+			{#snippet demoContent()}
+				<div class="alert alert-warning">
+					<h6>Web Component Limitation</h6>
+					<p class="mb-0">
+						The <code>customStrings</code> option is <strong>only available when using the JavaScript API</strong>
+						(<code>new DateRangePicker(...)</code>). It is <strong>not exposed as a web component attribute or property</strong>.
+					</p>
+				</div>
+				<p class="mt-3 small text-muted">
+					To customize UI strings, you must instantiate the date picker using the JavaScript API instead of the web component.
+				</p>
+			{/snippet}
+
+			{#snippet controlsContent()}
+				<CodeBlock
+					codeContent={`// JavaScript API - customStrings is available
+import { DateRangePicker } from '@keenmate/web-daterangepicker';
+
+const inputElement = document.querySelector('input');
+const picker = new DateRangePicker(inputElement, {
+  selectionMode: 'range',
+  customStrings: {
+    today: 'Jump to Today',
+    clear: 'Reset Selection',
+    apply: 'Confirm Dates',
+    day: 'day',
+    days: 'days',
+    night: 'night',
+    nights: 'nights',
+    preview: 'Preview'
+  }
+});`}
+					languageType="javascript"
+					titleText="JavaScript API"
+				/>
+
+				<CodeBlock
+					codeContent={`<!-- Web Component - customStrings NOT available -->
+<!-- This will NOT work: -->
+<web-daterangepicker
+  selection-mode="range"
+  custom-strings="...">  <!-- ❌ Not supported -->
+</web-daterangepicker>
+
+<!-- This will also NOT work: -->
+<script>
+  const picker = document.querySelector('web-daterangepicker');
+  picker.customStrings = {...};  // ❌ Not exposed
+</script>`}
+					languageType="html"
+					titleText="Web Component (Not Supported)"
+				/>
+			{/snippet}
+
+			{#snippet descriptionContent()}
+				<div class="prose">
+					<h5>Available String Keys</h5>
+					<p>When using the JavaScript API, you can override these strings:</p>
+					<ul>
+						<li><code>today</code> - "Today" button label</li>
+						<li><code>clear</code> - "Clear" button label</li>
+						<li><code>apply</code> - "Apply" button label (range mode)</li>
+						<li><code>day</code> - Singular "day" text</li>
+						<li><code>days</code> - Plural "days" text</li>
+						<li><code>night</code> - Singular "night" text</li>
+						<li><code>nights</code> - Plural "nights" text</li>
+						<li><code>preview</code> - "Preview" label when dragging</li>
+					</ul>
+
+					<h5>Use Cases</h5>
+					<ul>
+						<li><strong>Branding</strong> - Match your app's voice and tone</li>
+						<li><strong>Custom languages</strong> - Languages not in built-in locales</li>
+						<li><strong>Domain-specific terms</strong> - "Check-in/Check-out" instead of dates</li>
+					</ul>
+
+					<h5>Partial Override</h5>
+					<p>Only provide the strings you want to override. Unspecified strings use the current locale's defaults.</p>
+
+					<h5>Alternative: Use Built-in Locales</h5>
+					<p>If you just need different languages, use the <code>locale</code> attribute instead (<code>locale="es"</code>, <code>locale="de"</code>, etc.)</p>
 				</div>
 			{/snippet}
 		</ShowcaseSection>
