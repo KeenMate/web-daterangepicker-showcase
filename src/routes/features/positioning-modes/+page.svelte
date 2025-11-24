@@ -22,9 +22,9 @@
 		<ShowcaseSection
 			titleText="Floating Mode (Default)"
 			subtitleText="Calendar appears as a popup below the input"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -87,9 +87,9 @@ const picker = new DateRangePicker(inputElement, {
 		<ShowcaseSection
 			titleText="Calendar Placement"
 			subtitleText="Control where the floating calendar appears"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -166,9 +166,9 @@ const picker = new DateRangePicker(inputElement, {
 		<ShowcaseSection
 			titleText="Inline Mode"
 			subtitleText="Calendar always visible in the page flow"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker

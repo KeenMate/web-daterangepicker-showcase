@@ -29,9 +29,9 @@
 		<ShowcaseSection
 			titleText="The Five Handling Modes"
 			subtitleText="Choose the right behavior for your use case"
-			demoColumnTitle="Mode Comparison"
-			controlsColumnTitle="When to Use"
-			descriptionColumnTitle="Behavior">
+			col1Title="Mode Comparison"
+			col2Title="When to Use"
+			col3Title="Behavior">
 
 			{#snippet demoContent()}
 				<div class="table-responsive">
@@ -114,9 +114,9 @@
 		<ShowcaseSection
 			titleText="Mode: 'allow' (Default)"
 			subtitleText="Allow ranges over disabled dates with breakdown"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -242,9 +242,9 @@ const picker = new DateRangePicker(input, {
 		<ShowcaseSection
 			titleText="Mode: 'prevent' (Default)"
 			subtitleText="REJECTS selections that cross disabled dates - no event fires"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -359,9 +359,9 @@ const picker = new DateRangePicker(input, {
 		<ShowcaseSection
 			titleText="Mode: 'block'"
 			subtitleText="ACCEPTS selection but AUTO-SHORTENS to last enabled date - event fires"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -489,9 +489,9 @@ const picker = new DateRangePicker(input, {
 		<ShowcaseSection
 			titleText="Mode: 'split'"
 			subtitleText="Return multiple ranges split by disabled dates"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -637,9 +637,9 @@ picker.input.addEventListener('date-select', (e) => {
 		<ShowcaseSection
 			titleText="Mode: 'individual'"
 			subtitleText="Return flat array of individual enabled dates"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -777,9 +777,9 @@ picker.input.addEventListener('date-select', (e) => {
 		<ShowcaseSection
 			titleText="Visual Highlighting"
 			subtitleText="Control disabled date highlighting in ranges"
-			demoColumnTitle="highlight-disabled-in-range"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="highlight-disabled-in-range"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<div class="row">
@@ -881,9 +881,9 @@ const picker2 = new DateRangePicker(input2, {
 		<ShowcaseSection
 			titleText="Decision Guide"
 			subtitleText="Choose the right mode for your use case"
-			demoColumnTitle="Use Case"
-			controlsColumnTitle="Recommended Mode"
-			descriptionColumnTitle="Why">
+			col1Title="Use Case"
+			col2Title="Recommended Mode"
+			col3Title="Why">
 
 			{#snippet demoContent()}
 				<div class="table-responsive">

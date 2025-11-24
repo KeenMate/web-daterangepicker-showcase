@@ -32,9 +32,9 @@
 		<ShowcaseSection
 			titleText="Three Independent Sizing Systems"
 			subtitleText="Control font, spacing, and cell dimensions independently"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="How It Works">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="How It Works">
 
 			{#snippet demoContent()}
 				<div class="mb-4">
@@ -133,9 +133,9 @@
 		<ShowcaseSection
 			titleText="Uniform Sizing"
 			subtitleText="All three systems scaled together uniformly"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Use Cases">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Use Cases">
 
 			{#snippet demoContent()}
 				<div class="mb-4">
@@ -245,9 +245,9 @@
 		<ShowcaseSection
 			titleText="Compact Grid Layout"
 			subtitleText="Dense dashboard calendar at 60% scale"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Example"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Example"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<div>
@@ -346,9 +346,9 @@
 		<ShowcaseSection
 			titleText="CSS Custom Properties (Theming)"
 			subtitleText="Customize colors, borders, and more with CSS variables"
-			demoColumnTitle="Available Variables"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="How to Use">
+			col1Title="Available Variables"
+			col2Title="Code Examples"
+			col3Title="How to Use">
 
 			{#snippet demoContent()}
 				<div class="prose">

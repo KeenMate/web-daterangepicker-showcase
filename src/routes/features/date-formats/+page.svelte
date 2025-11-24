@@ -24,9 +24,9 @@
 		<ShowcaseSection
 			titleText="Standard Date Formats"
 			subtitleText="Common date format patterns"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -119,9 +119,9 @@ const picker3 = new DateRangePicker(input3, {
 		<ShowcaseSection
 			titleText="Supported Formats"
 			subtitleText="Only numeric date formats are currently supported"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker

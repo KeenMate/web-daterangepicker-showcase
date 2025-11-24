@@ -24,9 +24,9 @@
 		<ShowcaseSection
 			titleText="Single Date Selection"
 			subtitleText="Select one date at a time"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -90,9 +90,9 @@ const picker = new DateRangePicker(inputElement, {
 		<ShowcaseSection
 			titleText="Range Selection"
 			subtitleText="Select a date range with start and end dates"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -163,9 +163,9 @@ const picker = new DateRangePicker(inputElement, {
 		<ShowcaseSection
 			titleText="Event Handling"
 			subtitleText="Listen to selection events"
-			demoColumnTitle="Single Mode Events"
-			controlsColumnTitle="Range Mode Events"
-			descriptionColumnTitle="Event Details">
+			col1Title="Single Mode Events"
+			col2Title="Range Mode Events"
+			col3Title="Event Details">
 
 			{#snippet demoContent()}
 				<CodeBlock

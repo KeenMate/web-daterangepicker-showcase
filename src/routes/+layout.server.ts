@@ -34,9 +34,12 @@ const config: PartialDocsConfig = {
 					{ label: 'Selection Modes', href: '/features/selection-modes' },
 					{ label: 'Date Formats & Masking', href: '/features/date-formats' },
 					{ label: 'Multi-Month Display', href: '/features/multi-month' },
+					{ label: 'Unified Navigation', href: '/features/unified-navigation' },
 					{ label: 'Internationalization', href: '/features/internationalization' },
 					{ label: 'Date Restrictions', href: '/features/date-restrictions' },
 					{ label: 'Special Dates & Badges', href: '/features/special-dates' },
+					{ label: 'Bulk Metadata Loading', href: '/features/bulk-metadata-loading' },
+					{ label: 'Event Callbacks', href: '/features/event-callbacks' },
 					{ label: 'Custom Rendering (Slots)', href: '/features/custom-rendering' },
 					{ label: 'Range Disabled Handling', href: '/features/range-disabled-handling' },
 					{ label: 'Positioning Modes', href: '/features/positioning-modes' },
@@ -57,7 +60,10 @@ const config: PartialDocsConfig = {
 	features: {
 		search: true,
 		breadcrumbs: true,
-		tableOfContents: true
+		tableOfContents: true,
+		analytics: {
+			plausible: 'web-daterangepicker.keenmate.dev'
+		}
 	}
 };
 

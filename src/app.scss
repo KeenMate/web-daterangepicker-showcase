@@ -1,4 +1,23 @@
-// Import svelte-docs styles
+// Leverage new rc8 features: SCSS Module Exports & Variable Customization
+// Import variables first so we can override them
+@import '@keenmate/svelte-docs/styles/variables';
+
+// Custom theme overrides - demonstrating new rc8 SCSS variables
+$color-primary: #00A7E1 !default;      // Keep default primary color
+$heading-color-h2: #007EA7 !default;   // Darker blue for h2
+$heading-color-h3: #003459 !default;   // Even darker for h3
+$link-color: #00A7E1 !default;         // Match primary color
+
+// Code styling customization
+$code-bg-color: #f0f9ff !default;      // Light blue background for inline code
+$pre-bg-color: #1e293b !default;       // Dark background for code blocks
+
+// Spacing adjustments for better readability
+$h2-margin-top: 2rem !default;         // More space above h2
+$h3-margin-top: 1.5rem !default;       // More space above h3
+$paragraph-margin-bottom: 1.25rem !default; // More space between paragraphs
+
+// Import the main svelte-docs styles with our customizations applied
 @import '@keenmate/svelte-docs/styles/main.scss';
 
 // Import Bootstrap

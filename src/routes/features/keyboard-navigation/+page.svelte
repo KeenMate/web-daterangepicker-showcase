@@ -22,9 +22,9 @@
 		<ShowcaseSection
 			titleText="Arrow Key Navigation"
 			subtitleText="Navigate calendar dates with keyboard arrows"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -91,9 +91,9 @@ const picker = new DateRangePicker(inputElement, {
 		<ShowcaseSection
 			titleText="Keyboard Shortcuts"
 			subtitleText="Quick navigation with shortcut keys"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker

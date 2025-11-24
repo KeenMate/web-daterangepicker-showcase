@@ -28,9 +28,9 @@
 		<ShowcaseSection
 			titleText="Min and Max Dates"
 			subtitleText="Set date range boundaries"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -109,9 +109,9 @@ const picker2 = new DateRangePicker(input2, {
 		<ShowcaseSection
 			titleText="Disabled Weekdays"
 			subtitleText="Disable specific days of the week"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -198,9 +198,9 @@ const picker2 = new DateRangePicker(input2, {
 		<ShowcaseSection
 			titleText="Disabled Dates (Specific Dates)"
 			subtitleText="Disable a list of specific dates"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -318,9 +318,9 @@ fetch('/api/holidays')
 		<ShowcaseSection
 			titleText="Custom Disable Logic (Callback)"
 			subtitleText="Use functions for complex or dynamic rules"
-			demoColumnTitle="When to Use"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="When to Use"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<div class="prose">
@@ -439,9 +439,9 @@ const picker3 = new DateRangePicker(input3, {
 		<ShowcaseSection
 			titleText="Advanced: Date Metadata Callback"
 			subtitleText="Disable dates AND provide styling via single callback"
-			demoColumnTitle="Use Case"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Use Case"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<div class="prose">
@@ -616,9 +616,9 @@ const picker = new DateRangePicker(inputElement, {
 		<ShowcaseSection
 			titleText="Combining Multiple Restrictions"
 			subtitleText="How different restriction methods interact"
-			demoColumnTitle="Evaluation Order"
-			controlsColumnTitle="Example"
-			descriptionColumnTitle="Details"
+			col1Title="Evaluation Order"
+			col2Title="Example"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<div class="prose">

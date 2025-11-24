@@ -96,9 +96,9 @@
 		<ShowcaseSection
 			titleText="Dark Theme"
 			subtitleText="Complete dark mode with light text and proper contrast"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Implementation"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Implementation"
+			col3Title="Details">
 			{#snippet demoContent()}
 				<div class="dark-theme-container">
 					<div class="mb-3">
@@ -205,9 +205,9 @@ web-daterangepicker.theme-dark {
 		<ShowcaseSection
 			titleText="Pastel Theme"
 			subtitleText="Warm, inviting color scheme with amber/yellow tones"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Implementation"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Implementation"
+			col3Title="Details">
 			{#snippet demoContent()}
 				<div class="pastel-theme-container">
 					<div class="mb-3">
@@ -317,9 +317,9 @@ web-daterangepicker.theme-pastel {
 		<ShowcaseSection
 			titleText="Accent Color Themes"
 			subtitleText="Quick theming by changing only the accent color"
-			demoColumnTitle="Live Examples"
-			controlsColumnTitle="Implementation"
-			descriptionColumnTitle="Details">
+			col1Title="Live Examples"
+			col2Title="Implementation"
+			col3Title="Details">
 			{#snippet demoContent()}
 				<div class="row g-3">
 					<div class="col-md-6">

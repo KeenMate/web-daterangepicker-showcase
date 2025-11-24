@@ -24,9 +24,9 @@
 		<ShowcaseSection
 			titleText="Horizontal Layout"
 			subtitleText="Display months side-by-side"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -99,9 +99,9 @@ const picker = new DateRangePicker(inputElement, {
 		<ShowcaseSection
 			titleText="Grid Layout"
 			subtitleText="Display months in a grid pattern"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -193,9 +193,9 @@ const picker = new DateRangePicker(inputElement, {
 		<ShowcaseSection
 			titleText="Three Month View"
 			subtitleText="Perfect for quarterly planning"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker

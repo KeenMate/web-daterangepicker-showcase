@@ -2,7 +2,11 @@
 	import { DocLayout, ShowcaseSection, CodeBlock } from '@keenmate/svelte-docs';
 	import { onMount } from 'svelte';
 
+	// For initial-date attribute
+	const todayDate = new Date().toISOString().split('T')[0];
+
 	onMount(async () => {
+		await import('@keenmate/web-daterangepicker/dist/style.css');
 		const { DateRangePicker } = await import('@keenmate/web-daterangepicker');
 
 		// Demo 1: DateInfo Properties Reference
@@ -29,6 +33,30 @@
 					dayTooltip: 'Day: $350/night'
 				}
 			];
+
+			demo1.customStylesCallback = () => `
+				.drp-date-picker__badge-cell.event {
+					background-color: rgba(34, 197, 94, 0.3);
+					color: #166534;
+					font-weight: 600;
+				}
+
+				.drp-date-picker__badge-cell.peak {
+					background-color: rgba(251, 191, 36, 0.3);
+					color: #92400e;
+					font-weight: 700;
+				}
+
+				.drp-date-picker__day.highlighted-day {
+					background-color: rgba(59, 130, 246, 0.15);
+					border: 2px solid rgb(59, 130, 246);
+				}
+
+				.drp-date-picker__day.peak-day {
+					background-color: rgba(251, 191, 36, 0.2);
+					font-weight: 700;
+				}
+			`;
 		}
 
 		// Demo 2: Complete example with holidays, events, and custom styling
@@ -97,7 +125,7 @@
 				// Inject custom styles into Shadow DOM
 				customStylesCallback: () => `
 					/* Peak season pricing */
-					.drp-date-picker__badge.peak-season {
+					.drp-date-picker__badge-cell.peak-season {
 						background-color: rgba(251, 191, 36, 0.3);
 						color: #92400e;
 						font-weight: 700;
@@ -111,7 +139,7 @@
 					}
 
 					/* Special events */
-					.drp-date-picker__badge.special-event {
+					.drp-date-picker__badge-cell.special-event {
 						background-color: rgba(168, 85, 247, 0.3);
 						font-size: 1.2em;
 					}
@@ -136,18 +164,34 @@
 			});
 		}
 
-		// Demo 3: Dynamic metadata
+		// Demo 3: Dynamic metadata (relative to current date)
 		const demo3 = document.getElementById('demo-special-dates-dynamic') as any;
 		if (demo3) {
-			const pricing: Record<string, number> = {
-				'2025-07-01': 250,
-				'2025-07-04': 350,
-				'2025-07-15': 280,
-				'2025-12-25': 400,
-				'2025-12-31': 450
-			};
+			const today = new Date();
 
-			demo3.getDateMetadata = (date: Date) => {
+			// Generate dynamic pricing for next 60 days based on day of week
+			const pricing: Record<string, number> = {};
+			for (let i = 0; i < 60; i++) {
+				const date = new Date(today);
+				date.setDate(today.getDate() + i);
+				const key = date.toISOString().split('T')[0];
+
+				const dayOfWeek = date.getDay();
+				const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+				const isFriday = dayOfWeek === 5;
+
+				// Weekend pricing is highest
+				if (isWeekend) {
+					pricing[key] = 350 + Math.floor(Math.random() * 100); // $350-450
+				} else if (isFriday) {
+					pricing[key] = 280 + Math.floor(Math.random() * 70);  // $280-350
+				} else {
+					// Weekday pricing varies
+					pricing[key] = 200 + Math.floor(Math.random() * 80);  // $200-280
+				}
+			}
+
+			demo3.getDateMetadataCallback = (date: Date) => {
 				const key = date.toISOString().split('T')[0];
 				const price = pricing[key];
 
@@ -156,18 +200,69 @@
 						return {
 							badgeClass: 'peak-pricing',
 							badgeText: '$$$',
-							badgeTooltip: `$${price}/night - Peak Season`
+							badgeTooltip: `$${price}/night - Peak Season`,
+							dayClass: 'peak-day'
 						};
 					} else if (price >= 250) {
 						return {
 							badgeClass: 'high-pricing',
 							badgeText: '$$',
-							badgeTooltip: `$${price}/night - High Season`
+							badgeTooltip: `$${price}/night - High Season`,
+							dayClass: 'high-day'
+						};
+					} else if (price >= 200) {
+						return {
+							badgeClass: 'standard-pricing',
+							badgeText: '$',
+							badgeTooltip: `$${price}/night - Standard`,
+							dayClass: 'standard-day'
 						};
 					}
 				}
 				return null;
 			};
+
+			// Inject custom styles into Shadow DOM
+			demo3.customStylesCallback = () => `
+				/* Peak pricing */
+				.drp-date-picker__badge-cell.peak-pricing {
+					background-color: rgba(239, 68, 68, 0.3);
+					color: #991b1b;
+					font-weight: 700;
+					font-size: 0.7em;
+				}
+
+				.drp-date-picker__day.peak-day {
+					background-color: rgba(239, 68, 68, 0.1);
+					font-weight: 700;
+				}
+
+				/* High pricing */
+				.drp-date-picker__badge-cell.high-pricing {
+					background-color: rgba(251, 191, 36, 0.3);
+					color: #92400e;
+					font-weight: 600;
+					font-size: 0.7em;
+				}
+
+				.drp-date-picker__day.high-day {
+					background-color: rgba(251, 191, 36, 0.1);
+					font-weight: 600;
+				}
+
+				/* Standard pricing */
+				.drp-date-picker__badge-cell.standard-pricing {
+					background-color: rgba(34, 197, 94, 0.3);
+					color: #166534;
+					font-weight: 500;
+					font-size: 0.7em;
+				}
+
+				.drp-date-picker__day.standard-day {
+					background-color: rgba(34, 197, 94, 0.1);
+					font-weight: 500;
+				}
+			`;
 		}
 
 		// Demo 4: Member mapping
@@ -200,6 +295,26 @@
 			demo4.badgeTooltipMember = 'badge_tip';
 			demo4.dayClassMember = 'cell_class';
 			demo4.dayTooltipMember = 'cell_tip';
+
+			demo4.customStylesCallback = () => `
+				.drp-date-picker__badge-cell.concert {
+					background-color: rgba(16, 185, 129, 0.3);
+					font-size: 1.2em;
+				}
+
+				.drp-date-picker__badge-cell.theater {
+					background-color: rgba(168, 85, 247, 0.3);
+					font-size: 1.2em;
+				}
+
+				.drp-date-picker__day.event-day {
+					background-color: rgba(16, 185, 129, 0.15);
+				}
+
+				.drp-date-picker__day.theater-day {
+					background-color: rgba(168, 85, 247, 0.15);
+				}
+			`;
 		}
 
 		// Demo 5: Disabling dates
@@ -226,6 +341,37 @@
 					badgeTooltip: '2 rooms left'
 				}
 			];
+
+			// Inject custom styles into Shadow DOM
+			demo5.customStylesCallback = () => `
+				/* Badge styles */
+				.drp-date-picker__badge-cell.available {
+					background-color: rgba(34, 197, 94, 0.3);
+					color: #166534;
+					font-weight: 600;
+				}
+
+				.drp-date-picker__badge-cell.unavailable {
+					background-color: rgba(239, 68, 68, 0.3);
+					color: #991b1b;
+					font-weight: 600;
+				}
+
+				.drp-date-picker__badge-cell.limited {
+					background-color: rgba(251, 191, 36, 0.3);
+					color: #92400e;
+					font-weight: 600;
+				}
+
+				/* Day styles */
+				.drp-date-picker__day.unavailable {
+					opacity: 0.4;
+				}
+
+				.drp-date-picker__day.limited {
+					background-color: rgba(251, 191, 36, 0.15);
+				}
+			`;
 		}
 
 		// Demo 6: HTML tooltips (via callbacks)
@@ -254,46 +400,24 @@
 				}
 				return null;
 			};
+
+			demo6.customStylesCallback = () => `
+				.drp-date-picker__badge-cell.hotel {
+					background-color: rgba(59, 130, 246, 0.3);
+					font-size: 1.2em;
+				}
+
+				.drp-date-picker__badge-cell.flight {
+					background-color: rgba(168, 85, 247, 0.3);
+					font-size: 1.2em;
+				}
+			`;
 		}
 	});
 </script>
 
 <style>
-	/* Styles for demos that use web component (not JS API) */
-	:global(web-daterangepicker#demo-dateinfo-properties .drp-date-picker__day.highlighted-day) {
-		background-color: rgba(59, 130, 246, 0.15);
-		border: 2px solid rgb(59, 130, 246);
-	}
-	:global(web-daterangepicker#demo-dateinfo-properties .drp-date-picker__day.peak-day) {
-		background-color: rgba(251, 191, 36, 0.2);
-		font-weight: 700;
-	}
-
-	/* Demo 3: Dynamic */
-	:global(web-daterangepicker#demo-special-dates-dynamic .drp-date-picker__day.peak-pricing) {
-		background-color: rgba(239, 68, 68, 0.15);
-		font-weight: 700;
-	}
-	:global(web-daterangepicker#demo-special-dates-dynamic .drp-date-picker__day.high-pricing) {
-		background-color: rgba(251, 191, 36, 0.15);
-		font-weight: 600;
-	}
-
-	/* Demo 4: Member mapping */
-	:global(web-daterangepicker#demo-member-mapping .drp-date-picker__day.event-day) {
-		background-color: rgba(16, 185, 129, 0.15);
-	}
-	:global(web-daterangepicker#demo-member-mapping .drp-date-picker__day.theater-day) {
-		background-color: rgba(168, 85, 247, 0.15);
-	}
-
-	/* Demo 5: Disabling */
-	:global(web-daterangepicker#demo-disabling-dates .drp-date-picker__day.unavailable) {
-		opacity: 0.4;
-	}
-	:global(web-daterangepicker#demo-disabling-dates .drp-date-picker__day.limited) {
-		background-color: rgba(251, 191, 36, 0.15);
-	}
+	/* All demos use customStylesCallback for Shadow DOM styling */
 </style>
 
 <DocLayout
@@ -332,9 +456,9 @@
 		<ShowcaseSection
 			titleText="DateInfo Properties Reference"
 			subtitleText="Complete property reference with examples"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Property Table"
-			descriptionColumnTitle="Visual Explanation"
+			col1Title="Live Demo"
+			col2Title="Property Table"
+			col3Title="Visual Explanation"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -465,9 +589,9 @@
 		<ShowcaseSection
 			titleText="Complete Example: Holidays, Events & Custom Styling"
 			subtitleText="All features combined with customStylesCallback for Shadow DOM"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Complete Code"
-			descriptionColumnTitle="Key Concepts"
+			col1Title="Live Demo"
+			col2Title="Complete Code"
+			col3Title="Key Concepts"
 		>
 			{#snippet demoContent()}
 				<input
@@ -539,7 +663,7 @@ const picker = new DateRangePicker(input, {
   // IMPORTANT: Inject custom CSS into Shadow DOM
   customStylesCallback: () => \`
     /* Peak season pricing */
-    .drp-date-picker__badge.peak-season {
+    .drp-date-picker__badge-cell.peak-season {
       background-color: rgba(251, 191, 36, 0.3);
       color: #92400e;
       font-weight: 700;
@@ -553,7 +677,7 @@ const picker = new DateRangePicker(input, {
     }
 
     /* Special events */
-    .drp-date-picker__badge.special-event {
+    .drp-date-picker__badge-cell.special-event {
       background-color: rgba(168, 85, 247, 0.3);
       font-size: 1.2em;
     }
@@ -606,21 +730,22 @@ const picker = new DateRangePicker(input, {
 
 		<!-- Dynamic Metadata -->
 		<ShowcaseSection
-			titleText="Dynamic Metadata (getDateMetadata)"
-			subtitleText="Complex logic and API integration"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			titleText="Dynamic Metadata (getDateMetadataCallback)"
+			subtitleText="Real-time pricing based on day of week"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
 					id="demo-special-dates-dynamic"
 					selection-mode="single"
+					initial-date={todayDate}
 					placeholder="Select a date">
 				</web-daterangepicker>
 				<p class="mt-3 small text-muted">
-					<strong>Pricing:</strong> $$ Jul 1 ($250), Jul 15 ($280) | $$$ Jul 4 ($350), Dec 25 ($400),
-					Dec 31 ($450)
+					<strong>Dynamic Pricing:</strong> Prices calculated based on day of week. Weekends ($$$ = $350-450),
+					Fridays ($$ = $280-350), Weekdays ($ = $200-280). Navigate to see 60-day pricing forecast.
 				</p>
 			{/snippet}
 
@@ -633,7 +758,7 @@ const pricing = {
   '2025-12-25': 400
 };
 
-picker.getDateMetadata = (date) => {
+picker.getDateMetadataCallback = (date) => {
   const key = date.toISOString().split('T')[0];
   const price = pricing[key];
 
@@ -662,7 +787,7 @@ picker.getDateMetadata = (date) => {
 					codeContent={`// API integration with caching
 let cachedData = null;
 
-picker.getDateMetadata = async (date) => {
+picker.getDateMetadataCallback = async (date) => {
   // Load data once
   if (!cachedData) {
     const response = await fetch('/api/dates');
@@ -721,9 +846,9 @@ picker.getDateMetadata = async (date) => {
 		<ShowcaseSection
 			titleText="Member Mapping"
 			subtitleText="Map custom data structures to DateInfo properties"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -810,9 +935,9 @@ picker.isDisabledMember = 'unavailable';    // Default: 'isDisabled'`}
 		<ShowcaseSection
 			titleText="Advanced: Disabling Dates"
 			subtitleText="Override disabled state with isDisabled"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -863,7 +988,7 @@ const availability = {
   '2025-04-20': 2   // Limited
 };
 
-picker.getDateMetadata = (date) => {
+picker.getDateMetadataCallback = (date) => {
   const key = date.toISOString().split('T')[0];
   const rooms = availability[key];
 
@@ -917,9 +1042,9 @@ picker.getDateMetadata = (date) => {
 		<ShowcaseSection
 			titleText="Advanced: HTML Tooltips"
 			subtitleText="Rich formatted tooltips with callbacks"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -1039,7 +1164,7 @@ interface DayRenderData {
 							<td>Not suitable for complex logic</td>
 						</tr>
 						<tr>
-							<td><code>getDateMetadata</code></td>
+							<td><code>getDateMetadataCallback</code></td>
 							<td>Dynamic logic, API data, calculations</td>
 							<td>Powerful, flexible, handles any logic</td>
 							<td>Performance considerations</td>
@@ -1054,7 +1179,7 @@ interface DayRenderData {
 							<td>Both combined</td>
 							<td>Base data + dynamic overrides</td>
 							<td>Maximum flexibility</td>
-							<td>getDateMetadata overrides specialDates</td>
+							<td>getDateMetadataCallback overrides specialDates</td>
 						</tr>
 					</tbody>
 				</table>
@@ -1073,7 +1198,7 @@ interface DayRenderData {
     { date: '2025-07-01', badgeClass: 'my-custom-class' }
   ],
   customStylesCallback: () => \`
-    .drp-date-picker__badge.my-custom-class {
+    .drp-date-picker__badge-cell.my-custom-class {
       background-color: gold;
     }
   \`
@@ -1086,7 +1211,7 @@ interface DayRenderData {
 					<strong>Option 2: Web Component - Global CSS with Full Selector</strong>
 					<CodeBlock
 						codeContent={`/* Global CSS file */
-web-daterangepicker .drp-date-picker__badge.my-custom-class {
+web-daterangepicker .drp-date-picker__badge-cell.my-custom-class {
   background-color: gold;
 }`}
 						languageType="css"
@@ -1110,7 +1235,7 @@ web-daterangepicker .drp-date-picker__badge.my-custom-class {
 								<li>Cache API responses</li>
 								<li>Return null quickly for non-special dates</li>
 								<li>Use specialDates for known static data</li>
-								<li>Keep getDateMetadata logic fast</li>
+								<li>Keep getDateMetadataCallback logic fast</li>
 								<li>Use member mapping to avoid data transformation</li>
 							</ul>
 						</div>
@@ -1121,7 +1246,7 @@ web-daterangepicker .drp-date-picker__badge.my-custom-class {
 						<div class="card-header bg-danger text-white">✗ Avoid This</div>
 						<div class="card-body">
 							<ul class="mb-0">
-								<li>Making API calls in getDateMetadata without caching</li>
+								<li>Making API calls in getDateMetadataCallback without caching</li>
 								<li>Complex calculations for every date</li>
 								<li>Mixing both without understanding priority</li>
 								<li>Long badge text (keep it 1-3 characters)</li>
@@ -1143,7 +1268,7 @@ web-daterangepicker .drp-date-picker__badge.my-custom-class {
 					</li>
 					<li><strong>6 DateInfo properties:</strong> All documented with examples above</li>
 					<li>
-						<strong>Static vs Dynamic:</strong> Use specialDates for known data, getDateMetadata for logic
+						<strong>Static vs Dynamic:</strong> Use specialDates for known data, getDateMetadataCallback for logic
 					</li>
 					<li>
 						<strong>Shadow DOM styling:</strong> Use customStylesCallback (JS API) or global CSS (web component)

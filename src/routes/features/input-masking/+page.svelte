@@ -28,9 +28,9 @@
 		<ShowcaseSection
 			titleText="How Input Masking Works"
 			subtitleText="Always-on automatic formatting"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Key Behaviors"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Key Behaviors"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -95,9 +95,9 @@
 		<ShowcaseSection
 			titleText="Automatic Format Adaptation"
 			subtitleText="Masking adapts to any date format"
-			demoColumnTitle="Live Demos"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Supported Formats">
+			col1Title="Live Demos"
+			col2Title="Code Examples"
+			col3Title="Supported Formats">
 
 			{#snippet demoContent()}
 				<div class="row g-3">
@@ -257,9 +257,9 @@ const picker3 = new DateRangePicker(input3, {
 		<ShowcaseSection
 			titleText="Auto-Separator Insertion"
 			subtitleText="Smart separator handling as you type"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Behaviors"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Behaviors"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -390,9 +390,9 @@ const picker3 = new DateRangePicker(input3, {
 		<ShowcaseSection
 			titleText="Progressive Calendar Updates"
 			subtitleText="Calendar updates as you type valid segments"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Update Triggers"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Update Triggers"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -489,9 +489,9 @@ const picker = new DateRangePicker(input, {
 		<ShowcaseSection
 			titleText="Range Mode Masking"
 			subtitleText="Separate inputs with independent masking"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -570,9 +570,9 @@ const picker = new DateRangePicker(input, {
 		<ShowcaseSection
 			titleText="Best Practices"
 			subtitleText="Getting the most from input masking"
-			demoColumnTitle="Recommendations"
-			controlsColumnTitle="Common Patterns"
-			descriptionColumnTitle="Tips">
+			col1Title="Recommendations"
+			col2Title="Common Patterns"
+			col3Title="Tips">
 
 			{#snippet demoContent()}
 				<div class="prose">

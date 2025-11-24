@@ -25,9 +25,9 @@
 		<ShowcaseSection
 			titleText="Automatic Locale Detection"
 			subtitleText="Detect and use the browser's language"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -93,9 +93,9 @@ const picker = new DateRangePicker(inputElement, {
 		<ShowcaseSection
 			titleText="Built-in Locales"
 			subtitleText="Spanish, German, French, and English"
-			demoColumnTitle="Spanish Example"
-			controlsColumnTitle="German Example"
-			descriptionColumnTitle="Available Locales"
+			col1Title="Spanish Example"
+			col2Title="German Example"
+			col3Title="Available Locales"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -146,9 +146,9 @@ const picker = new DateRangePicker(inputElement, {
 		<ShowcaseSection
 			titleText="Localized Display Formats"
 			subtitleText="Show format hints in the user's language"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -241,9 +241,9 @@ const picker = new DateRangePicker(inputElement, {
 		<ShowcaseSection
 			titleText="Custom UI Strings (JavaScript API Only)"
 			subtitleText="Override built-in button labels using the JavaScript API"
-			demoColumnTitle="Limitation"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details"
+			col1Title="Limitation"
+			col2Title="Code Examples"
+			col3Title="Details"
 		>
 			{#snippet demoContent()}
 				<div class="alert alert-warning">

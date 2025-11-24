@@ -34,9 +34,9 @@
 		<ShowcaseSection
 			titleText="Named Slots (Declarative)"
 			subtitleText="Use HTML slots to customize specific dates"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -109,9 +109,9 @@
 		<ShowcaseSection
 			titleText="renderDayCallback (Full Replacement)"
 			subtitleText="Programmatically replace entire day cell content"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
@@ -228,9 +228,9 @@ interface DayRenderData {
 		<ShowcaseSection
 			titleText="renderDayContentCallback (Augmentation)"
 			subtitleText="Add content alongside the default day number"
-			demoColumnTitle="Live Demo"
-			controlsColumnTitle="Code Examples"
-			descriptionColumnTitle="Details">
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
