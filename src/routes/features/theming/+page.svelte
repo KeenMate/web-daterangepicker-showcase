@@ -391,6 +391,45 @@ web-daterangepicker.theme-red {
 			{/snippet}
 		</ShowcaseSection>
 
+		<!-- v1.3.0 Component-Specific Theming -->
+		<section class="mb-5">
+			<div class="alert alert-success">
+				<h4 class="alert-heading">🆕 v1.3.0: Component-Specific Customization</h4>
+				<p>
+					Version 1.3.0 adds 60+ semantic CSS variables for fine-grained control.
+					Customize individual components independently!
+				</p>
+
+				<h6 class="mt-3">Example: Custom Button Colors</h6>
+				<CodeBlock
+					codeContent={`/* Customize buttons without affecting day cells */
+web-daterangepicker {
+  --drp-button-today-color: #10b981;
+  --drp-button-apply-bg: #8b5cf6;
+  --drp-button-clear-color: #ef4444;
+}`}
+					languageType="css"
+					titleText="Component-Specific Theming"
+				/>
+
+				<h6 class="mt-3">Example: Custom Input Styling</h6>
+				<CodeBlock
+					codeContent={`/* Style input independently from calendar */
+web-daterangepicker {
+  --drp-input-background: #fef3c7;
+  --drp-input-border-color: #f59e0b;
+  --drp-input-border-color-focus: #d97706;
+}`}
+					languageType="css"
+					titleText="Input Customization"
+				/>
+
+				<p class="mt-3 mb-0">
+					<strong>Learn more:</strong> See the <a href="/features/custom-styling" class="alert-link">Custom Styling</a> page for the complete list of 90+ CSS variables.
+				</p>
+			</div>
+		</section>
+
 		<!-- Implementation Guide -->
 		<section class="mb-5">
 			<div class="alert alert-info">

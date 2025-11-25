@@ -352,7 +352,18 @@
 
 			{#snippet demoContent()}
 				<div class="prose">
-					<h6>Color Variables</h6>
+					<div class="alert alert-info mb-4">
+						<h6 class="alert-heading">🆕 New in v1.3.0: Semantic Component Variables</h6>
+						<p class="mb-2">
+							Version 1.3.0 adds 60+ semantic CSS variables for component-specific customization.
+							Each component (input, buttons, days, headers) now has dedicated variables for complete styling independence.
+						</p>
+						<p class="mb-0">
+							<strong>Total available:</strong> 90+ CSS custom properties
+						</p>
+					</div>
+
+					<h6>Base Color Variables</h6>
 					<ul class="small">
 						<li><code>--drp-card-bg</code> - Calendar background (#ffffff)</li>
 						<li><code>--drp-accent-color</code> - Primary accent (#3b82f6)</li>
@@ -362,6 +373,15 @@
 						<li><code>--drp-border-color</code> - Border color (#e5e7eb)</li>
 						<li><code>--drp-primary-bg</code> - Primary background (#f3f4f6)</li>
 						<li><code>--drp-primary-bg-hover</code> - Primary hover (#e5e7eb)</li>
+					</ul>
+
+					<h6>Component-Specific Variables (New in v1.3.0)</h6>
+					<ul class="small">
+						<li><strong>Input:</strong> <code>--drp-input-background</code>, <code>--drp-input-color</code>, <code>--drp-input-border-color</code>, and 9 more</li>
+						<li><strong>Buttons:</strong> <code>--drp-button-today-color</code>, <code>--drp-button-apply-bg</code>, and 8 more</li>
+						<li><strong>Day Cells:</strong> <code>--drp-day-text-color</code>, <code>--drp-day-selected-bg</code>, and 10 more</li>
+						<li><strong>Header/Nav:</strong> <code>--drp-header-text-color</code>, <code>--drp-nav-bg-hover</code>, and 14 more</li>
+						<li><strong>Badges:</strong> <code>--drp-badge-number-bg</code>, <code>--drp-badge-count-bg</code>, and 4 more</li>
 					</ul>
 
 					<h6>Spacing Variables</h6>
@@ -392,7 +412,7 @@
 					<p class="mt-3">
 						<strong>Complete list:</strong> See
 						<a href="https://github.com/keenmate/web-daterangepicker/blob/main/API.md#css-custom-properties" target="_blank">API Reference - CSS Custom Properties</a>
-						for all 30+ variables.
+						for all 90+ variables.
 					</p>
 				</div>
 			{/snippet}
@@ -467,6 +487,33 @@ picker.style.setProperty('--drp-accent-color', '#10b981');`}
 					languageType="javascript"
 					titleText="JavaScript"
 				/>
+
+				<CodeBlock
+					codeContent={`/* Component-Specific Customization (v1.3.0+) */
+
+/* Customize just the input */
+web-daterangepicker {
+  --drp-input-background: #f0f0f0;
+  --drp-input-border-color: #999;
+  --drp-input-border-color-focus: #10b981;
+}
+
+/* Customize buttons independently */
+web-daterangepicker {
+  --drp-button-today-color: green;
+  --drp-button-apply-bg: purple;
+  --drp-button-clear-color: red;
+}
+
+/* Customize day cells without affecting buttons */
+web-daterangepicker {
+  --drp-day-selected-bg: #f59e0b;
+  --drp-day-selected-color: white;
+  --drp-day-bg-hover: #fef3c7;
+}`}
+					languageType="css"
+					titleText="Component-Specific Variables (v1.3.0)"
+				/>
 			{/snippet}
 
 			{#snippet descriptionContent()}
@@ -487,10 +534,19 @@ picker.style.setProperty('--drp-accent-color', '#10b981');`}
 						<li><strong>Performant</strong> - Browser-native CSS variable support</li>
 					</ul>
 
+					<h5>v1.3.0: Component Independence</h5>
+					<p>The decoupled architecture means:</p>
+					<ul>
+						<li><strong>Independent styling</strong> - Customize inputs without affecting calendar</li>
+						<li><strong>Component isolation</strong> - Change button colors without affecting day cells</li>
+						<li><strong>Flexible theming</strong> - Override base OR semantic variables</li>
+						<li><strong>Backwards compatible</strong> - All existing themes still work</li>
+					</ul>
+
 					<h5>Complete Documentation</h5>
 					<p>See <a href="https://github.com/keenmate/web-daterangepicker/blob/main/API.md#css-custom-properties" target="_blank">API.md - CSS Custom Properties</a> for:</p>
 					<ul>
-						<li>Full list of all 30+ variables</li>
+						<li>Full list of all 90+ variables</li>
 						<li>Default values for each variable</li>
 						<li>Dark theme example</li>
 						<li>Multiple theme switching</li>
@@ -499,24 +555,57 @@ picker.style.setProperty('--drp-accent-color', '#10b981');`}
 			{/snippet}
 		</ShowcaseSection>
 
-		<!-- Input Field Styling Limitation -->
+		<!-- Input Field Styling -->
 		<section class="mb-5">
-			<div class="alert alert-warning">
-				<h4 class="alert-heading">⚠️ Input Field Styling Limitation</h4>
+			<div class="alert alert-info">
+				<h4 class="alert-heading">ℹ️ Input Field Styling (Updated in v1.3.0)</h4>
 				<p>
-					<strong>The component cannot style the <code>&lt;input&gt;</code> element directly</strong> due to Shadow DOM encapsulation.
+					<strong>v1.3.0 adds comprehensive input styling</strong> with the <code>.drp-input</code> class and 12 new CSS custom properties.
 				</p>
 
 				<hr />
 
-				<h6>Why This Happens</h6>
+				<h6>New Input Variables (v1.3.0)</h6>
+				<ul class="small">
+					<li><code>--drp-input-background</code> - Input background color</li>
+					<li><code>--drp-input-color</code> - Input text color</li>
+					<li><code>--drp-input-border-color</code> - Border color</li>
+					<li><code>--drp-input-border-color-hover</code> - Border on hover</li>
+					<li><code>--drp-input-border-color-focus</code> - Border when focused</li>
+					<li><code>--drp-input-placeholder-color</code> - Placeholder text</li>
+					<li><code>--drp-input-focus-shadow-color</code> - Focus ring color</li>
+				</ul>
+
+				<h6>Size Variants</h6>
+				<p>Three size variants available: <code>.drp-input--sm</code>, default (md), and <code>.drp-input--lg</code></p>
+
+				<hr />
+
+				<h6>Shadow DOM Limitation</h6>
 				<p>
 					The date picker uses Shadow DOM for style isolation. The <code>&lt;input&gt;</code> element lives in the light DOM (your page),
 					while the calendar lives in the shadow DOM (component internals). Styles inside shadow DOM cannot reach out to style light DOM elements.
 				</p>
 
-				<h6>What You Must Do</h6>
-				<p class="mb-2">Style the input element using your own CSS:</p>
+				<h6>Styling Options</h6>
+				<p class="mb-2">You have two options for styling the input:</p>
+
+				<p class="mb-2"><strong>Option 1: Override CSS variables (v1.3.0+)</strong></p>
+
+				<CodeBlock
+					codeContent={`/* Customize input using CSS variables */
+web-daterangepicker {
+  --drp-input-background: #f9fafb;
+  --drp-input-border-color: #d1d5db;
+  --drp-input-border-color-hover: #10b981;
+  --drp-input-border-color-focus: #10b981;
+  --drp-input-focus-shadow-color: rgba(16, 185, 129, 0.1);
+}`}
+					languageType="css"
+					titleText="CSS Variables (Recommended)"
+				/>
+
+				<p class="mb-2"><strong>Option 2: Direct CSS styling</strong></p>
 
 				<CodeBlock
 					codeContent={`/* Your global CSS */
@@ -540,10 +629,10 @@ web-daterangepicker input:disabled {
   opacity: 0.6;
 }`}
 					languageType="css"
-					titleText="Input Styling (Your CSS)"
+					titleText="Direct CSS"
 				/>
 
-				<h6 class="mt-3">Alternative: Provide Your Own Input</h6>
+				<h6 class="mt-3">Option 3: Provide Your Own Input</h6>
 				<p class="mb-2">You can provide a pre-styled input element:</p>
 
 				<CodeBlock

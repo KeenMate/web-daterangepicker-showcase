@@ -134,9 +134,14 @@ web-daterangepicker {
   /* Theme via CSS custom properties */
   --drp-accent-color: #10b981;
   --drp-border-radius: 0.5rem;
+
+  /* NEW in v1.3.0: Input-specific variables */
+  --drp-input-background: #f9fafb;
+  --drp-input-border-color: #d1d5db;
+  --drp-input-border-color-focus: #10b981;
 }
 
-/* Style the input element */
+/* Or style the input element directly */
 web-daterangepicker input {
   padding: 0.75rem;
   border: 2px solid #e5e7eb;
