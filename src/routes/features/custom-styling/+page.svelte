@@ -9,28 +9,241 @@
 
 <DocLayout
 	titleText="Custom Styling & Sizing"
-	descriptionText="Three independent sizing systems for font, spacing, and cell dimensions, plus complete theming control via CSS custom properties"
+	descriptionText="Four independent sizing systems for input, font, spacing, and cell dimensions, plus complete theming control via CSS custom properties"
 >
 	<div class="py-1">
 		<!-- Overview -->
 		<section class="mb-5">
 			<p class="lead">
-				The date picker provides three independent sizing systems that can be controlled via attributes,
+				The date picker provides four independent sizing systems that can be controlled via attributes,
 				plus complete theming via CSS custom properties.
 			</p>
 			<p>
-				<strong>Three Independent Systems:</strong>
+				<strong>Four Independent Systems:</strong>
 			</p>
 			<ul>
-				<li><code>font-size</code> attribute - Controls text size only</li>
-				<li><code>spacing</code> attribute - Controls gaps, padding, margins only</li>
+				<li><code>input-size</code> attribute - Controls input field size (floating mode only) <span class="badge bg-success">New in v1.4.0</span></li>
+				<li><code>font-size</code> attribute - Controls calendar text size only</li>
+				<li><code>spacing</code> attribute - Controls calendar gaps, padding, margins only</li>
 				<li><code>cell-size</code> attribute - Controls day cell dimensions and structural sizes only</li>
 			</ul>
+			<p>
+				All four systems use the same 5-level scale: <code>xs</code>, <code>sm</code>, <code>md</code> (default), <code>lg</code>, <code>xl</code>
+			</p>
 		</section>
 
-		<!-- Three Independent Sizing Systems -->
+		<!-- Input Size (New in v1.4.0) -->
 		<ShowcaseSection
-			titleText="Three Independent Sizing Systems"
+			titleText="Input Size (New in v1.4.0)"
+			subtitleText="Control input field size independently from calendar size"
+			col1Title="Live Demo"
+			col2Title="Code Examples"
+			col3Title="Details">
+
+			{#snippet demoContent()}
+				<div class="mb-4">
+					<label class="form-label fw-bold">Extra Small Input (xs)</label>
+					<web-daterangepicker
+						input-size="xs"
+						selection-mode="single"
+						placeholder="YYYY-MM-DD"></web-daterangepicker>
+					<small class="text-muted">Very compact input - 1.5rem height</small>
+				</div>
+
+				<div class="mb-4">
+					<label class="form-label fw-bold">Small Input (sm)</label>
+					<web-daterangepicker
+						input-size="sm"
+						selection-mode="single"
+						placeholder="YYYY-MM-DD"></web-daterangepicker>
+					<small class="text-muted">Compact input - 2rem height</small>
+				</div>
+
+				<div class="mb-4">
+					<label class="form-label fw-bold">Medium Input (md - default)</label>
+					<web-daterangepicker
+						input-size="md"
+						selection-mode="single"
+						placeholder="YYYY-MM-DD"></web-daterangepicker>
+					<small class="text-muted">Normal input - 2.5rem height</small>
+				</div>
+
+				<div class="mb-4">
+					<label class="form-label fw-bold">Large Input (lg)</label>
+					<web-daterangepicker
+						input-size="lg"
+						selection-mode="single"
+						placeholder="YYYY-MM-DD"></web-daterangepicker>
+					<small class="text-muted">Spacious input - 3rem height</small>
+				</div>
+
+				<div>
+					<label class="form-label fw-bold">Extra Large Input (xl)</label>
+					<web-daterangepicker
+						input-size="xl"
+						selection-mode="single"
+						placeholder="YYYY-MM-DD"></web-daterangepicker>
+					<small class="text-muted">Touch-friendly input - 3.5rem height</small>
+				</div>
+			{/snippet}
+
+			{#snippet controlsContent()}
+				<CodeBlock
+					codeContent={`<!-- Input size variants -->
+<web-daterangepicker input-size="xs"></web-daterangepicker>
+<web-daterangepicker input-size="sm"></web-daterangepicker>
+<web-daterangepicker input-size="md"></web-daterangepicker>
+<web-daterangepicker input-size="lg"></web-daterangepicker>
+<web-daterangepicker input-size="xl"></web-daterangepicker>
+
+<!-- Coordinated input + calendar sizing -->
+<web-daterangepicker
+  input-size="lg"
+  spacing="lg"
+  font-size="lg"
+  cell-size="lg">
+</web-daterangepicker>
+
+<!-- Mixed: large input with compact calendar -->
+<web-daterangepicker
+  input-size="xl"
+  spacing="sm"
+  font-size="sm"
+  cell-size="sm">
+</web-daterangepicker>`}
+					languageType="html"
+					titleText="HTML"
+				/>
+			{/snippet}
+
+			{#snippet descriptionContent()}
+				<div class="prose">
+					<h5>New in v1.4.0</h5>
+					<p>The <code>input-size</code> attribute controls the input field dimensions independently from calendar sizing.</p>
+
+					<h5>Available Sizes</h5>
+					<ul>
+						<li><code>xs</code> - 1.5rem height (very compact)</li>
+						<li><code>sm</code> - 2rem height (compact)</li>
+						<li><code>md</code> - 2.5rem height (default)</li>
+						<li><code>lg</code> - 3rem height (spacious)</li>
+						<li><code>xl</code> - 3.5rem height (touch-friendly)</li>
+					</ul>
+
+					<h5>Use Cases</h5>
+					<ul>
+						<li><strong>Floating mode only</strong> - This attribute applies to the input field in floating/popup mode</li>
+						<li><strong>Coordinated sizing</strong> - Use same size for input and calendar for consistent UI</li>
+						<li><strong>Mixed sizing</strong> - Large touch-friendly input with compact popup calendar</li>
+					</ul>
+
+					<h5>CSS Variables</h5>
+					<p>Each size has corresponding CSS variables:</p>
+					<ul class="small">
+						<li><code>--drp-input-size-{'{size}'}-font</code></li>
+						<li><code>--drp-input-size-{'{size}'}-padding-v</code></li>
+						<li><code>--drp-input-size-{'{size}'}-padding-h</code></li>
+						<li><code>--drp-input-size-{'{size}'}-height</code></li>
+						<li><code>--drp-input-size-{'{size}'}-icon-size</code></li>
+					</ul>
+				</div>
+			{/snippet}
+		</ShowcaseSection>
+
+		<!-- Coordinated Input + Calendar Sizing -->
+		<ShowcaseSection
+			titleText="Coordinated Input + Calendar Sizing"
+			subtitleText="Combine input-size with calendar sizing for consistent UI"
+			col1Title="Live Demo"
+			col2Title="Code"
+			col3Title="Details">
+
+			{#snippet demoContent()}
+				<div class="mb-4">
+					<label class="form-label fw-bold">All Small (sm)</label>
+					<web-daterangepicker
+						input-size="sm"
+						spacing="sm"
+						font-size="sm"
+						cell-size="sm"
+						selection-mode="single"
+						placeholder="YYYY-MM-DD"></web-daterangepicker>
+					<small class="text-muted">Compact input with compact calendar</small>
+				</div>
+
+				<div class="mb-4">
+					<label class="form-label fw-bold">All Large (lg)</label>
+					<web-daterangepicker
+						input-size="lg"
+						spacing="lg"
+						font-size="lg"
+						cell-size="lg"
+						selection-mode="single"
+						placeholder="YYYY-MM-DD"></web-daterangepicker>
+					<small class="text-muted">Large input with large calendar</small>
+				</div>
+
+				<div>
+					<label class="form-label fw-bold">Mixed: XL Input + SM Calendar</label>
+					<web-daterangepicker
+						input-size="xl"
+						spacing="sm"
+						font-size="sm"
+						cell-size="sm"
+						selection-mode="single"
+						placeholder="YYYY-MM-DD"></web-daterangepicker>
+					<small class="text-muted">Large touch target, compact popup</small>
+				</div>
+			{/snippet}
+
+			{#snippet controlsContent()}
+				<CodeBlock
+					codeContent={`<!-- All Small -->
+<web-daterangepicker
+  input-size="sm"
+  spacing="sm"
+  font-size="sm"
+  cell-size="sm">
+</web-daterangepicker>
+
+<!-- All Large -->
+<web-daterangepicker
+  input-size="lg"
+  spacing="lg"
+  font-size="lg"
+  cell-size="lg">
+</web-daterangepicker>
+
+<!-- Mixed sizing -->
+<web-daterangepicker
+  input-size="xl"
+  spacing="sm"
+  font-size="sm"
+  cell-size="sm">
+</web-daterangepicker>`}
+					languageType="html"
+					titleText="HTML"
+				/>
+			{/snippet}
+
+			{#snippet descriptionContent()}
+				<div class="prose">
+					<h5>Consistent UI</h5>
+					<p>For consistent visual design, use the same size value across all four attributes.</p>
+
+					<h5>Mixed Sizing Strategy</h5>
+					<p>Sometimes you want different sizes for input and calendar:</p>
+					<ul>
+						<li><strong>Large input + compact calendar</strong> - Touch-friendly input that opens a space-efficient popup</li>
+						<li><strong>Small input + large calendar</strong> - Compact form field with spacious date selection</li>
+					</ul>
+				</div>
+			{/snippet}
+		</ShowcaseSection>
+
+		<!-- Three Independent Sizing Systems (Calendar) -->
+		<ShowcaseSection
+			titleText="Calendar Sizing Systems"
 			subtitleText="Control font, spacing, and cell dimensions independently"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -696,6 +909,11 @@ web-daterangepicker input:disabled {
 							</tr>
 						</thead>
 						<tbody>
+							<tr>
+								<td><code>input-size</code> <span class="badge bg-success">v1.4.0</span></td>
+								<td>xs, sm, md, lg, xl</td>
+								<td>md</td>
+							</tr>
 							<tr>
 								<td><code>font-size</code></td>
 								<td>xs, sm, md, lg, xl</td>
