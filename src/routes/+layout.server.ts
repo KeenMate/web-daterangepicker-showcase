@@ -17,7 +17,7 @@ const config: PartialDocsConfig = {
 	},
 	company: {
 		name: 'KeenMate',
-		website: 'https://keenmate.com?utm_source=web-daterangepicker-docs',
+		website: 'https://keenmate.com?utm_source=web-daterangepicker-showcase',
 		social: {
 			github: 'https://github.com/keenmate/web-daterangepicker'
 		}
@@ -61,9 +61,9 @@ const config: PartialDocsConfig = {
 		search: true,
 		breadcrumbs: true,
 		tableOfContents: true,
-		analytics: {
-			plausible: 'web-daterangepicker.keenmate.dev'
-		}
+		analyticsScripts: [
+			'<script defer data-domain="web-daterangepicker.keenmate.dev" src="https://stats.keenmate.services/js/plausible.js"></script>'
+		]
 	}
 };
 

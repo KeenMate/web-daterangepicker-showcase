@@ -4,6 +4,44 @@
 
 	let isComponentLoaded = false;
 
+	// Price tiers for hotel demo
+	const PRICES = {
+		budget: 99,    // Mon-Tue, Sun
+		standard: 149, // Wed-Thu
+		premium: 199,  // Fri
+		deluxe: 249,   // Sat
+		luxury: 299    // Special dates (7th, 14th, 21st, 28th)
+	};
+
+	// Helper function to get price tier for a date
+	const getPriceTier = (date: Date) => {
+		const dayOfWeek = date.getDay();
+		const dateNum = date.getDate();
+
+		// Special event dates (7th, 14th, 21st, 28th)
+		if ([7, 14, 21, 28].includes(dateNum)) {
+			return { tier: 'luxury', price: PRICES.luxury, label: 'Luxury (Special Event)' };
+		}
+
+		// Weekend premium pricing
+		if (dayOfWeek === 6) { // Saturday
+			return { tier: 'deluxe', price: PRICES.deluxe, label: 'Deluxe (Sat)' };
+		}
+		if (dayOfWeek === 5) { // Friday
+			return { tier: 'premium', price: PRICES.premium, label: 'Premium (Fri)' };
+		}
+
+		// Weekday pricing
+		if (dayOfWeek === 3 || dayOfWeek === 4) { // Wed-Thu
+			return { tier: 'standard', price: PRICES.standard, label: 'Standard (Wed-Thu)' };
+		}
+
+		// Budget pricing (Mon-Tue, Sun)
+		return { tier: 'budget', price: PRICES.budget, label: 'Budget (Mon-Tue, Sun)' };
+	};
+
+	let hotelPricingSummaryOutput = $state('(Select a date range to see pricing)');
+
 	onMount(async () => {
 		// Import the web component
 		await import('@keenmate/web-daterangepicker');
@@ -137,34 +175,18 @@
 				// Simulate API call delay
 				await new Promise((resolve) => setTimeout(resolve, 300));
 
-				// Simulate API response with room data
+				// Simulate API response with multi-tier pricing
 				const metadata = new Map();
 				const current = new Date(firstVisibleDate);
 
 				while (current <= lastVisibleDate) {
 					const dateKey = current.toISOString().split('T')[0];
-					const dayOfWeek = current.getDay();
-					const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-
-					// Simulate pricing and availability
-					const basePrice = 120;
-					const weekendSurcharge = isWeekend ? 50 : 0;
-					const price = basePrice + weekendSurcharge + Math.floor(Math.random() * 80);
-
-					const availableRooms = Math.floor(Math.random() * 10);
-					const isFullyBooked = availableRooms === 0;
+					const { tier, price, label } = getPriceTier(current);
 
 					metadata.set(dateKey, {
 						badgeText: `$${price}`,
-						badgeClass: isFullyBooked
-							? 'sold-out'
-							: availableRooms < 3
-								? 'low-availability'
-								: 'available',
-						dayTooltip: isFullyBooked
-							? 'Sold out'
-							: `${availableRooms} rooms available`,
-						isDisabled: isFullyBooked
+						badgeClass: `badge-number price-${tier}`,
+						badgeTooltip: `${label}: $${price}/night`
 					});
 
 					current.setDate(current.getDate() + 1);
@@ -173,17 +195,127 @@
 				return { action: 'accept', metadata };
 			};
 
+			// Custom styles for price badges
 			hotelPicker.customStylesCallback = () => `
-				.drp-date-picker__badge-cell.sold-out {
-					background: #6c757d !important; color: white !important;
+				.price-budget {
+					background-color: #d1fae5 !important;
+					color: #065f46 !important;
+					border: 1px solid #34d399 !important;
+					font-weight: 600;
 				}
-				.drp-date-picker__badge-cell.low-availability {
-					background: #ffc107 !important; color: #000 !important;
+				.price-standard {
+					background-color: #dbeafe !important;
+					color: #1e40af !important;
+					border: 1px solid #60a5fa !important;
+					font-weight: 600;
 				}
-				.drp-date-picker__badge-cell.available {
-					background: #28a745 !important; color: white !important;
+				.price-premium {
+					background-color: #e9d5ff !important;
+					color: #6b21a8 !important;
+					border: 1px solid #a855f7 !important;
+					font-weight: 600;
+				}
+				.price-deluxe {
+					background-color: #fed7aa !important;
+					color: #92400e !important;
+					border: 1px solid #fb923c !important;
+					font-weight: 600;
+				}
+				.price-luxury {
+					background-color: #fee2e2 !important;
+					color: #991b1b !important;
+					border: 1px solid #f87171 !important;
+					font-weight: 600;
 				}
 			`;
+
+			// Enhanced summary with per-tier breakdown
+			hotelPicker.formatSummaryCallback = (data: any) => {
+				if (!data.startDate || !data.endDate) return '';
+
+				// Count nights in each price tier
+				const tierCounts = {
+					budget: 0,
+					standard: 0,
+					premium: 0,
+					deluxe: 0,
+					luxury: 0
+				};
+
+				const current = new Date(data.startDate);
+				const end = new Date(data.endDate);
+
+				while (current < end) {
+					const { tier } = getPriceTier(current);
+					tierCounts[tier as keyof typeof tierCounts]++;
+					current.setDate(current.getDate() + 1);
+				}
+
+				// Calculate totals for each tier
+				const tierTotals = {
+					budget: tierCounts.budget * PRICES.budget,
+					standard: tierCounts.standard * PRICES.standard,
+					premium: tierCounts.premium * PRICES.premium,
+					deluxe: tierCounts.deluxe * PRICES.deluxe,
+					luxury: tierCounts.luxury * PRICES.luxury
+				};
+
+				const grandTotal = Object.values(tierTotals).reduce((sum, val) => sum + val, 0);
+
+				// Build output summary for display
+				const tierLabels: Record<string, string> = {
+					budget: 'budget',
+					standard: 'standard',
+					premium: 'premium',
+					deluxe: 'deluxe',
+					luxury: 'luxury'
+				};
+
+				const summaryParts: string[] = [];
+				Object.entries(tierCounts).forEach(([tier, count]) => {
+					if (count > 0) {
+						const price = PRICES[tier as keyof typeof PRICES];
+						summaryParts.push(`${count} ${tierLabels[tier]} × $${price}`);
+					}
+				});
+
+				hotelPricingSummaryOutput = `${summaryParts.join(' + ')} = $${grandTotal}`;
+
+				// Build HTML for calendar summary
+				const prefix = data.isPreview
+					? `<span style="opacity: 0.7;">${data.localeStrings.preview}: </span>`
+					: '';
+
+				let breakdownHtml = '';
+				Object.entries(tierCounts).forEach(([tier, count]) => {
+					if (count > 0) {
+						const total = tierTotals[tier as keyof typeof tierTotals];
+						const price = PRICES[tier as keyof typeof PRICES];
+						const nightWord = count === 1 ? 'night' : 'nights';
+						breakdownHtml += `
+							<div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem; font-size: 0.9em;">
+								<span>${count} ${tierLabels[tier]} ${nightWord} × $${price}</span>
+								<span>$${total}</span>
+							</div>
+						`;
+					}
+				});
+
+				return `
+					${prefix}
+					<div style="font-size: 0.95em;">
+						${breakdownHtml}
+						<div style="display: flex; justify-content: space-between; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #e5e7eb;">
+							<span style="font-weight: bold;">Total</span>
+							<span style="font-weight: bold; color: #10b981;">$${grandTotal}</span>
+						</div>
+					</div>
+				`;
+			};
+
+			hotelPicker.addEventListener('date-select', () => {
+				// Summary is already updated via callback
+			});
 		}
 	}
 
@@ -416,8 +548,8 @@ const picker = new DateRangePicker(input, {
 
 		<!-- Hotel Booking Example -->
 		<ShowcaseSection
-			titleText="Hotel Booking Example"
-			subtitleText="Load room availability and pricing"
+			titleText="Hotel Booking with Multi-Tier Pricing"
+			subtitleText="Dynamic price badges and itemized summary breakdown"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
 			col3Title="Details"
@@ -428,101 +560,150 @@ const picker = new DateRangePicker(input, {
 					selection-mode="range"
 					visible-months-count="2"
 					month-layout="horizontal"
-					placeholder="Check-in - Check-out"
+					placeholder="Select check-in and check-out dates"
 				>
 				</web-daterangepicker>
-				<p class="mt-3 small text-muted">
-					Simulated hotel API: prices, availability, and disabled dates
+				<div class="alert alert-secondary mt-3">
+					<strong>Pricing Calculation:</strong> {hotelPricingSummaryOutput}
+				</div>
+				<p class="small text-muted">
+					Prices vary by day: Budget ($99), Standard ($149), Premium ($199), Deluxe ($249), Luxury ($299).
+					Each date shows its price as a colored badge. Select a range to see the itemized breakdown.
 				</p>
-
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
-					codeContent={`// Hotel Booking with Availability
-const picker = new DateRangePicker(input, {
-  selectionMode: 'range',
-  beforeMonthChangedCallback: async ({ firstVisibleDate, lastVisibleDate }) => {
-    // Single API call for entire date range
-    const response = await fetch('/api/hotel/availability', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        hotelId: 'hotel-123',
-        checkIn: firstVisibleDate.toISOString(),
-        checkOut: lastVisibleDate.toISOString()
-      })
+					codeContent={`// Multi-tier pricing with dynamic badges
+const PRICES = {
+  budget: 99,    // Mon-Tue, Sun
+  standard: 149, // Wed-Thu
+  premium: 199,  // Fri
+  deluxe: 249,   // Sat
+  luxury: 299    // Special dates (7th, 14th, 21st, 28th)
+};
+
+const getPriceTier = (date) => {
+  const dayOfWeek = date.getDay();
+  const dateNum = date.getDate();
+
+  // Special event dates
+  if ([7, 14, 21, 28].includes(dateNum)) {
+    return { tier: 'luxury', price: PRICES.luxury };
+  }
+  // Weekend pricing
+  if (dayOfWeek === 6) return { tier: 'deluxe', price: PRICES.deluxe };
+  if (dayOfWeek === 5) return { tier: 'premium', price: PRICES.premium };
+  // Weekday pricing
+  if (dayOfWeek === 3 || dayOfWeek === 4) {
+    return { tier: 'standard', price: PRICES.standard };
+  }
+  return { tier: 'budget', price: PRICES.budget };
+};
+
+// Bulk load prices via beforeMonthChangedCallback
+picker.beforeMonthChangedCallback = async ({ firstVisibleDate, lastVisibleDate }) => {
+  const metadata = new Map();
+  const current = new Date(firstVisibleDate);
+
+  while (current <= lastVisibleDate) {
+    const { tier, price } = getPriceTier(current);
+    metadata.set(current.toISOString().split('T')[0], {
+      badgeText: \`$\${price}\`,
+      badgeClass: \`badge-number price-\${tier}\`,
+      badgeTooltip: \`$\${price}/night\`
     });
+    current.setDate(current.getDate() + 1);
+  }
 
-    const availability = await response.json();
+  return { action: 'accept', metadata };
+};
 
-    // Build metadata map
-    const metadata = new Map();
-    availability.forEach(day => {
-      metadata.set(day.date, {
-        badgeText: \`$\${day.price}\`,
-        badgeClass: day.available === 0
-          ? 'sold-out'
-          : day.available < 3
-            ? 'low-availability'
-            : 'available',
-        dayTooltip: day.available === 0
-          ? 'Sold out'
-          : \`\${day.available} rooms available\`,
-        isDisabled: day.available === 0 // Disable sold-out dates
-      });
-    });
+// Add custom styles for price badges
+picker.customStylesCallback = () => \`
+  .price-budget { background: #d1fae5; color: #065f46; }
+  .price-standard { background: #dbeafe; color: #1e40af; }
+  .price-premium { background: #e9d5ff; color: #6b21a8; }
+  .price-deluxe { background: #fed7aa; color: #92400e; }
+  .price-luxury { background: #fee2e2; color: #991b1b; }
+\`;
 
-    return { action: 'accept', metadata };
-  },
+// Enhanced summary with per-tier breakdown
+picker.formatSummaryCallback = (data) => {
+  if (!data.startDate || !data.endDate) return '';
 
-  // Style the badge classes
-  customStylesCallback: () => \`
-    .drp-date-picker__badge-cell.sold-out {
-      background: #6c757d !important;
-      color: white !important;
+  // Count nights by tier
+  const tierCounts = { budget: 0, standard: 0, premium: 0, deluxe: 0, luxury: 0 };
+  const current = new Date(data.startDate);
+  while (current < data.endDate) {
+    tierCounts[getPriceTier(current).tier]++;
+    current.setDate(current.getDate() + 1);
+  }
+
+  // Calculate totals
+  let html = '';
+  let grandTotal = 0;
+  Object.entries(tierCounts).forEach(([tier, count]) => {
+    if (count > 0) {
+      const total = count * PRICES[tier];
+      grandTotal += total;
+      html += \`<div>\${count} \${tier} × $\${PRICES[tier]} = $\${total}</div>\`;
     }
-    .drp-date-picker__badge-cell.low-availability {
-      background: #ffc107 !important;
-      color: #000 !important;
-    }
-    .drp-date-picker__badge-cell.available {
-      background: #28a745 !important;
-      color: white !important;
-    }
-  \`
-});`}
+  });
+
+  return html + \`<div style="font-weight: bold;">Total: $\${grandTotal}</div>\`;
+};`}
 					languageType="javascript"
-					titleText="JavaScript"
+					titleText="JavaScript - Multi-Tier Pricing"
+				/>
+
+				<CodeBlock
+					codeContent={`<!-- HTML with current month dates -->
+<web-daterangepicker
+  id="hotel-booking"
+  selection-mode="range"
+  visible-months-count="2"
+  placeholder="Select check-in and check-out"
+></web-daterangepicker>`}
+					languageType="html"
+					titleText="HTML"
 				/>
 			{/snippet}
 
 			{#snippet descriptionContent()}
 				<div class="prose">
-					<h5>Real-World Use Case</h5>
-					<p>This example demonstrates a realistic hotel booking scenario:</p>
+					<h5>Key Features</h5>
 					<ul>
-						<li><strong>Dynamic pricing:</strong> Prices vary by day (weekends more expensive)</li>
-						<li>
-							<strong>Availability badges:</strong> Green (available), Yellow (low), Gray (sold
-							out)
-						</li>
-						<li><strong>Tooltips:</strong> Show room count on hover</li>
-						<li><strong>Disabled dates:</strong> Sold-out dates are unselectable</li>
+						<li><strong>Dynamic price badges</strong> - Each date shows its nightly rate as a colored badge</li>
+						<li><strong>5-tier pricing model</strong> - Budget, Standard, Premium, Deluxe, Luxury</li>
+						<li><strong>Custom badge styling</strong> - Color-coded badges (green → blue → purple → orange → red)</li>
+						<li><strong>Itemized breakdown</strong> - Summary shows per-tier calculations and grand total</li>
+						<li><strong>Hover tooltips</strong> - Badge tooltips show tier name and price</li>
 					</ul>
 
-					<h5>API Response Format</h5>
-					<p>Your API should return an array of date objects:</p>
-					<pre><code>{`[
-  { "date": "2025-01-15", "price": 150, "available": 5 },
-  { "date": "2025-01-16", "price": 180, "available": 2 },
-  { "date": "2025-01-17", "price": 200, "available": 0 }
-]`}</code></pre>
+					<h5>Pricing Tiers</h5>
+					<ul>
+						<li><strong style="color: #065f46;">Budget ($99)</strong> - Mon, Tue, Sun</li>
+						<li><strong style="color: #1e40af;">Standard ($149)</strong> - Wed, Thu</li>
+						<li><strong style="color: #6b21a8;">Premium ($199)</strong> - Fri</li>
+						<li><strong style="color: #92400e;">Deluxe ($249)</strong> - Sat</li>
+						<li><strong style="color: #991b1b;">Luxury ($299)</strong> - Special dates (7th, 14th, 21st, 28th)</li>
+					</ul>
 
-					<div class="alert alert-info mt-3">
-						<strong>Tip:</strong> The callback receives both start and end dates, allowing you to
-						load data for all visible months in multi-month displays (e.g., 2-6 months at once).
-					</div>
+					<h5>Callbacks Used</h5>
+					<ul>
+						<li><code>beforeMonthChangedCallback</code> - Bulk load prices for visible months</li>
+						<li><code>customStylesCallback</code> - Inject CSS for badge color schemes</li>
+						<li><code>formatSummaryCallback</code> - Build itemized pricing summary</li>
+					</ul>
+
+					<h5>Use Cases</h5>
+					<ul>
+						<li><strong>Hotels/Vacation Rentals</strong> - Show variable pricing on calendar</li>
+						<li><strong>Event Ticketing</strong> - Different prices for different dates</li>
+						<li><strong>Dynamic Pricing</strong> - Demand-based or seasonal rates</li>
+						<li><strong>Multi-tier Services</strong> - Visual price comparison</li>
+					</ul>
 				</div>
 			{/snippet}
 		</ShowcaseSection>
