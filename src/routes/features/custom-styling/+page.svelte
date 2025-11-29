@@ -47,7 +47,7 @@
 						input-size="xs"
 						selection-mode="single"
 						placeholder="YYYY-MM-DD"></web-daterangepicker>
-					<small class="text-muted">Very compact input - 1.5rem height</small>
+					<small class="text-muted">Very compact input - 3.1rem (31px) height</small>
 				</div>
 
 				<div class="mb-4">
@@ -56,7 +56,7 @@
 						input-size="sm"
 						selection-mode="single"
 						placeholder="YYYY-MM-DD"></web-daterangepicker>
-					<small class="text-muted">Compact input - 2rem height</small>
+					<small class="text-muted">Compact input - 3.3rem (33px) height</small>
 				</div>
 
 				<div class="mb-4">
@@ -65,7 +65,7 @@
 						input-size="md"
 						selection-mode="single"
 						placeholder="YYYY-MM-DD"></web-daterangepicker>
-					<small class="text-muted">Normal input - 2.5rem height</small>
+					<small class="text-muted">Normal input - 3.5rem (35px) height</small>
 				</div>
 
 				<div class="mb-4">
@@ -74,7 +74,7 @@
 						input-size="lg"
 						selection-mode="single"
 						placeholder="YYYY-MM-DD"></web-daterangepicker>
-					<small class="text-muted">Spacious input - 3rem height</small>
+					<small class="text-muted">Spacious input - 3.8rem (38px) height</small>
 				</div>
 
 				<div>
@@ -83,7 +83,7 @@
 						input-size="xl"
 						selection-mode="single"
 						placeholder="YYYY-MM-DD"></web-daterangepicker>
-					<small class="text-muted">Touch-friendly input - 3.5rem height</small>
+					<small class="text-muted">Touch-friendly input - 4.1rem (41px) height</small>
 				</div>
 			{/snippet}
 
@@ -123,11 +123,11 @@
 
 					<h5>Available Sizes</h5>
 					<ul>
-						<li><code>xs</code> - 1.5rem height (very compact)</li>
-						<li><code>sm</code> - 2rem height (compact)</li>
-						<li><code>md</code> - 2.5rem height (default)</li>
-						<li><code>lg</code> - 3rem height (spacious)</li>
-						<li><code>xl</code> - 3.5rem height (touch-friendly)</li>
+						<li><code>xs</code> - 3.1rem / 31px (very compact)</li>
+						<li><code>sm</code> - 3.3rem / 33px (compact)</li>
+						<li><code>md</code> - 3.5rem / 35px (default)</li>
+						<li><code>lg</code> - 3.8rem / 38px (spacious)</li>
+						<li><code>xl</code> - 4.1rem / 41px (touch-friendly)</li>
 					</ul>
 
 					<h5>Use Cases</h5>

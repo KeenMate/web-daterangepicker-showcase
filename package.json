@@ -24,7 +24,7 @@
 	},
 	"dependencies": {
 		"@keenmate/svelte-docs": "^1.0.0-rc09",
-		"@keenmate/web-daterangepicker": "^1.4.0",
+		"@keenmate/web-daterangepicker": "file:../web-daterangepicker",
 		"bootstrap": "^5.3.8"
 	}
 }

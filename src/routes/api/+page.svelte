@@ -635,28 +635,24 @@
 						</thead>
 						<tbody class="small">
 							<tr>
-								<td><code>--drp-input-size-sm-font</code></td>
-								<td>0.875rem</td>
+								<td><code>--drp-input-size-xs-height</code></td>
+								<td>3.1rem (31px)</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-size-sm-height</code></td>
-								<td>2rem</td>
-							</tr>
-							<tr>
-								<td><code>--drp-input-size-md-font</code></td>
-								<td>1rem</td>
+								<td>3.3rem (33px)</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-size-md-height</code></td>
-								<td>2.5rem</td>
-							</tr>
-							<tr>
-								<td><code>--drp-input-size-lg-font</code></td>
-								<td>1.125rem</td>
+								<td>3.5rem (35px)</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-size-lg-height</code></td>
-								<td>3rem</td>
+								<td>3.8rem (38px)</td>
+							</tr>
+							<tr>
+								<td><code>--drp-input-size-xl-height</code></td>
+								<td>4.1rem (41px)</td>
 							</tr>
 						</tbody>
 					</table>

@@ -2,6 +2,13 @@
 
 All notable changes to the web-daterangepicker-showcase documentation site will be documented in this file.
 
+## 2025-11-28
+
+### Changed
+- Updated `@keenmate/web-daterangepicker` to v1.5.0 (10px-based sizing system)
+- Updated API page input size table with new height values (3.1rem-4.1rem / 31px-41px)
+- Updated Custom Styling page input size demos and documentation with new values
+
 ## 2025-11-27
 
 ### Added
