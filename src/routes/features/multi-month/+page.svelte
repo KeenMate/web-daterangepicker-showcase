@@ -22,7 +22,7 @@
 
 		<!-- Horizontal Layout -->
 		<ShowcaseSection
-			titleText="Horizontal Layout"
+			titleText="MM01 Horizontal Layout"
 			subtitleText="Display months side-by-side"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -97,7 +97,7 @@ const picker = new DateRangePicker(inputElement, {
 
 		<!-- Grid Layout -->
 		<ShowcaseSection
-			titleText="Grid Layout"
+			titleText="MM02 Grid Layout"
 			subtitleText="Display months in a grid pattern"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -191,7 +191,7 @@ const picker = new DateRangePicker(inputElement, {
 
 		<!-- Three Months -->
 		<ShowcaseSection
-			titleText="Three Month View"
+			titleText="MM03 Three Month View"
 			subtitleText="Perfect for quarterly planning"
 			col1Title="Live Demo"
 			col2Title="Code Examples"

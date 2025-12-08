@@ -94,7 +94,7 @@
 
 		<!-- Dark Theme -->
 		<ShowcaseSection
-			titleText="Dark Theme"
+			titleText="TH01 Dark Theme"
 			subtitleText="Complete dark mode with light text and proper contrast"
 			col1Title="Live Demo"
 			col2Title="Implementation"
@@ -203,7 +203,7 @@ web-daterangepicker.theme-dark {
 
 		<!-- Pastel Theme -->
 		<ShowcaseSection
-			titleText="Pastel Theme"
+			titleText="TH02 Pastel Theme"
 			subtitleText="Warm, inviting color scheme with amber/yellow tones"
 			col1Title="Live Demo"
 			col2Title="Implementation"
@@ -315,7 +315,7 @@ web-daterangepicker.theme-pastel {
 
 		<!-- Color-Only Themes -->
 		<ShowcaseSection
-			titleText="Accent Color Themes"
+			titleText="TH03 Accent Color Themes"
 			subtitleText="Quick theming by changing only the accent color"
 			col1Title="Live Examples"
 			col2Title="Implementation"

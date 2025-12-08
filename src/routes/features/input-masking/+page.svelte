@@ -26,7 +26,7 @@
 
 		<!-- How It Works -->
 		<ShowcaseSection
-			titleText="How Input Masking Works"
+			titleText="IM01 How Input Masking Works"
 			subtitleText="Always-on automatic formatting"
 			col1Title="Live Demo"
 			col2Title="Key Behaviors"
@@ -93,7 +93,7 @@
 
 		<!-- Format Adaptation -->
 		<ShowcaseSection
-			titleText="Automatic Format Adaptation"
+			titleText="IM02 Automatic Format Adaptation"
 			subtitleText="Masking adapts to any date format"
 			col1Title="Live Demos"
 			col2Title="Code Examples"
@@ -255,7 +255,7 @@ const picker3 = new DateRangePicker(input3, {
 
 		<!-- Auto-Separator Insertion -->
 		<ShowcaseSection
-			titleText="Auto-Separator Insertion"
+			titleText="IM03 Auto-Separator Insertion"
 			subtitleText="Smart separator handling as you type"
 			col1Title="Live Demo"
 			col2Title="Behaviors"
@@ -266,8 +266,11 @@ const picker3 = new DateRangePicker(input3, {
 					id="separator-demo"
 					selection-mode="single"
 					date-format-mask="MM/DD/YYYY"
-					placeholder="Try typing just numbers">
+					placeholder="MM/DD/YYYY">
 				</web-daterangepicker>
+				<p class="mt-2 small text-muted">
+					<strong>Format:</strong> MM/DD/YYYY &mdash; Try typing <code>12252024</code> (just numbers, no slashes)
+				</p>
 				<div id="separator-output" class="mt-3 p-3 bg-light rounded" style="display:none;">
 					<h6>What you typed vs what you see:</h6>
 					<pre class="mb-0"><code></code></pre>
@@ -301,9 +304,6 @@ const picker3 = new DateRangePicker(input3, {
 						}, 100);
 					}
 				</script>
-				<p class="mt-3 small text-muted">
-					Type only numbers - separators appear automatically
-				</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
@@ -388,7 +388,7 @@ const picker3 = new DateRangePicker(input3, {
 
 		<!-- Progressive Calendar Updates -->
 		<ShowcaseSection
-			titleText="Progressive Calendar Updates"
+			titleText="IM04 Progressive Calendar Updates"
 			subtitleText="Calendar updates as you type valid segments"
 			col1Title="Live Demo"
 			col2Title="Update Triggers"
@@ -487,7 +487,7 @@ const picker = new DateRangePicker(input, {
 
 		<!-- Range Mode -->
 		<ShowcaseSection
-			titleText="Range Mode Masking"
+			titleText="IM05 Range Mode Masking"
 			subtitleText="Separate inputs with independent masking"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -568,7 +568,7 @@ const picker = new DateRangePicker(input, {
 
 		<!-- Best Practices -->
 		<ShowcaseSection
-			titleText="Best Practices"
+			titleText="IM06 Best Practices"
 			subtitleText="Getting the most from input masking"
 			col1Title="Recommendations"
 			col2Title="Common Patterns"

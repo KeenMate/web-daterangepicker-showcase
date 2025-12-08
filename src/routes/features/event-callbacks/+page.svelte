@@ -2,9 +2,196 @@
 	import { DocLayout, ShowcaseSection, CodeBlock } from '@keenmate/svelte-docs';
 	import { onMount } from 'svelte';
 
-	onMount(() => {
-		import('@keenmate/web-daterangepicker');
+	onMount(async () => {
+		await import('@keenmate/web-daterangepicker');
+
+		// Wait for components to be ready
+		await new Promise(resolve => setTimeout(resolve, 100));
+
+		// EC01: Before Date Select Callback - Validation
+		initializeBeforeSelectDemo();
+
+		// EC02: Adjusting Selections
+		initializeAdjustDemo();
+
+		// EC03: Async Validation
+		initializeAsyncDemo();
+
+		// EC04: onSelect Event
+		initializeOnSelectDemo();
 	});
+
+	function initializeBeforeSelectDemo() {
+		const picker = document.getElementById('before-select-demo') as any;
+		const messageDiv = document.getElementById('before-select-message');
+
+		if (picker && messageDiv) {
+			picker.beforeDateSelectCallback = async (selection: any) => {
+				// Check if it's a range (has start and end properties)
+				if ('start' in selection && selection.end) {
+					const nights = Math.round(
+						(selection.end.getTime() - selection.start.getTime()) / (1000 * 60 * 60 * 24)
+					);
+
+					if (nights < 3) {
+						messageDiv.textContent = '❌ Minimum stay is 3 nights';
+						messageDiv.className = 'mt-3 alert alert-danger';
+						messageDiv.style.display = 'block';
+						return {
+							action: 'restore',
+							message: 'Minimum stay is 3 nights'
+						};
+					}
+
+					if (nights > 7) {
+						messageDiv.textContent = '❌ Maximum stay is 7 nights';
+						messageDiv.className = 'mt-3 alert alert-danger';
+						messageDiv.style.display = 'block';
+						return {
+							action: 'restore',
+							message: 'Maximum stay is 7 nights'
+						};
+					}
+
+					messageDiv.textContent = `✅ Valid selection: ${nights} nights`;
+					messageDiv.className = 'mt-3 alert alert-success';
+					messageDiv.style.display = 'block';
+				}
+
+				return { action: 'accept' };
+			};
+		}
+	}
+
+	function initializeAdjustDemo() {
+		const picker = document.getElementById('adjust-demo') as any;
+		const messageDiv = document.getElementById('adjust-message');
+
+		if (picker && messageDiv) {
+			picker.beforeDateSelectCallback = async (selection: any) => {
+				// Auto-adjust to full weeks (Sunday to Saturday)
+				if ('start' in selection && selection.end) {
+					const start = new Date(selection.start);
+					const end = new Date(selection.end);
+
+					// Adjust start to previous Sunday
+					const startDay = start.getDay();
+					if (startDay !== 0) {
+						start.setDate(start.getDate() - startDay);
+					}
+
+					// Adjust end to next Saturday
+					const endDay = end.getDay();
+					if (endDay !== 6) {
+						end.setDate(end.getDate() + (6 - endDay));
+					}
+
+					// Check if adjustment was needed
+					const wasAdjusted =
+						start.getTime() !== selection.start.getTime() ||
+						end.getTime() !== selection.end.getTime();
+
+					if (wasAdjusted) {
+						messageDiv.textContent = '✨ Adjusted to full week (Sunday - Saturday)';
+						messageDiv.className = 'mt-3 alert alert-info';
+						messageDiv.style.display = 'block';
+
+						return {
+							action: 'adjust',
+							adjustedStartDate: start,
+							adjustedEndDate: end
+						};
+					}
+
+					messageDiv.textContent = '✅ Already a full week';
+					messageDiv.className = 'mt-3 alert alert-success';
+					messageDiv.style.display = 'block';
+				}
+
+				return { action: 'accept' };
+			};
+		}
+	}
+
+	function initializeAsyncDemo() {
+		const picker = document.getElementById('async-demo') as any;
+		const messageDiv = document.getElementById('async-message');
+
+		if (picker && messageDiv) {
+			picker.beforeDateSelectCallback = async (selection: any) => {
+				if ('start' in selection && selection.end) {
+					// Show loading state
+					messageDiv.textContent = '⏳ Checking availability...';
+					messageDiv.className = 'mt-3 alert alert-info';
+					messageDiv.style.display = 'block';
+
+					// Simulate API call (1 second delay)
+					await new Promise((resolve) => setTimeout(resolve, 1000));
+
+					// Simulate random availability
+					const isAvailable = Math.random() > 0.3;
+
+					if (!isAvailable) {
+						messageDiv.textContent = '❌ Not available for selected dates';
+						messageDiv.className = 'mt-3 alert alert-danger';
+						return {
+							action: 'restore',
+							message: 'Selected dates are not available'
+						};
+					}
+
+					messageDiv.textContent = '✅ Dates are available!';
+					messageDiv.className = 'mt-3 alert alert-success';
+				}
+
+				return { action: 'accept' };
+			};
+		}
+	}
+
+	function initializeOnSelectDemo() {
+		const picker = document.getElementById('onselect-demo') as any;
+		const outputDiv = document.getElementById('onselect-output');
+		const dataDiv = document.getElementById('onselect-data');
+
+		if (picker && outputDiv && dataDiv) {
+			// Web component uses 'date-select' event instead of onSelect property
+			picker.addEventListener('date-select', (e: CustomEvent) => {
+				outputDiv.style.display = 'block';
+
+				const detail = e.detail;
+
+				// Handle range mode (dateRange) vs single mode (date)
+				if (detail.dateRange) {
+					const nights = Math.round(
+						(detail.dateRange.end.getTime() - detail.dateRange.start.getTime()) / (1000 * 60 * 60 * 24)
+					);
+					dataDiv.textContent = JSON.stringify(
+						{
+							type: 'range',
+							start: detail.dateRange.start?.toLocaleDateString(),
+							end: detail.dateRange.end?.toLocaleDateString(),
+							nights: nights,
+							formattedValue: detail.formattedValue
+						},
+						null,
+						2
+					);
+				} else if (detail.date) {
+					// Single date
+					dataDiv.textContent = JSON.stringify(
+						{
+							type: 'single',
+							date: detail.date?.toLocaleDateString(),
+							formattedValue: detail.formattedValue
+						},
+						null,
+						2
+					);
+				}
+			});
+		}
+	}
 </script>
 
 <DocLayout
@@ -22,7 +209,7 @@
 
 		<!-- beforeDateSelectCallback -->
 		<ShowcaseSection
-			titleText="Before Date Select Callback"
+			titleText="EC01 Before Date Select Callback"
 			subtitleText="Validate and control date selection"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -38,49 +225,6 @@
 				>
 				</web-daterangepicker>
 				<div id="before-select-message" class="mt-3 alert alert-info" style="display: none;"></div>
-
-				<script>
-					setTimeout(() => {
-						const picker = document.getElementById('before-select-demo');
-						const messageDiv = document.getElementById('before-select-message');
-
-						if (picker && messageDiv) {
-							picker.beforeDateSelectCallback = async (selection) => {
-								// Validate range length: must be 3-7 nights
-								if (selection.type === 'range' && selection.endDate) {
-									const nights =
-										(selection.endDate - selection.startDate) / (1000 * 60 * 60 * 24);
-
-									if (nights < 3) {
-										messageDiv.textContent = '❌ Minimum stay is 3 nights';
-										messageDiv.className = 'mt-3 alert alert-danger';
-										messageDiv.style.display = 'block';
-										return {
-											action: 'block',
-											message: 'Minimum stay is 3 nights'
-										};
-									}
-
-									if (nights > 7) {
-										messageDiv.textContent = '❌ Maximum stay is 7 nights';
-										messageDiv.className = 'mt-3 alert alert-danger';
-										messageDiv.style.display = 'block';
-										return {
-											action: 'block',
-											message: 'Maximum stay is 7 nights'
-										};
-									}
-
-									messageDiv.textContent = `✅ Valid selection: ${nights} nights`;
-									messageDiv.className = 'mt-3 alert alert-success';
-									messageDiv.style.display = 'block';
-								}
-
-								return { action: 'accept' };
-							};
-						}
-					}, 100);
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}
@@ -89,20 +233,22 @@
 const picker = new DateRangePicker(input, {
   selectionMode: 'range',
   beforeDateSelectCallback: async (selection) => {
-    // Validate: must be 3-7 nights
-    if (selection.type === 'range' && selection.endDate) {
-      const nights = (selection.endDate - selection.startDate) / (1000 * 60 * 60 * 24);
+    // Check if it's a range (has start and end)
+    if ('start' in selection && selection.end) {
+      const nights = Math.round(
+        (selection.end - selection.start) / (1000 * 60 * 60 * 24)
+      );
 
       if (nights < 3) {
         return {
-          action: 'block',
+          action: 'restore',
           message: 'Minimum stay is 3 nights'
         };
       }
 
       if (nights > 7) {
         return {
-          action: 'block',
+          action: 'restore',
           message: 'Maximum stay is 7 nights'
         };
       }
@@ -126,7 +272,8 @@ const picker = new DateRangePicker(input, {
 <script>
   const picker = document.getElementById('picker');
   picker.beforeDateSelectCallback = async (selection) => {
-    // Validation logic here...
+    // selection is Date (single) or DateRange (range)
+    // DateRange has: { start: Date, end: Date }
     return { action: 'accept' };
   };
 </script>`}
@@ -150,38 +297,34 @@ const picker = new DateRangePicker(input, {
 					</ul>
 
 					<h5>Callback Parameters</h5>
-					<p>The callback receives a selection object:</p>
+					<p>The callback receives:</p>
 					<ul>
-						<li><code>type</code> - 'single' or 'range'</li>
-						<li><code>startDate</code> - Selected/start date (Date object)</li>
-						<li><code>endDate</code> - End date for ranges (Date object or null)</li>
-						<li><code>picker</code> - The picker instance</li>
+						<li><strong>Single mode:</strong> <code>Date</code> object</li>
+						<li><strong>Range mode:</strong> <code>DateRange</code> with <code>start</code> and <code>end</code> properties</li>
 					</ul>
 
-					<h5>Return Values</h5>
+					<h5>Return Values (BeforeSelectResult)</h5>
 					<ul>
 						<li>
 							<code>{'{ action: \'accept\' }'}</code> - Allow selection
 						</li>
 						<li>
-							<code>{'{ action: \'block\', message?: string }'}</code> - Block with optional message
+							<code>{'{ action: \'restore\', message?: string }'}</code> - Revert to previous selection
 						</li>
 						<li>
-							<code>{'{ action: \'adjust\', startDate, endDate? }'}</code> - Modify selection
+							<code>{'{ action: \'adjust\', adjustedStartDate, adjustedEndDate }'}</code> - Modify selection
+						</li>
+						<li>
+							<code>{'{ action: \'clear\' }'}</code> - Clear selection entirely
 						</li>
 					</ul>
-
-					<div class="alert alert-warning mt-3">
-						<strong>Breaking Change in v1.2.0:</strong> This callback was renamed from
-						<code>beforeDateSelect</code> to <code>beforeDateSelectCallback</code> for consistency.
-					</div>
 				</div>
 			{/snippet}
 		</ShowcaseSection>
 
 		<!-- Adjusting Selection -->
 		<ShowcaseSection
-			titleText="Adjusting Selections"
+			titleText="EC02 Adjusting Selections"
 			subtitleText="Automatically modify user selections"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -197,58 +340,6 @@ const picker = new DateRangePicker(input, {
 				>
 				</web-daterangepicker>
 				<div id="adjust-message" class="mt-3 alert alert-info" style="display: none;"></div>
-
-				<script>
-					setTimeout(() => {
-						const picker = document.getElementById('adjust-demo');
-						const messageDiv = document.getElementById('adjust-message');
-
-						if (picker && messageDiv) {
-							picker.beforeDateSelectCallback = async (selection) => {
-								// Auto-adjust to full weeks (Sunday to Saturday)
-								if (selection.type === 'range' && selection.endDate) {
-									const start = new Date(selection.startDate);
-									const end = new Date(selection.endDate);
-
-									// Adjust start to previous Sunday
-									const startDay = start.getDay();
-									if (startDay !== 0) {
-										start.setDate(start.getDate() - startDay);
-									}
-
-									// Adjust end to next Saturday
-									const endDay = end.getDay();
-									if (endDay !== 6) {
-										end.setDate(end.getDate() + (6 - endDay));
-									}
-
-									// Check if adjustment was needed
-									const wasAdjusted =
-										start.getTime() !== selection.startDate.getTime() ||
-										end.getTime() !== selection.endDate.getTime();
-
-									if (wasAdjusted) {
-										messageDiv.textContent = '✨ Adjusted to full week (Sunday - Saturday)';
-										messageDiv.className = 'mt-3 alert alert-info';
-										messageDiv.style.display = 'block';
-
-										return {
-											action: 'adjust',
-											startDate: start,
-											endDate: end
-										};
-									}
-
-									messageDiv.textContent = '✅ Already a full week';
-									messageDiv.className = 'mt-3 alert alert-success';
-									messageDiv.style.display = 'block';
-								}
-
-								return { action: 'accept' };
-							};
-						}
-					}, 100);
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}
@@ -257,9 +348,9 @@ const picker = new DateRangePicker(input, {
 const picker = new DateRangePicker(input, {
   selectionMode: 'range',
   beforeDateSelectCallback: async (selection) => {
-    if (selection.type === 'range' && selection.endDate) {
-      const start = new Date(selection.startDate);
-      const end = new Date(selection.endDate);
+    if ('start' in selection && selection.end) {
+      const start = new Date(selection.start);
+      const end = new Date(selection.end);
 
       // Adjust start to previous Sunday
       const startDay = start.getDay();
@@ -276,8 +367,8 @@ const picker = new DateRangePicker(input, {
       // Return adjusted dates
       return {
         action: 'adjust',
-        startDate: start,
-        endDate: end
+        adjustedStartDate: start,
+        adjustedEndDate: end
       };
     }
 
@@ -306,8 +397,8 @@ const picker = new DateRangePicker(input, {
 					<h5>Return Format for Adjustments</h5>
 					<pre><code>{`return {
   action: 'adjust',
-  startDate: new Date(...), // Adjusted start
-  endDate: new Date(...)    // Adjusted end (for ranges)
+  adjustedStartDate: new Date(...),
+  adjustedEndDate: new Date(...)
 };`}</code></pre>
 
 					<h5>Common Use Cases</h5>
@@ -327,7 +418,7 @@ const picker = new DateRangePicker(input, {
 
 		<!-- Async Validation -->
 		<ShowcaseSection
-			titleText="Async Validation"
+			titleText="EC03 Async Validation"
 			subtitleText="Validate selections with API calls"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -343,44 +434,6 @@ const picker = new DateRangePicker(input, {
 				>
 				</web-daterangepicker>
 				<div id="async-message" class="mt-3 alert alert-info" style="display: none;"></div>
-
-				<script>
-					setTimeout(() => {
-						const picker = document.getElementById('async-demo');
-						const messageDiv = document.getElementById('async-message');
-
-						if (picker && messageDiv) {
-							picker.beforeDateSelectCallback = async (selection) => {
-								if (selection.type === 'range' && selection.endDate) {
-									// Show loading state
-									messageDiv.textContent = '⏳ Checking availability...';
-									messageDiv.className = 'mt-3 alert alert-info';
-									messageDiv.style.display = 'block';
-
-									// Simulate API call (1 second delay)
-									await new Promise((resolve) => setTimeout(resolve, 1000));
-
-									// Simulate random availability
-									const isAvailable = Math.random() > 0.3;
-
-									if (!isAvailable) {
-										messageDiv.textContent = '❌ Not available for selected dates';
-										messageDiv.className = 'mt-3 alert alert-danger';
-										return {
-											action: 'block',
-											message: 'Selected dates are not available'
-										};
-									}
-
-									messageDiv.textContent = '✅ Dates are available!';
-									messageDiv.className = 'mt-3 alert alert-success';
-								}
-
-								return { action: 'accept' };
-							};
-						}
-					}, 100);
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}
@@ -389,14 +442,14 @@ const picker = new DateRangePicker(input, {
 const picker = new DateRangePicker(input, {
   selectionMode: 'range',
   beforeDateSelectCallback: async (selection) => {
-    if (selection.type === 'range' && selection.endDate) {
+    if ('start' in selection && selection.end) {
       // Make API call to check availability
       const response = await fetch('/api/check-availability', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          checkIn: selection.startDate.toISOString(),
-          checkOut: selection.endDate.toISOString()
+          checkIn: selection.start.toISOString(),
+          checkOut: selection.end.toISOString()
         })
       });
 
@@ -404,7 +457,7 @@ const picker = new DateRangePicker(input, {
 
       if (!result.available) {
         return {
-          action: 'block',
+          action: 'restore',
           message: 'Selected dates are not available'
         };
       }
@@ -460,7 +513,7 @@ const picker = new DateRangePicker(input, {
 
 		<!-- onSelect Event -->
 		<ShowcaseSection
-			titleText="onSelect Event"
+			titleText="EC04 onSelect Event"
 			subtitleText="React to completed selections"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -479,35 +532,6 @@ const picker = new DateRangePicker(input, {
 					<strong>Selection Details:</strong>
 					<pre id="onselect-data" class="mb-0 mt-2"></pre>
 				</div>
-
-				<script>
-					setTimeout(() => {
-						const picker = document.getElementById('onselect-demo');
-						const outputDiv = document.getElementById('onselect-output');
-						const dataDiv = document.getElementById('onselect-data');
-
-						if (picker && outputDiv && dataDiv) {
-							picker.onSelect = (selection) => {
-								outputDiv.style.display = 'block';
-								dataDiv.textContent = JSON.stringify(
-									{
-										type: selection.type,
-										startDate: selection.startDate?.toLocaleDateString(),
-										endDate: selection.endDate?.toLocaleDateString(),
-										nights:
-											selection.endDate
-												? Math.round(
-														(selection.endDate - selection.startDate) / (1000 * 60 * 60 * 24)
-													)
-												: null
-									},
-									null,
-									2
-								);
-							};
-						}
-					}, 100);
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}
@@ -517,16 +541,19 @@ const picker = new DateRangePicker(input, {
   selectionMode: 'range',
   onSelect: (selection) => {
     // Called AFTER selection is finalized
-    console.log('Selected:', {
-      type: selection.type,
-      startDate: selection.startDate,
-      endDate: selection.endDate
-    });
+    // selection is Date (single) or DateRange (range)
 
-    // Update UI, send to analytics, etc.
-    if (selection.type === 'range' && selection.endDate) {
-      const nights = (selection.endDate - selection.startDate) / (1000 * 60 * 60 * 24);
+    if ('start' in selection) {
+      // It's a DateRange
+      const nights = Math.round(
+        (selection.end - selection.start) / (1000 * 60 * 60 * 24)
+      );
       console.log(\`Booking for \${nights} nights\`);
+      console.log('Check-in:', selection.start);
+      console.log('Check-out:', selection.end);
+    } else {
+      // It's a single Date
+      console.log('Selected date:', selection);
     }
   }
 });`}
@@ -535,7 +562,7 @@ const picker = new DateRangePicker(input, {
 				/>
 
 				<CodeBlock
-					codeContent={`<!-- Web Component -->
+					codeContent={`<!-- Web Component uses 'date-select' event -->
 <web-daterangepicker
   id="picker"
   selection-mode="range"
@@ -544,12 +571,24 @@ const picker = new DateRangePicker(input, {
 
 <script>
   const picker = document.getElementById('picker');
-  picker.onSelect = (selection) => {
-    console.log('Selected:', selection);
-  };
+
+  // Listen for date-select event
+  picker.addEventListener('date-select', (e) => {
+    const { date, dateRange, formattedValue } = e.detail;
+
+    if (dateRange) {
+      // Range mode: dateRange.start and dateRange.end
+      console.log('Range:', dateRange.start, '-', dateRange.end);
+    } else if (date) {
+      // Single mode: date is a Date object
+      console.log('Date:', date);
+    }
+
+    console.log('Formatted:', formattedValue);
+  });
 </script>`}
 					languageType="html"
-					titleText="HTML"
+					titleText="HTML (Web Component)"
 				/>
 			{/snippet}
 
@@ -557,13 +596,25 @@ const picker = new DateRangePicker(input, {
 				<div class="prose">
 					<h5>What It Does</h5>
 					<p>
-						The <code>onSelect</code> callback is called AFTER a selection is finalized and
-						accepted (after <code>beforeDateSelectCallback</code> validation passes).
+						Called AFTER a selection is finalized and accepted (after <code>beforeDateSelectCallback</code> validation passes).
 					</p>
+
+					<h5>Two Approaches</h5>
+					<ul>
+						<li><strong>JavaScript API:</strong> Use <code>onSelect</code> callback option</li>
+						<li><strong>Web Component:</strong> Listen for <code>date-select</code> event</li>
+					</ul>
+
+					<h5>Event Detail (Web Component)</h5>
+					<ul>
+						<li><code>e.detail.date</code> - Date object (single mode)</li>
+						<li><code>e.detail.dateRange</code> - <code>{'{start, end}'}</code> (range mode)</li>
+						<li><code>e.detail.formattedValue</code> - Formatted input string</li>
+					</ul>
 
 					<h5>Use Cases</h5>
 					<ul>
-						<li><strong>Update UI:</strong> Show selection summary, pricing, etc.</li>
+						<li><strong>Update UI:</strong> Show selection summary, pricing</li>
 						<li><strong>Form integration:</strong> Populate hidden form fields</li>
 						<li><strong>Analytics:</strong> Track user selections</li>
 						<li><strong>Navigation:</strong> Auto-advance to next step</li>
@@ -573,7 +624,7 @@ const picker = new DateRangePicker(input, {
 					<table class="table table-sm">
 						<thead>
 							<tr>
-								<th>Callback</th>
+								<th>Method</th>
 								<th>When</th>
 								<th>Purpose</th>
 							</tr>
@@ -585,17 +636,12 @@ const picker = new DateRangePicker(input, {
 								<td>Validate, block, adjust</td>
 							</tr>
 							<tr>
-								<td><code>onSelect</code></td>
+								<td><code>onSelect</code> / <code>date-select</code></td>
 								<td>AFTER</td>
 								<td>React, update UI</td>
 							</tr>
 						</tbody>
 					</table>
-
-					<div class="alert alert-info mt-3">
-						<strong>Note:</strong> <code>onSelect</code> is called for both single and range mode.
-						Check <code>selection.type</code> to determine the mode.
-					</div>
 				</div>
 			{/snippet}
 		</ShowcaseSection>

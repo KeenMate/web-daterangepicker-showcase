@@ -23,7 +23,7 @@
 
 		<!-- Auto-Detection -->
 		<ShowcaseSection
-			titleText="Automatic Locale Detection"
+			titleText="INT01 Automatic Locale Detection"
 			subtitleText="Detect and use the browser's language"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -91,7 +91,7 @@ const picker = new DateRangePicker(inputElement, {
 
 		<!-- Built-in Locales -->
 		<ShowcaseSection
-			titleText="Built-in Locales"
+			titleText="INT02 Built-in Locales"
 			subtitleText="Spanish, German, French, and English"
 			col1Title="Spanish Example"
 			col2Title="German Example"
@@ -144,7 +144,7 @@ const picker = new DateRangePicker(inputElement, {
 
 		<!-- Display Format Masks -->
 		<ShowcaseSection
-			titleText="Localized Display Formats"
+			titleText="INT03 Localized Display Formats"
 			subtitleText="Show format hints in the user's language"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -154,23 +154,21 @@ const picker = new DateRangePicker(inputElement, {
 				<web-daterangepicker
 					selection-mode="single"
 					locale="es"
-					date-format-mask="YYYY-MM-DD"
-					display-format-mask="dd/mm/aaaa"
+					date-format-mask="DD/MM/YYYY"
 					placeholder="dd/mm/aaaa"
 				>
 				</web-daterangepicker>
 				<p class="mt-3 small text-muted">
-					Shows "dd/mm/aaaa" to Spanish users while validating with YYYY-MM-DD
+					Spanish locale with DD/MM/YYYY format (día/mes/año)
 				</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
-					codeContent={`<!-- Spanish: aaaa = año (year) -->
+					codeContent={`<!-- Spanish: DD/MM/YYYY format -->
 <web-daterangepicker
   locale="es"
-  date-format-mask="YYYY-MM-DD"
-  display-format-mask="dd/mm/aaaa"
+  date-format-mask="DD/MM/YYYY"
   placeholder="dd/mm/aaaa">
 </web-daterangepicker>
 
@@ -239,7 +237,7 @@ const picker = new DateRangePicker(inputElement, {
 
 		<!-- Custom Strings -->
 		<ShowcaseSection
-			titleText="Custom UI Strings (JavaScript API Only)"
+			titleText="INT04 Custom UI Strings (JavaScript API Only)"
 			subtitleText="Override built-in button labels using the JavaScript API"
 			col1Title="Limitation"
 			col2Title="Code Examples"

@@ -12,20 +12,24 @@
 		// Demo 1: DateInfo Properties Reference
 		const demo1 = document.getElementById('demo-dateinfo-properties') as any;
 		if (demo1) {
+			const today = new Date();
+			const thisYear = today.getFullYear();
+			const thisMonth = today.getMonth();
+
 			demo1.specialDates = [
 				{
-					date: '2025-01-15',
+					date: new Date(thisYear, thisMonth, 10),
 					badgeText: '🎉',
 					badgeClass: 'event',
 					badgeTooltip: 'Badge tooltip: Special Event'
 				},
 				{
-					date: '2025-01-20',
+					date: new Date(thisYear, thisMonth, 18),
 					dayClass: 'highlighted-day',
 					dayTooltip: 'Day tooltip: Important Date'
 				},
 				{
-					date: '2025-01-25',
+					date: new Date(thisYear, thisMonth, 25),
 					badgeText: '💰',
 					badgeClass: 'peak',
 					badgeTooltip: 'Badge: Peak Season',
@@ -62,51 +66,56 @@
 		// Demo 2: Complete example with holidays, events, and custom styling
 		const input2 = document.getElementById('demo-input-complete') as HTMLInputElement;
 		if (input2) {
+			const today2 = new Date();
+			const thisYear2 = today2.getFullYear();
+			const thisMonth2 = today2.getMonth();
+			const nextMonth2 = thisMonth2 + 1;
+
 			const picker2 = new DateRangePicker(input2, {
 				selectionMode: 'single',
 				specialDates: [
 					// Holidays with predefined 'holiday' class
 					{
-						date: '2025-12-25',
+						date: new Date(thisYear2, thisMonth2, 1),
 						badgeClass: 'holiday',
 						badgeText: '🎄',
-						badgeTooltip: 'Christmas Day - Office Closed'
+						badgeTooltip: 'Holiday - Office Closed'
 					},
 					{
-						date: '2025-12-24',
+						date: new Date(thisYear2, thisMonth2, 2),
 						badgeClass: 'holiday',
 						badgeText: '🎁',
-						badgeTooltip: 'Christmas Eve'
+						badgeTooltip: 'Holiday Eve'
 					},
 					{
-						date: '2025-01-01',
+						date: new Date(thisYear2, nextMonth2, 1),
 						badgeClass: 'holiday',
 						badgeText: '🎉',
-						badgeTooltip: "New Year's Day"
+						badgeTooltip: 'First of Next Month'
 					},
 					{
-						date: '2025-07-04',
+						date: new Date(thisYear2, thisMonth2, 15),
 						badgeClass: 'holiday',
 						badgeText: '🎆',
-						badgeTooltip: 'Independence Day'
+						badgeTooltip: 'Mid-Month Holiday'
 					},
 					// Events with predefined 'event' class
 					{
-						date: '2025-06-15',
+						date: new Date(thisYear2, thisMonth2, 12),
 						badgeClass: 'event',
 						badgeText: '🎵',
-						badgeTooltip: 'Company Summer Party'
+						badgeTooltip: 'Company Party'
 					},
 					// Custom classes with styling via customStylesCallback
 					{
-						date: '2025-07-01',
+						date: new Date(thisYear2, thisMonth2, 20),
 						badgeClass: 'peak-season',
 						badgeText: '$$$',
 						badgeTooltip: 'Peak Season - $350/night',
 						dayClass: 'peak-pricing'
 					},
 					{
-						date: '2025-07-15',
+						date: new Date(thisYear2, thisMonth2, 21),
 						badgeClass: 'peak-season',
 						badgeText: '$$$',
 						badgeTooltip: 'Peak Season - $350/night',
@@ -114,12 +123,12 @@
 					},
 					// Combined: badge + day styling
 					{
-						date: '2025-03-17',
+						date: new Date(thisYear2, thisMonth2, 17),
 						badgeText: '☘️',
 						badgeClass: 'special-event',
-						badgeTooltip: "St. Patrick's Day",
+						badgeTooltip: 'Special Day',
 						dayClass: 'irish-day',
-						dayTooltip: 'Wear green!'
+						dayTooltip: 'Celebrate!'
 					}
 				],
 				// Inject custom styles into Shadow DOM
@@ -268,10 +277,14 @@
 		// Demo 4: Member mapping
 		const demo4 = document.getElementById('demo-member-mapping') as any;
 		if (demo4) {
+			const today4 = new Date();
+			const thisYear4 = today4.getFullYear();
+			const thisMonth4 = today4.getMonth();
+
 			// Simulate API response with custom property names
 			const apiData = [
 				{
-					event_date: '2025-03-15',
+					event_date: new Date(thisYear4, thisMonth4, 8),
 					event_name: '🎸',
 					event_type: 'concert',
 					badge_tip: 'Rock Concert',
@@ -279,7 +292,7 @@
 					cell_tip: 'Sold out'
 				},
 				{
-					event_date: '2025-03-20',
+					event_date: new Date(thisYear4, thisMonth4, 22),
 					event_name: '🎭',
 					event_type: 'theater',
 					badge_tip: 'Theater Show',
@@ -320,22 +333,26 @@
 		// Demo 5: Disabling dates
 		const demo5 = document.getElementById('demo-disabling-dates') as any;
 		if (demo5) {
+			const today5 = new Date();
+			const thisYear5 = today5.getFullYear();
+			const thisMonth5 = today5.getMonth();
+
 			demo5.specialDates = [
 				{
-					date: '2025-04-10',
+					date: new Date(thisYear5, thisMonth5, 10),
 					badgeText: '✓',
 					badgeClass: 'available',
 					badgeTooltip: '5 rooms available'
 				},
 				{
-					date: '2025-04-15',
+					date: new Date(thisYear5, thisMonth5, 15),
 					badgeText: '✕',
 					badgeClass: 'unavailable',
 					badgeTooltip: 'Fully booked',
 					isDisabled: true
 				},
 				{
-					date: '2025-04-20',
+					date: new Date(thisYear5, thisMonth5, 20),
 					badgeText: '!',
 					badgeClass: 'limited',
 					badgeTooltip: '2 rooms left'
@@ -377,14 +394,28 @@
 		// Demo 6: HTML tooltips (via callbacks)
 		const demo6 = document.getElementById('demo-html-tooltips') as any;
 		if (demo6) {
+			const today6 = new Date();
+			const thisYear6 = today6.getFullYear();
+			const thisMonth6 = today6.getMonth();
+
+			// Helper to format date as local YYYY-MM-DD (same as Validation.formatDateKey)
+			const formatLocalDate = (d: Date) =>
+				`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+			// Store dates for comparison in callback
+			const hotelDate = new Date(thisYear6, thisMonth6, 10);
+			const flightDate = new Date(thisYear6, thisMonth6, 16);
+			const hotelDateStr = formatLocalDate(hotelDate);
+			const flightDateStr = formatLocalDate(flightDate);
+
 			demo6.specialDates = [
 				{
-					date: '2025-05-10',
+					date: hotelDate,
 					badgeText: '🏨',
 					badgeClass: 'hotel'
 				},
 				{
-					date: '2025-05-15',
+					date: flightDate,
 					badgeText: '✈️',
 					badgeClass: 'flight'
 				}
@@ -392,10 +423,10 @@
 
 			demo6.badgeTooltipCallback = (data: any) => {
 				const dateStr = data.dateString;
-				if (dateStr === '2025-05-10') {
+				if (dateStr === hotelDateStr) {
 					return '<strong>Hotel Deal</strong><br>$199/night<br><em>Breakfast included</em>';
 				}
-				if (dateStr === '2025-05-15') {
+				if (dateStr === flightDateStr) {
 					return '<strong>Flight Special</strong><br>$450 round-trip<br><em>Non-stop</em>';
 				}
 				return null;
@@ -454,7 +485,7 @@
 
 		<!-- DateInfo Properties Reference -->
 		<ShowcaseSection
-			titleText="DateInfo Properties Reference"
+			titleText="SD01 DateInfo Properties Reference"
 			subtitleText="Complete property reference with examples"
 			col1Title="Live Demo"
 			col2Title="Property Table"
@@ -465,18 +496,18 @@
 					id="demo-dateinfo-properties"
 					selection-mode="single"
 					placeholder="Select a date"
-					initial-date="2025-01-15">
+					initial-date={todayDate}>
 				</web-daterangepicker>
 				<div class="mt-3 small">
-					<p class="mb-1"><strong>Examples:</strong></p>
+					<p class="mb-1"><strong>Examples (current month):</strong></p>
 					<p class="mb-1">
-						• Jan 15: Badge only (🎉 event badge with badge tooltip)
+						• 10th: Badge only (🎉 event badge with badge tooltip)
 					</p>
 					<p class="mb-1">
-						• Jan 20: Day only (highlighted day cell with day tooltip)
+						• 18th: Day only (highlighted day cell with day tooltip)
 					</p>
 					<p class="mb-1">
-						• Jan 25: Both (💰 badge + styled day + separate tooltips for each)
+						• 25th: Both (💰 badge + styled day + separate tooltips for each)
 					</p>
 				</div>
 			{/snippet}
@@ -587,7 +618,7 @@
 
 		<!-- Complete Example: Holidays, Events, and Custom Styling -->
 		<ShowcaseSection
-			titleText="Complete Example: Holidays, Events & Custom Styling"
+			titleText="SD02 Complete Example: Holidays, Events & Custom Styling"
 			subtitleText="All features combined with customStylesCallback for Shadow DOM"
 			col1Title="Live Demo"
 			col2Title="Complete Code"
@@ -730,7 +761,7 @@ const picker = new DateRangePicker(input, {
 
 		<!-- Dynamic Metadata -->
 		<ShowcaseSection
-			titleText="Dynamic Metadata (getDateMetadataCallback)"
+			titleText="SD03 Dynamic Metadata (getDateMetadataCallback)"
 			subtitleText="Real-time pricing based on day of week"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -844,7 +875,7 @@ picker.getDateMetadataCallback = async (date) => {
 
 		<!-- Member Mapping -->
 		<ShowcaseSection
-			titleText="Member Mapping"
+			titleText="SD04 Member Mapping"
 			subtitleText="Map custom data structures to DateInfo properties"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -855,10 +886,10 @@ picker.getDateMetadataCallback = async (date) => {
 					id="demo-member-mapping"
 					selection-mode="single"
 					placeholder="Select a date"
-					initial-date="2025-03-15">
+					initial-date={todayDate}>
 				</web-daterangepicker>
 				<p class="mt-3 small text-muted">
-					<strong>Events:</strong> 🎸 Mar 15 (concert), 🎭 Mar 20 (theater). Data uses custom property
+					<strong>Events:</strong> 🎸 8th (concert), 🎭 22nd (theater). Data uses custom property
 					names!
 				</p>
 			{/snippet}
@@ -933,7 +964,7 @@ picker.isDisabledMember = 'unavailable';    // Default: 'isDisabled'`}
 
 		<!-- Advanced: Disabling Dates -->
 		<ShowcaseSection
-			titleText="Advanced: Disabling Dates"
+			titleText="SD05 Advanced: Disabling Dates"
 			subtitleText="Override disabled state with isDisabled"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -944,11 +975,11 @@ picker.isDisabledMember = 'unavailable';    // Default: 'isDisabled'`}
 					id="demo-disabling-dates"
 					selection-mode="single"
 					placeholder="Select a date"
-					initial-date="2025-04-10">
+					initial-date={todayDate}>
 				</web-daterangepicker>
 				<p class="mt-3 small text-muted">
-					<strong>Availability:</strong> ✓ Apr 10 (available), ✕ Apr 15 (fully booked - disabled),
-					! Apr 20 (limited)
+					<strong>Availability:</strong> ✓ 10th (available), ✕ 15th (fully booked - disabled),
+					! 20th (limited)
 				</p>
 			{/snippet}
 
@@ -1040,7 +1071,7 @@ picker.getDateMetadataCallback = (date) => {
 
 		<!-- Advanced: HTML Tooltips -->
 		<ShowcaseSection
-			titleText="Advanced: HTML Tooltips"
+			titleText="SD06 Advanced: HTML Tooltips"
 			subtitleText="Rich formatted tooltips with callbacks"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -1051,10 +1082,10 @@ picker.getDateMetadataCallback = (date) => {
 					id="demo-html-tooltips"
 					selection-mode="single"
 					placeholder="Select a date"
-					initial-date="2025-05-10">
+					initial-date={todayDate}>
 				</web-daterangepicker>
 				<p class="mt-3 small text-muted">
-					<strong>Hover over badges:</strong> 🏨 May 10 (hotel deal), ✈️ May 15 (flight special). Tooltips
+					<strong>Hover over badges:</strong> 🏨 10th (hotel deal), ✈️ 16th (flight special). Tooltips
 					use HTML formatting!
 				</p>
 			{/snippet}

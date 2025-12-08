@@ -20,7 +20,7 @@
 		</section>
 
 		<ShowcaseSection
-			titleText="Floating Mode (Default)"
+			titleText="PM01 Floating Mode (Default)"
 			subtitleText="Calendar appears as a popup below the input"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -85,7 +85,7 @@ const picker = new DateRangePicker(inputElement, {
 		</ShowcaseSection>
 
 		<ShowcaseSection
-			titleText="Calendar Placement"
+			titleText="PM02 Calendar Placement"
 			subtitleText="Control where the floating calendar appears"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -164,7 +164,7 @@ const picker = new DateRangePicker(inputElement, {
 		</ShowcaseSection>
 
 		<ShowcaseSection
-			titleText="Inline Mode"
+			titleText="PM03 Inline Mode"
 			subtitleText="Calendar always visible in the page flow"
 			col1Title="Live Demo"
 			col2Title="Code Examples"

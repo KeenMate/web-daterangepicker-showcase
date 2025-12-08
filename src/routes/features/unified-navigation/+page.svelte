@@ -22,7 +22,7 @@
 
 		<!-- Basic Unified Navigation -->
 		<ShowcaseSection
-			titleText="Basic Unified Navigation"
+			titleText="UN01 Basic Unified Navigation"
 			subtitleText="Single header controls all months"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -114,7 +114,7 @@ const picker = new DateRangePicker(inputElement, {
 
 		<!-- Interactive Unified Header -->
 		<ShowcaseSection
-			titleText="Interactive Unified Header"
+			titleText="UN02 Interactive Unified Header"
 			subtitleText="Click header to open month/year selector"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -207,7 +207,7 @@ const picker = new DateRangePicker(inputElement, {
 
 		<!-- Custom Header Text -->
 		<ShowcaseSection
-			titleText="Custom Header Text"
+			titleText="UN03 Custom Header Text"
 			subtitleText="Customize the unified header display"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -333,7 +333,7 @@ getUnifiedHeaderCallback: ({ firstMonth, lastMonth, monthNames }) => {
 
 		<!-- Anchor Index -->
 		<ShowcaseSection
-			titleText="Navigation Anchor"
+			titleText="UN04 Navigation Anchor"
 			subtitleText="Control which month drives navigation"
 			col1Title="Live Demo"
 			col2Title="Code Examples"

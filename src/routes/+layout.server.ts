@@ -39,6 +39,7 @@ const config: PartialDocsConfig = {
 					{ label: 'Date Restrictions', href: '/features/date-restrictions' },
 					{ label: 'Special Dates & Badges', href: '/features/special-dates' },
 					{ label: 'Bulk Metadata Loading', href: '/features/bulk-metadata-loading' },
+					{ label: 'Custom Month Headers', href: '/features/custom-month-headers' },
 					{ label: 'Event Callbacks', href: '/features/event-callbacks' },
 					{ label: 'Custom Rendering (Slots)', href: '/features/custom-rendering' },
 					{ label: 'Range Disabled Handling', href: '/features/range-disabled-handling' },
@@ -47,6 +48,7 @@ const config: PartialDocsConfig = {
 					{ label: 'Keyboard Navigation', href: '/features/keyboard-navigation' },
 					{ label: 'Custom Summary Formatting', href: '/features/custom-summary' },
 					{ label: 'Custom Styling & Theming', href: '/features/custom-styling' },
+					{ label: 'Base Typography Variables', href: '/features/base-variables' },
 					{ label: 'Logging & Debugging', href: '/features/logging-debugging' }
 				]
 			},

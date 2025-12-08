@@ -27,7 +27,7 @@
 
 		<!-- Mode Overview -->
 		<ShowcaseSection
-			titleText="The Five Handling Modes"
+			titleText="RDH01 The Five Handling Modes"
 			subtitleText="Choose the right behavior for your use case"
 			col1Title="Mode Comparison"
 			col2Title="When to Use"
@@ -112,7 +112,7 @@
 
 		<!-- 'allow' Mode -->
 		<ShowcaseSection
-			titleText="Mode: 'allow' (Default)"
+			titleText="RDH02 Mode: 'allow' (Default)"
 			subtitleText="Allow ranges over disabled dates with breakdown"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -240,7 +240,7 @@ const picker = new DateRangePicker(input, {
 
 		<!-- 'prevent' Mode -->
 		<ShowcaseSection
-			titleText="Mode: 'prevent' (Default)"
+			titleText="RDH03 Mode: 'prevent'"
 			subtitleText="REJECTS selections that cross disabled dates - no event fires"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -357,7 +357,7 @@ const picker = new DateRangePicker(input, {
 
 		<!-- 'block' Mode -->
 		<ShowcaseSection
-			titleText="Mode: 'block'"
+			titleText="RDH04 Mode: 'block'"
 			subtitleText="ACCEPTS selection but AUTO-SHORTENS to last enabled date - event fires"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -487,7 +487,7 @@ const picker = new DateRangePicker(input, {
 
 		<!-- 'split' Mode -->
 		<ShowcaseSection
-			titleText="Mode: 'split'"
+			titleText="RDH05 Mode: 'split'"
 			subtitleText="Return multiple ranges split by disabled dates"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -635,7 +635,7 @@ picker.input.addEventListener('date-select', (e) => {
 
 		<!-- 'individual' Mode -->
 		<ShowcaseSection
-			titleText="Mode: 'individual'"
+			titleText="RDH06 Mode: 'individual'"
 			subtitleText="Return flat array of individual enabled dates"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -775,7 +775,7 @@ picker.input.addEventListener('date-select', (e) => {
 
 		<!-- Visual Highlighting -->
 		<ShowcaseSection
-			titleText="Visual Highlighting"
+			titleText="RDH07 Visual Highlighting"
 			subtitleText="Control disabled date highlighting in ranges"
 			col1Title="highlight-disabled-in-range"
 			col2Title="Code Examples"
@@ -879,7 +879,7 @@ const picker2 = new DateRangePicker(input2, {
 
 		<!-- Decision Guide -->
 		<ShowcaseSection
-			titleText="Decision Guide"
+			titleText="RDH08 Decision Guide"
 			subtitleText="Choose the right mode for your use case"
 			col1Title="Use Case"
 			col2Title="Recommended Mode"

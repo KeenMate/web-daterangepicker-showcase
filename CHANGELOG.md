@@ -2,6 +2,51 @@
 
 All notable changes to the web-daterangepicker-showcase documentation site will be documented in this file.
 
+## 2025-12-08
+
+### Changed (web-daterangepicker v1.7.0)
+- **BREAKING: Removed Sizing Attributes** - The `spacing`, `font-size`, and `cell-size` attributes have been removed
+  - Use `--drp-rem` CSS variable for global scaling (e.g., `style="--drp-rem: 15px"`)
+  - Use individual CSS variables (`--drp-spacing-*`, `--drp-font-size-*`) for fine-grained control
+- **Complete Rewrite of Custom Styling Page** - Updated to use new CSS variable approach:
+  - New "Calendar Scaling with --drp-rem" section with scale classes (scale-xs/sm/md/lg/xl)
+  - New "Fine-Grained Control" section for individual variable overrides
+  - Added v1.7.0 breaking change warning
+  - Updated Quick Reference tables
+- **Updated API Reference Page** - Removed `cell-size`, `font-size`, `spacing` from attributes table
+- **Fixed Bulk Metadata Loading** - Replaced broken MutationObserver (was checking non-existent `drp-date-picker--open` class) with input focus event listener
+- **Updated API Page** - Fixed outdated CSS variable name `--drp-card-bg` → `--drp-dropdown-background`
+- Updated `@keenmate/web-daterangepicker` to v1.7.0
+
+### Fixed (web-daterangepicker v1.7.0)
+- **RDH04 'block' Mode**: Forward selection now works correctly - allows visual preview over disabled dates, then snaps on completion
+- **RDH07 Visual Highlighting**: `highlight-disabled-in-range` option now shows visible difference - disabled dates in range show blue tint when enabled
+- **KN01 Keyboard Navigation**: Ctrl+Home/End now respect `rolling-year-range`, `min-date`, and `max-date` constraints
+- **monthHeaders Key Format**: Fixed key format to use 1-based months (January = "2025-01")
+
+## 2025-12-04
+
+### Added (web-daterangepicker v1.6.0)
+- **Custom Month Headers**: New `getMonthHeaderCallback` option to customize individual month header text (e.g., "Jan 2026 (10 rooms)")
+- **Month Headers from Callback**: `beforeMonthChangedCallback` can now return `monthHeaders` map to set header text when loading async data
+- **Themeable Loading Overlay**: New CSS variables for loading overlay styling:
+  - `--drp-loading-overlay-background`
+  - `--drp-loading-spinner-color`
+  - `--drp-loading-spinner-accent`
+
+### Changed
+- **BREAKING: Unified CSS Variable Names** - Several CSS variables renamed for consistency across KeenMate components:
+  - `--drp-accent-text-color` → `--drp-text-on-accent`
+  - `--drp-input-disabled-background` → `--drp-input-background-disabled`
+  - `--drp-card-bg` → `--drp-dropdown-background`
+  - `--drp-tooltip-bg` → `--drp-tooltip-background`
+  - `--drp-tooltip-color` → `--drp-tooltip-text-color`
+
+### Documentation TODO
+- Add new page for Custom Month Headers feature
+- Update Bulk Metadata Loading page with `monthHeaders` example
+- Update Theming page with loading overlay CSS variables
+
 ## 2025-11-28
 
 ### Changed

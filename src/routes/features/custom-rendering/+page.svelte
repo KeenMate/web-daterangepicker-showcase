@@ -2,9 +2,53 @@
 	import { DocLayout, ShowcaseSection, CodeBlock } from '@keenmate/svelte-docs';
 	import { onMount } from 'svelte';
 
-	onMount(() => {
-		import('@keenmate/web-daterangepicker');
+	onMount(async () => {
+		await import('@keenmate/web-daterangepicker');
+
+		// Wait for components to be ready
+		await new Promise(resolve => setTimeout(resolve, 100));
+
+		// CR02: renderDayCallback demo
+		initializeRenderDayDemo();
+
+		// CR03: renderDayContentCallback demo
+		initializeRenderContentDemo();
 	});
+
+	function initializeRenderDayDemo() {
+		const picker = document.getElementById('render-day-demo') as any;
+		if (picker) {
+			picker.renderDayCallback = (data: any) => {
+				const isWeekend = data.date.getDay() === 0 || data.date.getDay() === 6;
+				const emoji = data.date.getDay() === 0 ? '😴' : data.date.getDay() === 6 ? '🎉' : '';
+
+				const div = document.createElement('div');
+				div.style.cssText = isWeekend
+					? 'background: #fef3c7; padding: 0.25rem; border-radius: 4px; font-weight: 600;'
+					: 'padding: 0.25rem;';
+				div.innerHTML = `${emoji} ${data.dayNumber}`;
+				return div;
+			};
+		}
+	}
+
+	function initializeRenderContentDemo() {
+		const picker = document.getElementById('render-content-demo') as any;
+		if (picker) {
+			picker.renderDayContentCallback = (data: any) => {
+				// Simulate availability data
+				const availability = data.dayNumber % 3 === 0 ? 'Full' :
+				                    data.dayNumber % 3 === 1 ? 'Limited' : 'Available';
+				const color = availability === 'Full' ? '#ef4444' :
+				             availability === 'Limited' ? '#f59e0b' : '#10b981';
+
+				const badge = document.createElement('div');
+				badge.style.cssText = `font-size: 0.6rem; color: ${color}; font-weight: 600; margin-top: 2px;`;
+				badge.textContent = availability;
+				return badge;
+			};
+		}
+	}
 </script>
 
 <DocLayout
@@ -32,7 +76,7 @@
 
 		<!-- Named Slots -->
 		<ShowcaseSection
-			titleText="Named Slots (Declarative)"
+			titleText="CR01 Named Slots (Declarative)"
 			subtitleText="Use HTML slots to customize specific dates"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -107,7 +151,7 @@
 
 		<!-- renderDayCallback -->
 		<ShowcaseSection
-			titleText="renderDayCallback (Full Replacement)"
+			titleText="CR02 renderDayCallback (Full Replacement)"
 			subtitleText="Programmatically replace entire day cell content"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -122,26 +166,6 @@
 					max-date="2025-02-28">
 				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Weekend dates show emoji indicators</p>
-				<script>
-					if (typeof window !== 'undefined') {
-						setTimeout(() => {
-							const picker = document.getElementById('render-day-demo');
-							if (picker) {
-								picker.renderDayCallback = (data) => {
-									const isWeekend = data.date.getDay() === 0 || data.date.getDay() === 6;
-									const emoji = data.date.getDay() === 0 ? '😴' : data.date.getDay() === 6 ? '🎉' : '';
-
-									const div = document.createElement('div');
-									div.style.cssText = isWeekend
-										? 'background: #fef3c7; padding: 0.25rem; border-radius: 4px; font-weight: 600;'
-										: 'padding: 0.25rem;';
-									div.innerHTML = `${emoji} ${data.dayNumberNumber}`;
-									return div;
-								};
-							}
-						}, 100);
-					}
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}
@@ -161,7 +185,7 @@
     div.style.cssText = isWeekend
       ? 'background: #fef3c7; padding: 0.25rem;'
       : 'padding: 0.25rem;';
-    div.innerHTML = \`\${emoji} \${data.dayNumberNumber}\`;
+    div.innerHTML = \`\${emoji} \${data.dayNumber}\`;
     return div;
   };
 </script>`}
@@ -226,7 +250,7 @@ interface DayRenderData {
 
 		<!-- renderDayContentCallback -->
 		<ShowcaseSection
-			titleText="renderDayContentCallback (Augmentation)"
+			titleText="CR03 renderDayContentCallback (Augmentation)"
 			subtitleText="Add content alongside the default day number"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -241,27 +265,6 @@ interface DayRenderData {
 					max-date="2025-03-31">
 				</web-daterangepicker>
 				<p class="mt-3 small text-muted">Days show availability badges below the date</p>
-				<script>
-					if (typeof window !== 'undefined') {
-						setTimeout(() => {
-							const picker = document.getElementById('render-content-demo');
-							if (picker) {
-								picker.renderDayContentCallback = (data) => {
-									// Simulate availability data
-									const availability = data.dayNumberNumber % 3 === 0 ? 'Full' :
-									                    data.dayNumberNumber % 3 === 1 ? 'Limited' : 'Available';
-									const color = availability === 'Full' ? '#ef4444' :
-									             availability === 'Limited' ? '#f59e0b' : '#10b981';
-
-									const badge = document.createElement('div');
-									badge.style.cssText = `font-size: 0.6rem; color: ${color}; font-weight: 600; margin-top: 2px;`;
-									badge.textContent = availability;
-									return badge;
-								};
-							}
-						}, 100);
-					}
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}

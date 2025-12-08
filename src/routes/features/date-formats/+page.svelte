@@ -22,7 +22,7 @@
 
 		<!-- Standard Formats -->
 		<ShowcaseSection
-			titleText="Standard Date Formats"
+			titleText="DF01 Standard Date Formats"
 			subtitleText="Common date format patterns"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -117,7 +117,7 @@ const picker3 = new DateRangePicker(input3, {
 
 		<!-- Supported Formats -->
 		<ShowcaseSection
-			titleText="Supported Formats"
+			titleText="DF02 Supported Formats"
 			subtitleText="Only numeric date formats are currently supported"
 			col1Title="Live Demo"
 			col2Title="Code Examples"

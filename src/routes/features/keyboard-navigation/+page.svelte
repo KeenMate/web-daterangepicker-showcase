@@ -20,142 +20,92 @@
 		</section>
 
 		<ShowcaseSection
-			titleText="Arrow Key Navigation"
-			subtitleText="Navigate calendar dates with keyboard arrows"
+			titleText="KN01 Keyboard Navigation & Shortcuts"
+			subtitleText="Full keyboard control with arrows, shortcuts, and multi-month support"
 			col1Title="Live Demo"
-			col2Title="Code Examples"
-			col3Title="Details">
-
-			{#snippet demoContent()}
-				<web-daterangepicker
-					selection-mode="single"
-					placeholder="Click input, then use arrow keys">
-				</web-daterangepicker>
-				<p class="mt-3 small text-muted">Click input, then try: Arrow keys, Enter, Escape, Tab</p>
-			{/snippet}
-
-			{#snippet controlsContent()}
-				<CodeBlock
-					codeContent={`<!-- Web Component -->
-<web-daterangepicker
-  selection-mode="single"
-  placeholder="Use keyboard to navigate">
-</web-daterangepicker>
-
-<!-- Keyboard navigation works automatically -->`}
-					languageType="html"
-					titleText="HTML"
-				/>
-
-				<CodeBlock
-					codeContent={`// JavaScript API
-import { DateRangePicker } from '@keenmate/web-daterangepicker';
-
-const picker = new DateRangePicker(inputElement, {
-  onSelect: (date) => {
-    console.log('Selected date:', date);
-  }
-});
-
-// Keyboard navigation is always enabled`}
-					languageType="javascript"
-					titleText="JavaScript"
-				/>
-			{/snippet}
-
-			{#snippet descriptionContent()}
-				<div class="prose">
-					<h5>Arrow Key Controls</h5>
-					<ul>
-						<li><code>← Left Arrow</code> - Previous day</li>
-						<li><code>→ Right Arrow</code> - Next day</li>
-						<li><code>↑ Up Arrow</code> - Same day previous week</li>
-						<li><code>↓ Down Arrow</code> - Same day next week</li>
-					</ul>
-
-					<h5>Selection Keys</h5>
-					<ul>
-						<li><code>Enter / Space</code> - Select focused date</li>
-						<li><code>Escape</code> - Close calendar without selecting</li>
-					</ul>
-
-					<h5>Accessibility</h5>
-					<p>Keyboard navigation is essential for accessibility and power users who prefer keyboard-only interaction.</p>
-
-					<h5>Always Enabled</h5>
-					<p>Keyboard navigation is always enabled by default. No configuration needed.</p>
-				</div>
-			{/snippet}
-		</ShowcaseSection>
-
-		<ShowcaseSection
-			titleText="Keyboard Shortcuts"
-			subtitleText="Quick navigation with shortcut keys"
-			col1Title="Live Demo"
-			col2Title="Code Examples"
+			col2Title="All Keyboard Controls"
 			col3Title="Details">
 
 			{#snippet demoContent()}
 				<web-daterangepicker
 					selection-mode="range"
 					visible-months-count="2"
-					placeholder="Try keyboard shortcuts">
+					placeholder="Click, then use keyboard">
 				</web-daterangepicker>
-				<p class="mt-3 small text-muted">Try: T (today), PageUp/PageDown (months), Home/End</p>
+				<p class="mt-3 small text-muted">
+					Try: Arrow keys, T (today), PageUp/PageDown, Home/End, Ctrl+Home/End, Tab
+				</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
-				<CodeBlock
-					codeContent={`<!-- Web Component -->
-<web-daterangepicker
-  selection-mode="range"
-  placeholder="Keyboard shortcuts work by default">
-</web-daterangepicker>
+				<div class="prose">
+					<h5>Arrow Keys</h5>
+					<ul>
+						<li><code>← Left</code> - Previous day</li>
+						<li><code>→ Right</code> - Next day</li>
+						<li><code>↑ Up</code> - Same day previous week</li>
+						<li><code>↓ Down</code> - Same day next week</li>
+					</ul>
 
-<!-- Keyboard navigation is always enabled -->
-<!-- No special attributes needed -->`}
-					languageType="html"
-					titleText="HTML"
-				/>
+					<h5>Selection</h5>
+					<ul>
+						<li><code>Enter / Space</code> - Select focused date</li>
+						<li><code>Escape</code> - Close calendar</li>
+					</ul>
 
-				<CodeBlock
-					codeContent={`// JavaScript API
-import { DateRangePicker } from '@keenmate/web-daterangepicker';
+					<h5>Quick Navigation</h5>
+					<ul>
+						<li><code>T</code> - Jump to today</li>
+						<li><code>Home</code> - First day of month (repeat: prev month)</li>
+						<li><code>End</code> - Last day of month (repeat: next month)</li>
+						<li><code>Page Up</code> - Previous month</li>
+						<li><code>Page Down</code> - Next month</li>
+					</ul>
 
-// Keyboard shortcuts work automatically
-const picker = new DateRangePicker(inputElement, {
-  selectionMode: 'range',
-  onSelect: (dateRange) => {
-    console.log('Selected:', dateRange);
-  }
-});
+					<h5>Year Navigation</h5>
+					<ul>
+						<li><code>Ctrl + Home</code> - First day of year (repeat: prev year)</li>
+						<li><code>Ctrl + End</code> - Last day of year (repeat: next year)</li>
+						<li><code>Ctrl + ← / →</code> - Previous/next month</li>
+					</ul>
 
-// No special keyboard options needed
-// T, Home, End, PageUp, PageDown work out of the box`}
-					languageType="javascript"
-					titleText="JavaScript"
-				/>
+					<h5>Multi-Month Mode</h5>
+					<ul>
+						<li><code>Tab</code> - Switch to next month column</li>
+						<li><code>Shift + Tab</code> - Switch to previous month column</li>
+					</ul>
+				</div>
 			{/snippet}
 
 			{#snippet descriptionContent()}
 				<div class="prose">
-					<h5>Built-in Shortcuts</h5>
+					<h5>Always Enabled</h5>
+					<p>Keyboard navigation is always enabled by default. No configuration needed.</p>
+
+					<h5>Boundary Aware</h5>
+					<p>
+						All navigation shortcuts respect <code>rolling-year-range</code>, <code>min-date</code>,
+						and <code>max-date</code> constraints. You cannot navigate outside the allowed date range.
+					</p>
+
+					<h5>Accessibility</h5>
+					<p>Full keyboard support is essential for:</p>
 					<ul>
-						<li><code>T</code> - Jump to today</li>
-						<li><code>Home</code> - First day of current month</li>
-						<li><code>End</code> - Last day of current month</li>
-						<li><code>Page Up</code> - Previous month</li>
-						<li><code>Page Down</code> - Next month</li>
-						<li><code>Ctrl/Cmd + Left Arrow</code> - Previous month</li>
-						<li><code>Ctrl/Cmd + Right Arrow</code> - Next month</li>
-						<li><code>Ctrl + Home</code> - First day of year</li>
-						<li><code>Ctrl + End</code> - Last day of year</li>
-						<li><code>Tab</code> - Switch to next month column (multi-month mode)</li>
-						<li><code>Shift + Tab</code> - Switch to previous month column (multi-month mode)</li>
+						<li>Screen reader users</li>
+						<li>Users with motor impairments</li>
+						<li>Power users who prefer keyboard</li>
+						<li>WCAG 2.1 compliance</li>
 					</ul>
 
-					<h5>Always Enabled</h5>
-					<p>Keyboard navigation and shortcuts are always enabled by default. No configuration required.</p>
+					<h5>Code Example</h5>
+					<CodeBlock
+						codeContent={`<!-- Just use the component - keyboard works automatically -->
+<web-daterangepicker
+  selection-mode="range"
+  visible-months-count="2">
+</web-daterangepicker>`}
+						languageType="html"
+					/>
 				</div>
 			{/snippet}
 		</ShowcaseSection>

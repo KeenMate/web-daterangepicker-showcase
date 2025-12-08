@@ -22,7 +22,7 @@
 
 		<!-- Single Date Selection -->
 		<ShowcaseSection
-			titleText="Single Date Selection"
+			titleText="SM01 Single Date Selection"
 			subtitleText="Select one date at a time"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -88,7 +88,7 @@ const picker = new DateRangePicker(inputElement, {
 
 		<!-- Range Selection -->
 		<ShowcaseSection
-			titleText="Range Selection"
+			titleText="SM02 Range Selection"
 			subtitleText="Select a date range with start and end dates"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -161,7 +161,7 @@ const picker = new DateRangePicker(inputElement, {
 
 		<!-- Event Handling -->
 		<ShowcaseSection
-			titleText="Event Handling"
+			titleText="SM03 Event Handling"
 			subtitleText="Listen to selection events"
 			col1Title="Single Mode Events"
 			col2Title="Range Mode Events"

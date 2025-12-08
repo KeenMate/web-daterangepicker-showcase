@@ -88,11 +88,6 @@
 								<td>bottom-start</td>
 							</tr>
 							<tr>
-								<td><code>cell-size</code></td>
-								<td>xs | sm | md | lg | xl</td>
-								<td>md</td>
-							</tr>
-							<tr>
 								<td><code>date-format-mask</code></td>
 								<td>string</td>
 								<td>YYYY-MM-DD</td>
@@ -116,11 +111,6 @@
 								<td><code>display-format-mask</code></td>
 								<td>string</td>
 								<td>-</td>
-							</tr>
-							<tr>
-								<td><code>font-size</code></td>
-								<td>xs | sm | md | lg | xl</td>
-								<td>md</td>
 							</tr>
 							<tr>
 								<td><code>grid-columns</code></td>
@@ -201,11 +191,6 @@
 								<td><code>show-today-button</code></td>
 								<td>boolean</td>
 								<td>true</td>
-							</tr>
-							<tr>
-								<td><code>spacing</code></td>
-								<td>xs | sm | md | lg | xl</td>
-								<td>md</td>
 							</tr>
 							<tr>
 								<td><code>unified-header-interactive</code></td>
@@ -448,7 +433,7 @@
 								<td>#e5e7eb</td>
 							</tr>
 							<tr>
-								<td><code>--drp-card-bg</code></td>
+								<td><code>--drp-dropdown-background</code></td>
 								<td>#ffffff</td>
 							</tr>
 							<tr>

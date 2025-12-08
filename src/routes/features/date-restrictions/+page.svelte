@@ -3,7 +3,106 @@
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		import('@keenmate/web-daterangepicker');
+		import('@keenmate/web-daterangepicker').then(() => {
+			setTimeout(() => {
+				// DR03: Set up disabled dates demo
+				const disabledDatesDemo = document.getElementById('disabled-dates-demo') as any;
+				if (disabledDatesDemo) {
+					// Disable specific dates relative to current month
+					const today = new Date();
+					const thisYear = today.getFullYear();
+					const thisMonth = today.getMonth();
+					disabledDatesDemo.disabledDates = [
+						new Date(thisYear, thisMonth, 5),   // 5th of this month
+						new Date(thisYear, thisMonth, 15),  // 15th of this month
+						new Date(thisYear, thisMonth, 25)   // 25th of this month
+					];
+				}
+
+				// DR04: Set up callback demo
+				const callbackDemo = document.getElementById('callback-demo') as any;
+				if (callbackDemo) {
+					callbackDemo.getDateMetadataCallback = (date: Date) => {
+						const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+						const isThirdDay = date.getDate() % 3 === 0;
+						return { isDisabled: isWeekend || isThirdDay };
+					};
+				}
+
+				// DR05: Set up metadata demo (hotel availability simulation)
+				const metadataDemo = document.getElementById('metadata-demo') as any;
+				if (metadataDemo) {
+					metadataDemo.getDateMetadataCallback = (date: Date) => {
+						const dayOfMonth = date.getDate();
+
+						// Simulate availability:
+						// - Days divisible by 7 (7, 14, 21, 28) = fully booked
+						// - Days divisible by 5 (5, 10, 15, 20, 25, 30) = limited (except if also div by 7)
+						// - Others = available
+						if (dayOfMonth % 7 === 0) {
+							return {
+								isDisabled: true,
+								dayClass: 'fully-booked',
+								dayTooltip: 'Fully booked'
+							};
+						}
+
+						if (dayOfMonth % 5 === 0) {
+							const roomsLeft = (dayOfMonth % 3) + 1; // 1-3 rooms
+							return {
+								dayClass: 'limited-availability',
+								dayTooltip: `${roomsLeft} rooms left`,
+								badgeText: roomsLeft.toString(),
+								badgeClass: 'warning-badge'
+							};
+						}
+
+						return {};
+					};
+
+					// Add custom styles for the demo
+					metadataDemo.customStylesCallback = () => `
+						.drp-date-picker__day-cell.fully-booked {
+							background: #f8d7da !important;
+							color: #721c24 !important;
+						}
+						.drp-date-picker__day-cell.limited-availability {
+							background: #fff3cd !important;
+							color: #856404 !important;
+						}
+						.drp-date-picker__badge-cell.warning-badge {
+							background: #ffc107 !important;
+							color: #000 !important;
+							font-weight: bold;
+						}
+					`;
+				}
+
+				// DR06: Set up combined restrictions demo
+				const combinedDemo = document.getElementById('combined-demo') as any;
+				if (combinedDemo) {
+					// Get current date info for relative dates
+					const today = new Date();
+					const thisYear = today.getFullYear();
+					const thisMonth = today.getMonth();
+
+					// Disable specific dates (1st, 11th, 21st of current month)
+					combinedDemo.disabledDates = [
+						new Date(thisYear, thisMonth, 1),
+						new Date(thisYear, thisMonth, 11),
+						new Date(thisYear, thisMonth, 21)
+					];
+
+					// Additional callback: disable every 9th day
+					combinedDemo.getDateMetadataCallback = (date: Date) => {
+						if (date.getDate() % 9 === 0) {
+							return { isDisabled: true };
+						}
+						return {};
+					};
+				}
+			}, 100);
+		});
 	});
 </script>
 
@@ -26,7 +125,7 @@
 
 		<!-- Min/Max Dates -->
 		<ShowcaseSection
-			titleText="Min and Max Dates"
+			titleText="DR01 Min and Max Dates"
 			subtitleText="Set date range boundaries"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -107,7 +206,7 @@ const picker2 = new DateRangePicker(input2, {
 
 		<!-- Disabled Weekdays -->
 		<ShowcaseSection
-			titleText="Disabled Weekdays"
+			titleText="DR02 Disabled Weekdays"
 			subtitleText="Disable specific days of the week"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -196,7 +295,7 @@ const picker2 = new DateRangePicker(input2, {
 
 		<!-- Disabled Dates Array -->
 		<ShowcaseSection
-			titleText="Disabled Dates (Specific Dates)"
+			titleText="DR03 Disabled Dates (Specific Dates)"
 			subtitleText="Disable a list of specific dates"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -206,25 +305,10 @@ const picker2 = new DateRangePicker(input2, {
 				<web-daterangepicker
 					id="disabled-dates-demo"
 					selection-mode="single"
-					placeholder="Holidays disabled"
+					placeholder="Specific dates disabled"
 				>
 				</web-daterangepicker>
-				<script>
-					if (typeof window !== 'undefined') {
-						setTimeout(() => {
-							const picker = document.getElementById('disabled-dates-demo');
-							if (picker) {
-								// Set disabled dates via JavaScript
-								picker.disabledDates = [
-									'2025-01-01',  // New Year
-									'2025-12-25',  // Christmas
-									'2025-12-26'   // Boxing Day
-								];
-							}
-						}, 100);
-					}
-				</script>
-				<p class="mt-3 small text-muted">New Year and Christmas holidays are disabled</p>
+				<p class="mt-3 small text-muted">5th, 15th, and 25th of current month are disabled</p>
 			{/snippet}
 
 			{#snippet controlsContent()}
@@ -234,19 +318,15 @@ const picker2 = new DateRangePicker(input2, {
 
 <script>
   const picker = document.getElementById('picker');
+  const today = new Date();
+  const thisYear = today.getFullYear();
+  const thisMonth = today.getMonth();
 
-  // Array of ISO date strings
+  // Disable specific dates in current month
   picker.disabledDates = [
-    '2025-01-01',  // New Year
-    '2025-07-04',  // Independence Day
-    '2025-12-25'   // Christmas
-  ];
-
-  // Or array of Date objects
-  picker.disabledDates = [
-    new Date(2025, 0, 1),   // New Year
-    new Date(2025, 6, 4),   // Independence Day
-    new Date(2025, 11, 25)  // Christmas
+    new Date(thisYear, thisMonth, 5),   // 5th
+    new Date(thisYear, thisMonth, 15),  // 15th
+    new Date(thisYear, thisMonth, 25)   // 25th
   ];
 </script>`}
 					languageType="html"
@@ -257,24 +337,17 @@ const picker2 = new DateRangePicker(input2, {
 					codeContent={`// JavaScript API
 import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
-// String dates
+const today = new Date();
+const thisYear = today.getFullYear();
+const thisMonth = today.getMonth();
+
+// Disable specific dates in current month
 const picker = new DateRangePicker(inputElement, {
   disabledDates: [
-    '2025-01-01',
-    '2025-12-25',
-    '2025-12-26'
+    new Date(thisYear, thisMonth, 5),
+    new Date(thisYear, thisMonth, 15),
+    new Date(thisYear, thisMonth, 25)
   ]
-});
-
-// Or Date objects
-const holidays = [
-  new Date(2025, 0, 1),
-  new Date(2025, 11, 25),
-  new Date(2025, 11, 26)
-];
-
-const picker2 = new DateRangePicker(input2, {
-  disabledDates: holidays
 });
 
 // Dynamic loading from API
@@ -316,14 +389,22 @@ fetch('/api/holidays')
 
 		<!-- Custom Disable Logic (Callback) -->
 		<ShowcaseSection
-			titleText="Custom Disable Logic (Callback)"
+			titleText="DR04 Custom Disable Logic (Callback)"
 			subtitleText="Use functions for complex or dynamic rules"
-			col1Title="When to Use"
+			col1Title="Live Demo"
 			col2Title="Code Examples"
 			col3Title="Details"
 		>
 			{#snippet demoContent()}
-				<div class="prose">
+				<web-daterangepicker
+					id="callback-demo"
+					selection-mode="single"
+					placeholder="Weekdays only (via callback)"
+				>
+				</web-daterangepicker>
+				<p class="mt-3 small text-muted">Weekends + every 3rd day of month disabled via callback</p>
+
+				<div class="mt-4 prose">
 					<h5>Use Callback When:</h5>
 					<ul>
 						<li><strong>Complex logic</strong> - Multiple conditions, date ranges, calculations</li>
@@ -346,30 +427,37 @@ fetch('/api/holidays')
 					codeContent={`// JavaScript API - Pass during initialization
 import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
-// Example 1: Disable booked date ranges
+// Example 1: Disable booked date ranges (relative to current month)
+const today = new Date();
+const thisMonth = today.getMonth();
+const thisYear = today.getFullYear();
+
 const bookings = [
-  { start: new Date(2025, 5, 10), end: new Date(2025, 5, 20) },
-  { start: new Date(2025, 6, 1), end: new Date(2025, 6, 10) }
+  // 10th-20th of current month
+  { start: new Date(thisYear, thisMonth, 10), end: new Date(thisYear, thisMonth, 20) },
+  // 1st-10th of next month
+  { start: new Date(thisYear, thisMonth + 1, 1), end: new Date(thisYear, thisMonth + 1, 10) }
 ];
 
 const picker = new DateRangePicker(inputElement, {
   getDateMetadataCallback: (date) => {
-    return bookings.some(booking =>
+    const isBooked = bookings.some(booking =>
       date >= booking.start && date <= booking.end
     );
+    return { isDisabled: isBooked };
   }
 });
 
 // Example 2: Disable past dates + weekends
 const picker2 = new DateRangePicker(input2, {
   getDateMetadataCallback: (date) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
 
-    const isPast = date < today;
+    const isPast = date < now;
     const isWeekend = date.getDay() === 0 || date.getDay() === 6;
 
-    return isPast || isWeekend;
+    return { isDisabled: isPast || isWeekend };
   }
 });
 
@@ -377,14 +465,14 @@ const picker2 = new DateRangePicker(input2, {
 const picker3 = new DateRangePicker(input3, {
   getDateMetadataCallback: (date) => {
     // Disable every 3rd day
-    if (date.getDate() % 3 === 0) return true;
+    if (date.getDate() % 3 === 0) return { isDisabled: true };
 
     // Disable last week of each month
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     const daysUntilMonthEnd = lastDay.getDate() - date.getDate();
-    if (daysUntilMonthEnd < 7) return true;
+    if (daysUntilMonthEnd < 7) return { isDisabled: true };
 
-    return false;
+    return { isDisabled: false };
   }
 });`}
 					languageType="javascript"
@@ -402,7 +490,7 @@ const picker3 = new DateRangePicker(input3, {
   picker.getDateMetadataCallback = (date) => {
     // Your custom logic here
     const isWeekend = date.getDay() === 0 || date.getDay() === 6;
-    return isWeekend;
+    return { isDisabled: isWeekend };
   };
 </script>`}
 					languageType="html"
@@ -413,10 +501,10 @@ const picker3 = new DateRangePicker(input3, {
 			{#snippet descriptionContent()}
 				<div class="prose">
 					<h5>Function Signature</h5>
-					<p><code>getDateMetadataCallback: (date: Date) => boolean</code></p>
+					<p><code>getDateMetadataCallback: (date: Date) => DateInfo | null</code></p>
 					<ul>
 						<li>Receives: Date object for the cell being rendered</li>
-						<li>Returns: <code>true</code> to disable, <code>false</code> to enable</li>
+						<li>Returns: Object with <code>isDisabled: true</code> to disable, or <code>{'{}'}</code> / <code>null</code> to enable</li>
 					</ul>
 
 					<h5>Usage Patterns</h5>
@@ -437,16 +525,28 @@ const picker3 = new DateRangePicker(input3, {
 
 		<!-- getDateMetadata -->
 		<ShowcaseSection
-			titleText="Advanced: Date Metadata Callback"
+			titleText="DR05 Advanced: Date Metadata Callback"
 			subtitleText="Disable dates AND provide styling via single callback"
-			col1Title="Use Case"
+			col1Title="Live Demo"
 			col2Title="Code Examples"
 			col3Title="Details"
 		>
 			{#snippet demoContent()}
-				<div class="prose">
-					<h5>Why Use getDateMetadata?</h5>
-					<p>When you need to BOTH disable dates AND apply custom styling/tooltips, use <code>getDateMetadata</code> instead of separate <code>getDateMetadataCallback</code> and <code>specialDates</code>.</p>
+				<web-daterangepicker
+					id="metadata-demo"
+					selection-mode="single"
+					placeholder="Hotel availability demo"
+				>
+				</web-daterangepicker>
+				<p class="mt-3 small text-muted">
+					<span class="badge bg-danger text-white me-1">7, 14, 21, 28</span> Fully booked (disabled)
+					<br>
+					<span class="badge bg-warning text-dark me-1">5, 10, 15...</span> Limited availability (with badge)
+				</p>
+
+				<div class="mt-4 prose">
+					<h5>Why Use getDateMetadataCallback?</h5>
+					<p>When you need to BOTH disable dates AND apply custom styling/tooltips in one callback.</p>
 
 					<h5>Single Source of Truth</h5>
 					<p>One callback provides all date metadata:</p>
@@ -456,41 +556,21 @@ const picker3 = new DateRangePicker(input3, {
 						<li>Tooltips</li>
 						<li>Badges</li>
 					</ul>
-
-					<h5>Example Scenario</h5>
-					<p><strong>Hotel booking system:</strong></p>
-					<ul>
-						<li>Fully booked dates → Disabled + red styling + "Fully booked" tooltip</li>
-						<li>Limited availability → Enabled + orange styling + "2 rooms left" tooltip</li>
-						<li>Available dates → Enabled + default styling</li>
-					</ul>
 				</div>
 			{/snippet}
 
 			{#snippet controlsContent()}
 				<CodeBlock
-					codeContent={`// JavaScript API
+					codeContent={`// JavaScript API - Hotel availability with dynamic logic
 import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
-// Hotel availability data
-const availability = {
-  '2025-06-15': { rooms: 0, status: 'full' },
-  '2025-06-16': { rooms: 2, status: 'limited' },
-  '2025-06-17': { rooms: 10, status: 'available' }
-};
-
 const picker = new DateRangePicker(inputElement, {
-  getDateMetadata: (date) => {
-    const dateStr = date.toISOString().split('T')[0];
-    const avail = availability[dateStr];
+  getDateMetadataCallback: (date) => {
+    const dayOfMonth = date.getDate();
 
-    if (!avail) {
-      // No data - default available
-      return {};
-    }
-
-    if (avail.status === 'full') {
-      // Fully booked - disable with red styling
+    // Simulate availability based on day patterns:
+    // Days divisible by 7 (7, 14, 21, 28) = fully booked
+    if (dayOfMonth % 7 === 0) {
       return {
         isDisabled: true,
         dayClass: 'fully-booked',
@@ -498,66 +578,75 @@ const picker = new DateRangePicker(inputElement, {
       };
     }
 
-    if (avail.status === 'limited') {
-      // Limited availability - orange styling
+    // Days divisible by 5 (5, 10, 15, 20, 25, 30) = limited
+    if (dayOfMonth % 5 === 0) {
+      const roomsLeft = (dayOfMonth % 3) + 1;
       return {
         dayClass: 'limited-availability',
-        dayTooltip: \`\${avail.rooms} rooms left\`,
-        badgeText: avail.rooms.toString(),
+        dayTooltip: \`\${roomsLeft} rooms left\`,
+        badgeText: roomsLeft.toString(),
         badgeClass: 'warning-badge'
       };
     }
 
-    // Available
-    return {
-      dayClass: 'available'
-    };
+    // All other dates = available (default)
+    return {};
   }
-});`}
+});
+
+// Add custom styles for availability states
+picker.customStylesCallback = () => \`
+  .drp-date-picker__day-cell.fully-booked {
+    background: #f8d7da !important;
+    color: #721c24 !important;
+  }
+  .drp-date-picker__day-cell.limited-availability {
+    background: #fff3cd !important;
+    color: #856404 !important;
+  }
+  .drp-date-picker__badge-cell.warning-badge {
+    background: #ffc107 !important;
+    color: #000 !important;
+  }
+\`;`}
 					languageType="javascript"
-					titleText="Hotel Booking Example"
+					titleText="Hotel Availability Example"
 				/>
 
 				<CodeBlock
-					codeContent={`// Booking system with multiple states
-const bookingData = fetchBookingData(); // From API
-
+					codeContent={`// Dynamic booking states based on day patterns
 const picker = new DateRangePicker(inputElement, {
-  getDateMetadata: (date) => {
-    const booking = bookingData.find(b =>
-      isSameDay(b.date, date)
-    );
+  getDateMetadataCallback: (date) => {
+    const day = date.getDate();
 
-    if (!booking) return {}; // No booking
-
-    // Return metadata based on booking state
-    switch (booking.state) {
-      case 'booked':
-        return {
-          isDisabled: true,
-          badgeText: '✓',
-          badgeClass: 'booked',
-          badgeTooltip: \`Booked by \${booking.customer}\`
-        };
-
-      case 'pending':
-        return {
-          isDisabled: true,
-          badgeText: '?',
-          badgeClass: 'pending',
-          badgeTooltip: 'Pending confirmation'
-        };
-
-      case 'available':
-        return {
-          badgeText: '$',
-          badgeClass: 'price',
-          badgeTooltip: \`$\${booking.price}\`
-        };
-
-      default:
-        return {};
+    // Simulate different booking states
+    if (day % 10 === 0) {
+      // Days 10, 20, 30 = booked
+      return {
+        isDisabled: true,
+        badgeText: '✓',
+        badgeClass: 'booked',
+        dayTooltip: 'Already booked'
+      };
     }
+
+    if (day % 8 === 0) {
+      // Days 8, 16, 24 = pending
+      return {
+        isDisabled: true,
+        badgeText: '?',
+        badgeClass: 'pending',
+        dayTooltip: 'Pending confirmation'
+      };
+    }
+
+    // Show price for available dates
+    const price = 100 + (day * 3);
+    return {
+      badgeText: '$',
+      badgeClass: 'price',
+      dayTooltip: \`$\${price}/night\`
+    };
   }
 });`}
 					languageType="javascript"
@@ -614,27 +703,39 @@ const picker = new DateRangePicker(inputElement, {
 
 		<!-- Combining Restrictions -->
 		<ShowcaseSection
-			titleText="Combining Multiple Restrictions"
+			titleText="DR06 Combining Multiple Restrictions"
 			subtitleText="How different restriction methods interact"
-			col1Title="Evaluation Order"
+			col1Title="Live Demo"
 			col2Title="Example"
 			col3Title="Details"
 		>
 			{#snippet demoContent()}
-				<div class="prose">
+				<web-daterangepicker
+					id="combined-demo"
+					selection-mode="single"
+					min-date={new Date().toISOString().split('T')[0]}
+					disabled-weekdays="0,6"
+					placeholder="Multiple restrictions combined"
+				>
+				</web-daterangepicker>
+				<p class="mt-3 small text-muted">
+					<strong>Combined restrictions:</strong><br>
+					• <code>minDate</code>: Today onwards<br>
+					• <code>disabledWeekdays</code>: Sat/Sun<br>
+					• <code>disabledDates</code>: 1st, 11th, 21st<br>
+					• <code>callback</code>: Every 9th day (9, 18, 27)
+				</p>
+
+				<div class="mt-4 prose">
 					<h5>Restriction Evaluation</h5>
-					<p>A date is <strong>disabled</strong> if ANY of these conditions are true:</p>
+					<p>A date is <strong>disabled</strong> if ANY restriction applies:</p>
 					<ol>
 						<li>Date is before <code>minDate</code></li>
 						<li>Date is after <code>maxDate</code></li>
 						<li>Day of week is in <code>disabledWeekdays</code></li>
 						<li>Date is in <code>disabledDates</code> array</li>
-						<li><code>getDateMetadataCallback(date)</code> returns true</li>
-						<li><code>getDateMetadata(date).isDisabled</code> is true</li>
+						<li><code>getDateMetadataCallback(date).isDisabled</code> is true</li>
 					</ol>
-
-					<h5>All Restrictions Are Additive</h5>
-					<p>If you set multiple restrictions, they ALL apply. You cannot "override" one with another.</p>
 				</div>
 			{/snippet}
 
@@ -643,6 +744,10 @@ const picker = new DateRangePicker(inputElement, {
 					codeContent={`// JavaScript API - Combining restrictions
 import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
+const today = new Date();
+const thisYear = today.getFullYear();
+const thisMonth = today.getMonth();
+
 const picker = new DateRangePicker(inputElement, {
   // 1. Only future dates
   minDate: new Date(),
@@ -650,26 +755,27 @@ const picker = new DateRangePicker(inputElement, {
   // 2. Weekends disabled
   disabledWeekdays: [0, 6],
 
-  // 3. Company holidays
+  // 3. Specific dates disabled (relative to current month)
   disabledDates: [
-    '2025-01-01',
-    '2025-12-25'
+    new Date(thisYear, thisMonth, 1),
+    new Date(thisYear, thisMonth, 11),
+    new Date(thisYear, thisMonth, 21)
   ],
 
-  // 4. Custom logic: Already booked dates
+  // 4. Custom logic: disable every 9th day
   getDateMetadataCallback: (date) => {
-    const bookedDates = fetchBookedDates(); // From API
-    return bookedDates.some(booked =>
-      date.toDateString() === booked.toDateString()
-    );
+    if (date.getDate() % 9 === 0) {
+      return { isDisabled: true };
+    }
+    return {};
   }
 });
 
-// Result: A date is enabled ONLY if:
+// Result: A date is enabled ONLY if ALL conditions pass:
 // - It's today or in the future (minDate)
-// - It's a weekday (not in disabledWeekdays)
-// - It's not a company holiday (not in disabledDates)
-// - It's not already booked (getDateMetadataCallback returns false)`}
+// - It's a weekday (not Sat/Sun)
+// - It's not the 1st, 11th, or 21st
+// - It's not the 9th, 18th, or 27th`}
 					languageType="javascript"
 					titleText="All Restrictions Combined"
 				/>

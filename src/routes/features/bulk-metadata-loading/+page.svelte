@@ -85,18 +85,11 @@
 			// Track when calendar opens/navigates
 			perDayPicker.addEventListener('monthchanged', showPerDayLoader);
 
-			// Also show on first open
-			const observer = new MutationObserver((mutations) => {
-				mutations.forEach((mutation) => {
-					if (mutation.attributeName === 'class') {
-						const classList = perDayPicker.classList;
-						if (classList.contains('drp-date-picker--open')) {
-							showPerDayLoader();
-						}
-					}
-				});
-			});
-			observer.observe(perDayPicker, { attributes: true });
+			// Show loader on first open (when input receives focus)
+			const input = perDayPicker.querySelector('input');
+			if (input) {
+				input.addEventListener('focus', showPerDayLoader, { once: true });
+			}
 
 			perDayPicker.getDateMetadataCallback = (date: Date) => {
 				callCount++;
@@ -412,7 +405,7 @@
 
 		<!-- Performance Comparison -->
 		<ShowcaseSection
-			titleText="Performance Comparison"
+			titleText="BML01 Performance Comparison"
 			subtitleText="1 API call vs 35-42 per month"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -548,7 +541,7 @@ const picker = new DateRangePicker(input, {
 
 		<!-- Hotel Booking Example -->
 		<ShowcaseSection
-			titleText="Hotel Booking with Multi-Tier Pricing"
+			titleText="BML02 Hotel Booking with Multi-Tier Pricing"
 			subtitleText="Dynamic price badges and itemized summary breakdown"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -710,7 +703,7 @@ picker.formatSummaryCallback = (data) => {
 
 		<!-- Loading States -->
 		<ShowcaseSection
-			titleText="Loading States"
+			titleText="BML03 Loading States"
 			subtitleText="Automatic loading overlay during API calls"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -789,7 +782,7 @@ const picker = new DateRangePicker(input, {
 
 		<!-- Blocking Navigation -->
 		<ShowcaseSection
-			titleText="Blocking Navigation"
+			titleText="BML04 Blocking Navigation"
 			subtitleText="Prevent navigation to unavailable months"
 			col1Title="Live Demo"
 			col2Title="Code Examples"

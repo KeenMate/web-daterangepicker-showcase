@@ -242,7 +242,7 @@
 		</section>
 
 		<ShowcaseSection
-			titleText="Custom Range Summary"
+			titleText="CSU01 Custom Range Summary"
 			subtitleText="Customize the summary text below the calendar"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -334,7 +334,7 @@ const picker = new DateRangePicker(inputElement, {
 		</ShowcaseSection>
 
 		<ShowcaseSection
-			titleText="Hotel Booking with Multi-Tier Pricing"
+			titleText="CSU02 Hotel Booking with Multi-Tier Pricing"
 			subtitleText="Dynamic price badges and itemized summary breakdown"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
