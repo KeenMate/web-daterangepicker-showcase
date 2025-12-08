@@ -62,6 +62,9 @@
 		const varName = variableMap[inputId];
 		if (!varName) return;
 
+		// Guard against SSR - document is only available in browser
+		if (typeof document === 'undefined') return;
+
 		if (value === '' || value === null || value === undefined) {
 			document.documentElement.style.removeProperty(varName);
 			delete currentValues[varName];
@@ -101,6 +104,9 @@
 		lineHeightNormal = defaults.lineHeightNormal;
 		lineHeightRelaxed = defaults.lineHeightRelaxed;
 
+		// Guard against SSR
+		if (typeof document === 'undefined') return;
+
 		// Clear CSS variables
 		Object.values(variableMap).forEach(varName => {
 			document.documentElement.style.removeProperty(varName);
@@ -117,6 +123,9 @@
 	function loadFont() {
 		let value = fontLink.trim();
 		if (!value) return;
+
+		// Guard against SSR
+		if (typeof document === 'undefined') return;
 
 		// Extract URL if it's a full <link> tag
 		const hrefMatch = value.match(/href=["']([^"']+)["']/);
