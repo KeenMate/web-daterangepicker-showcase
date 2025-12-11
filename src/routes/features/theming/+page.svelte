@@ -10,7 +10,7 @@
 <style>
 	/* Dark Theme */
 	:global(web-daterangepicker.theme-dark) {
-		--drp-card-bg: #1e293b;
+		--drp-dropdown-background: #1e293b;
 		--drp-text-primary: #f1f5f9;
 		--drp-text-secondary: #cbd5e1;
 		--drp-border-color: #334155;
@@ -18,13 +18,13 @@
 		--drp-accent-color-hover: #2563eb;
 		--drp-primary-bg: #334155;
 		--drp-primary-bg-hover: #475569;
-		--drp-accent-text-color: #ffffff;
+		--drp-text-on-accent: #ffffff;
 		--drp-button-text-color: #ffffff;
 	}
 
 	/* Pastel Theme */
 	:global(web-daterangepicker.theme-pastel) {
-		--drp-card-bg: #fef3c7;
+		--drp-dropdown-background: #fef3c7;
 		--drp-text-primary: #78350f;
 		--drp-text-secondary: #92400e;
 		--drp-border-color: #fbbf24;
@@ -32,7 +32,7 @@
 		--drp-accent-color-hover: #d97706;
 		--drp-primary-bg: #fed7aa;
 		--drp-primary-bg-hover: #fdba74;
-		--drp-accent-text-color: #ffffff;
+		--drp-text-on-accent: #ffffff;
 		--drp-button-text-color: #ffffff;
 	}
 
@@ -136,7 +136,7 @@
 					codeContent={`/* CSS */
 web-daterangepicker.theme-dark {
   /* Dark backgrounds */
-  --drp-card-bg: #1e293b;
+  --drp-dropdown-background: #1e293b;
   --drp-primary-bg: #334155;
   --drp-primary-bg-hover: #475569;
 
@@ -152,7 +152,7 @@ web-daterangepicker.theme-dark {
   --drp-accent-color-hover: #2563eb;
 
   /* Text on accent backgrounds */
-  --drp-accent-text-color: #ffffff;
+  --drp-text-on-accent: #ffffff;
   --drp-button-text-color: #ffffff;
 }`}
 					languageType="css"
@@ -193,7 +193,7 @@ web-daterangepicker.theme-dark {
 					<ul>
 						<li><code>--drp-text-primary</code> - Main text color for month titles and day numbers</li>
 						<li>
-							<code>--drp-accent-text-color</code> - Text color on selected dates and accent backgrounds
+							<code>--drp-text-on-accent</code> - Text color on selected dates and accent backgrounds
 						</li>
 						<li><code>--drp-button-text-color</code> - Text color for buttons</li>
 					</ul>
@@ -245,7 +245,7 @@ web-daterangepicker.theme-dark {
 					codeContent={`/* CSS */
 web-daterangepicker.theme-pastel {
   /* Warm pastel backgrounds */
-  --drp-card-bg: #fef3c7;        /* Amber-50 */
+  --drp-dropdown-background: #fef3c7;        /* Amber-50 */
   --drp-primary-bg: #fed7aa;     /* Amber-200 */
   --drp-primary-bg-hover: #fdba74; /* Amber-300 */
 
@@ -261,7 +261,7 @@ web-daterangepicker.theme-pastel {
   --drp-accent-color-hover: #d97706; /* Amber-600 */
 
   /* White text on amber accent */
-  --drp-accent-text-color: #ffffff;
+  --drp-text-on-accent: #ffffff;
   --drp-button-text-color: #ffffff;
 }`}
 					languageType="css"
@@ -430,6 +430,64 @@ web-daterangepicker {
 			</div>
 		</section>
 
+		<!-- v1.6.0 Loading Overlay Theming -->
+		<section class="mb-5">
+			<div class="alert alert-success">
+				<h4 class="alert-heading">🆕 v1.6.0: Themeable Loading Overlay</h4>
+				<p>
+					Version 1.6.0 adds CSS variables for styling the loading overlay that appears during
+					async operations (like fetching availability data).
+				</p>
+
+				<h6 class="mt-3">Loading Overlay Variables</h6>
+				<CodeBlock
+					codeContent={`/* Customize loading overlay for dark themes */
+web-daterangepicker.theme-dark {
+  --drp-loading-overlay-background: rgba(30, 41, 59, 0.8);
+  --drp-loading-spinner-color: rgba(255, 255, 255, 0.3);
+  --drp-loading-spinner-accent: #3b82f6;
+}`}
+					languageType="css"
+					titleText="Loading Overlay Theming"
+				/>
+
+				<div class="table-responsive mt-3">
+					<table class="table table-sm table-bordered mb-0">
+						<thead>
+							<tr>
+								<th>Variable</th>
+								<th>Default</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody class="small">
+							<tr>
+								<td><code>--drp-loading-overlay-background</code></td>
+								<td>rgba(255, 255, 255, 0.8)</td>
+								<td>Semi-transparent overlay background</td>
+							</tr>
+							<tr>
+								<td><code>--drp-loading-spinner-color</code></td>
+								<td>rgba(0, 0, 0, 0.1)</td>
+								<td>Spinner track color</td>
+							</tr>
+							<tr>
+								<td><code>--drp-loading-spinner-accent</code></td>
+								<td>--drp-accent-color</td>
+								<td>Spinner animated accent color</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<p class="mt-3 mb-0">
+					<strong>When it appears:</strong> The loading overlay shows automatically during async
+					<code>beforeMonthChangedCallback</code> operations. See the
+					<a href="/features/bulk-metadata-loading" class="alert-link">Bulk Metadata Loading</a> page for examples.
+				</p>
+			</div>
+		</section>
+
 		<!-- Implementation Guide -->
 		<section class="mb-5">
 			<div class="alert alert-info">
@@ -448,7 +506,7 @@ web-daterangepicker {
 				<CodeBlock
 					codeContent={`/* Your theme CSS */
 web-daterangepicker.my-custom-theme {
-  --drp-card-bg: /* your background */;
+  --drp-dropdown-background: /* your background */;
   --drp-text-primary: /* your text color */;
   --drp-accent-color: /* your accent color */;
   /* ... other variables as needed */

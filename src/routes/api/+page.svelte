@@ -425,7 +425,7 @@
 								<td>#2563eb</td>
 							</tr>
 							<tr>
-								<td><code>--drp-accent-text-color</code></td>
+								<td><code>--drp-text-on-accent</code></td>
 								<td>#ffffff</td>
 							</tr>
 							<tr>
@@ -522,11 +522,23 @@
 								<td>0.25rem</td>
 							</tr>
 							<tr>
-								<td colspan="2" class="table-secondary fw-bold">Layout</td>
+								<td colspan="2" class="table-secondary fw-bold">Layout / Border Radius</td>
+							</tr>
+							<tr>
+								<td><code>--drp-border-radius-sm</code></td>
+								<td>4px (day cells, tooltips)</td>
+							</tr>
+							<tr>
+								<td><code>--drp-border-radius-md</code></td>
+								<td>6px (input, buttons)</td>
+							</tr>
+							<tr>
+								<td><code>--drp-border-radius-lg</code></td>
+								<td>8px (calendar, selectors)</td>
 							</tr>
 							<tr>
 								<td><code>--drp-border-radius</code></td>
-								<td>0.375rem</td>
+								<td>alias for -md</td>
 							</tr>
 							<tr>
 								<td><code>--drp-border-width-base</code></td>
@@ -578,7 +590,7 @@
 						<tbody class="small">
 							<tr>
 								<td><code>--drp-input-background</code></td>
-								<td>--drp-card-bg</td>
+								<td>--drp-dropdown-background</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-color</code></td>
@@ -586,22 +598,22 @@
 							</tr>
 							<tr>
 								<td><code>--drp-input-border-color</code></td>
-								<td>--drp-border-color</td>
+								<td>--base-input-border-color</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-border-color-hover</code></td>
-								<td>--drp-accent-color</td>
+								<td>--base-input-border-color-hover</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-border-color-focus</code></td>
-								<td>--drp-accent-color</td>
+								<td>--base-input-border-color-focus</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-placeholder-color</code></td>
 								<td>--drp-text-secondary</td>
 							</tr>
 							<tr>
-								<td><code>--drp-input-disabled-background</code></td>
+								<td><code>--drp-input-background-disabled</code></td>
 								<td>--drp-primary-bg</td>
 							</tr>
 						</tbody>
@@ -621,23 +633,23 @@
 						<tbody class="small">
 							<tr>
 								<td><code>--drp-input-size-xs-height</code></td>
-								<td>3.1rem (31px)</td>
+								<td>--base-input-size-xs-height (31px)</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-size-sm-height</code></td>
-								<td>3.3rem (33px)</td>
+								<td>--base-input-size-sm-height (33px)</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-size-md-height</code></td>
-								<td>3.5rem (35px)</td>
+								<td>--base-input-size-md-height (35px)</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-size-lg-height</code></td>
-								<td>3.8rem (38px)</td>
+								<td>--base-input-size-lg-height (38px)</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-size-xl-height</code></td>
-								<td>4.1rem (41px)</td>
+								<td>--base-input-size-xl-height (41px)</td>
 							</tr>
 						</tbody>
 					</table>
@@ -748,7 +760,7 @@
 							</tr>
 							<tr>
 								<td><code>--drp-day-selected-color</code></td>
-								<td>--drp-accent-text-color</td>
+								<td>--drp-text-on-accent</td>
 							</tr>
 						</tbody>
 					</table>
@@ -771,7 +783,7 @@
 							</tr>
 							<tr>
 								<td><code>--drp-day-range-color</code></td>
-								<td>--drp-accent-text-color</td>
+								<td>--drp-text-on-accent</td>
 							</tr>
 						</tbody>
 					</table>
@@ -890,7 +902,7 @@
 							</tr>
 							<tr>
 								<td><code>--drp-rolling-item-color-selected</code></td>
-								<td>--drp-accent-text-color</td>
+								<td>--drp-text-on-accent</td>
 							</tr>
 						</tbody>
 					</table>
@@ -1026,7 +1038,7 @@
 							</tr>
 							<tr>
 								<td><code>--drp-badge-number-color</code></td>
-								<td>--drp-accent-text-color</td>
+								<td>--drp-text-on-accent</td>
 								<td>Number badge text</td>
 							</tr>
 							<tr>

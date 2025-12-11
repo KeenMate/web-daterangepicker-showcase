@@ -2,6 +2,28 @@
 
 All notable changes to the web-daterangepicker-showcase documentation site will be documented in this file.
 
+## 2025-12-10
+
+### Changed
+- Updated `@keenmate/web-daterangepicker` to v1.8.0
+
+### Added (web-daterangepicker v1.8.0 documentation)
+- **Border Radius Variables** - Added `--drp-border-radius-sm/md/lg` to API page Layout section
+  - sm (4px): day cells, tooltips
+  - md (6px): input, buttons
+  - lg (8px): calendar, selectors
+- **Theme-Designer Integration** - Updated API page to show `--base-*` variable references:
+  - Input border colors now reference `--base-input-border-color*`
+  - Input heights now reference `--base-input-size-*-height`
+
+### Fixed (v1.6.0 documentation cleanup)
+- **Applied v1.6.0 CSS variable renames** - Fixed all remaining occurrences that were missed:
+  - Theming page: `--drp-card-bg` → `--drp-dropdown-background`, `--drp-accent-text-color` → `--drp-text-on-accent`
+  - API page: `--drp-accent-text-color` → `--drp-text-on-accent`, `--drp-input-disabled-background` → `--drp-input-background-disabled`
+- **Added Loading Overlay Theming section** to Theming page (v1.6.0 feature)
+- Custom Month Headers page was already created at `/features/custom-month-headers`
+- Bulk Metadata Loading `monthHeaders` example already documented in Custom Month Headers page (CMH02)
+
 ## 2025-12-08
 
 ### Changed (web-daterangepicker v1.7.0)
@@ -41,11 +63,6 @@ All notable changes to the web-daterangepicker-showcase documentation site will 
   - `--drp-card-bg` → `--drp-dropdown-background`
   - `--drp-tooltip-bg` → `--drp-tooltip-background`
   - `--drp-tooltip-color` → `--drp-tooltip-text-color`
-
-### Documentation TODO
-- Add new page for Custom Month Headers feature
-- Update Bulk Metadata Loading page with `monthHeaders` example
-- Update Theming page with loading overlay CSS variables
 
 ## 2025-11-28
 
