@@ -2,7 +2,7 @@
 
 All notable changes to the web-daterangepicker-showcase documentation site will be documented in this file.
 
-## 2025-12-10
+## 2025-12-11
 
 ### Changed
 - Updated `@keenmate/web-daterangepicker` to v1.8.0
