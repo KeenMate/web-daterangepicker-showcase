@@ -32,6 +32,7 @@ const config: PartialDocsConfig = {
 				icon: '✨',
 				children: [
 					{ label: 'Selection Modes', href: '/features/selection-modes' },
+					{ label: 'Auto-Close Behavior', href: '/features/auto-close' },
 					{ label: 'Date Formats & Masking', href: '/features/date-formats' },
 					{ label: 'Multi-Month Display', href: '/features/multi-month' },
 					{ label: 'Unified Navigation', href: '/features/unified-navigation' },
