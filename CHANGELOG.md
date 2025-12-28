@@ -2,6 +2,19 @@
 
 All notable changes to the web-daterangepicker-showcase documentation site will be documented in this file.
 
+## 2025-12-28
+
+### Changed
+- Updated `@keenmate/web-daterangepicker` to v1.9.0
+
+### Fixed (web-daterangepicker v1.9.0 documentation)
+- **Input Border Variables Renamed** - Updated all documentation to reflect v1.9.0 breaking changes:
+  - `--drp-input-border-color` → `--drp-input-border` (full border string)
+  - `--drp-input-border-color-hover` → `--drp-input-border-hover`
+  - `--drp-input-border-color-focus` → `--drp-input-border-focus`
+- Updated pages: API Reference, Custom Styling, Getting Started, Theming
+- Code examples now show full border syntax (e.g., `1px solid #color`)
+
 ## 2025-12-11
 
 ### Changed
