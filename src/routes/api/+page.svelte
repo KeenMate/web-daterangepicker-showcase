@@ -708,8 +708,16 @@
 								<td>--drp-primary-bg</td>
 							</tr>
 							<tr>
+								<td><code>--drp-day-border</code></td>
+								<td>2px solid transparent</td>
+							</tr>
+							<tr>
 								<td><code>--drp-day-border-hover</code></td>
 								<td>--drp-accent-color</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-drag-border</code></td>
+								<td>2px dashed --drp-day-range-bg</td>
 							</tr>
 							<tr>
 								<td><code>--drp-day-disabled-color</code></td>
@@ -930,8 +938,20 @@
 						</thead>
 						<tbody class="small">
 							<tr>
+								<td><code>--drp-button-bg</code></td>
+								<td>transparent</td>
+							</tr>
+							<tr>
+								<td><code>--drp-button-color</code></td>
+								<td>--drp-text-primary</td>
+							</tr>
+							<tr>
 								<td><code>--drp-button-bg-hover</code></td>
 								<td>--drp-primary-bg</td>
+							</tr>
+							<tr>
+								<td><code>--drp-button-border</code></td>
+								<td>--drp-border</td>
 							</tr>
 							<tr>
 								<td><code>--drp-button-border-color</code></td>
@@ -995,6 +1015,10 @@
 							</tr>
 						</thead>
 						<tbody class="small">
+							<tr>
+								<td><code>--drp-summary-border</code></td>
+								<td>--drp-border</td>
+							</tr>
 							<tr>
 								<td><code>--drp-summary-border-color</code></td>
 								<td>--drp-border-color</td>

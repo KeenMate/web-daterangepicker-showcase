@@ -5,7 +5,16 @@ All notable changes to the web-daterangepicker-showcase documentation site will 
 ## 2025-12-28
 
 ### Changed
-- Updated `@keenmate/web-daterangepicker` to v1.9.0
+- Updated `@keenmate/web-daterangepicker` to v1.9.2
+
+### Added (web-daterangepicker v1.9.1/1.9.2 documentation)
+- **API Reference**: Added new CSS variables:
+  - `--drp-day-border`, `--drp-day-drag-border` - Day cell borders
+  - `--drp-button-bg`, `--drp-button-color`, `--drp-button-border` - Button styling
+  - `--drp-summary-border` - Summary section border
+- **Theming page**: Added loading spinner size variables:
+  - `--drp-loading-spinner-size`, `--drp-loading-spinner-border-width`
+- **Theming page**: Renamed `--drp-button-text-color` → `--drp-button-accent-text-color` in all examples (v1.9.2 breaking change)
 
 ### Fixed (web-daterangepicker v1.9.0 documentation)
 - **Input Border Variables Renamed** - Updated all documentation to reflect v1.9.0 breaking changes:

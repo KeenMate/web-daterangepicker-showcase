@@ -19,7 +19,7 @@
 		--drp-primary-bg: #334155;
 		--drp-primary-bg-hover: #475569;
 		--drp-text-on-accent: #ffffff;
-		--drp-button-text-color: #ffffff;
+		--drp-button-accent-text-color: #ffffff;
 	}
 
 	/* Pastel Theme */
@@ -33,7 +33,7 @@
 		--drp-primary-bg: #fed7aa;
 		--drp-primary-bg-hover: #fdba74;
 		--drp-text-on-accent: #ffffff;
-		--drp-button-text-color: #ffffff;
+		--drp-button-accent-text-color: #ffffff;
 	}
 
 	/* Green Theme */
@@ -153,7 +153,7 @@ web-daterangepicker.theme-dark {
 
   /* Text on accent backgrounds */
   --drp-text-on-accent: #ffffff;
-  --drp-button-text-color: #ffffff;
+  --drp-button-accent-text-color: #ffffff;
 }`}
 					languageType="css"
 					titleText="Dark Theme CSS"
@@ -195,7 +195,7 @@ web-daterangepicker.theme-dark {
 						<li>
 							<code>--drp-text-on-accent</code> - Text color on selected dates and accent backgrounds
 						</li>
-						<li><code>--drp-button-text-color</code> - Text color for buttons</li>
+						<li><code>--drp-button-accent-text-color</code> - Text color for buttons</li>
 					</ul>
 				</div>
 			{/snippet}
@@ -262,7 +262,7 @@ web-daterangepicker.theme-pastel {
 
   /* White text on amber accent */
   --drp-text-on-accent: #ffffff;
-  --drp-button-text-color: #ffffff;
+  --drp-button-accent-text-color: #ffffff;
 }`}
 					languageType="css"
 					titleText="Pastel Theme CSS"
@@ -475,6 +475,16 @@ web-daterangepicker.theme-dark {
 								<td><code>--drp-loading-spinner-accent</code></td>
 								<td>--drp-accent-color</td>
 								<td>Spinner animated accent color</td>
+							</tr>
+							<tr>
+								<td><code>--drp-loading-spinner-size</code></td>
+								<td>40px</td>
+								<td>Spinner width and height</td>
+							</tr>
+							<tr>
+								<td><code>--drp-loading-spinner-border-width</code></td>
+								<td>4px</td>
+								<td>Spinner border thickness</td>
 							</tr>
 						</tbody>
 					</table>
