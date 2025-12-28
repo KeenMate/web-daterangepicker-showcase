@@ -417,8 +417,8 @@ web-daterangepicker {
 					codeContent={`/* Style input independently from calendar */
 web-daterangepicker {
   --drp-input-background: #fef3c7;
-  --drp-input-border-color: #f59e0b;
-  --drp-input-border-color-focus: #d97706;
+  --drp-input-border: 1px solid #f59e0b;
+  --drp-input-border-focus: 1px solid #d97706;
 }`}
 					languageType="css"
 					titleText="Input Customization"

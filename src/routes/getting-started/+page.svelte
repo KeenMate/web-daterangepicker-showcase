@@ -135,10 +135,10 @@ web-daterangepicker {
   --drp-accent-color: #10b981;
   --drp-border-radius: 0.5rem;
 
-  /* NEW in v1.3.0: Input-specific variables */
+  /* Input-specific variables */
   --drp-input-background: #f9fafb;
-  --drp-input-border-color: #d1d5db;
-  --drp-input-border-color-focus: #10b981;
+  --drp-input-border: 1px solid #d1d5db;
+  --drp-input-border-focus: 1px solid #10b981;
 }
 
 /* Or style the input element directly */

@@ -493,7 +493,7 @@ web-daterangepicker.scale-lg {
 
 					<h6>Component-Specific Variables</h6>
 					<ul class="small">
-						<li><strong>Input:</strong> <code>--drp-input-background</code>, <code>--drp-input-color</code>, <code>--drp-input-border-color</code>, and 9 more</li>
+						<li><strong>Input:</strong> <code>--drp-input-background</code>, <code>--drp-input-color</code>, <code>--drp-input-border</code>, and 9 more</li>
 						<li><strong>Buttons:</strong> <code>--drp-button-today-color</code>, <code>--drp-button-apply-bg</code>, and 8 more</li>
 						<li><strong>Day Cells:</strong> <code>--drp-day-text-color</code>, <code>--drp-day-selected-bg</code>, and 10 more</li>
 						<li><strong>Header/Nav:</strong> <code>--drp-header-text-color</code>, <code>--drp-nav-bg-hover</code>, and 14 more</li>
@@ -610,9 +610,9 @@ picker.style.setProperty('--drp-accent-color', '#10b981');`}
 				<ul class="small">
 					<li><code>--drp-input-background</code> - Input background color</li>
 					<li><code>--drp-input-color</code> - Input text color</li>
-					<li><code>--drp-input-border-color</code> - Border color</li>
-					<li><code>--drp-input-border-color-hover</code> - Border on hover</li>
-					<li><code>--drp-input-border-color-focus</code> - Border when focused</li>
+					<li><code>--drp-input-border</code> - Full border (e.g., 1px solid #e5e7eb)</li>
+					<li><code>--drp-input-border-hover</code> - Border on hover</li>
+					<li><code>--drp-input-border-focus</code> - Border when focused</li>
 					<li><code>--drp-input-placeholder-color</code> - Placeholder text</li>
 					<li><code>--drp-input-focus-shadow-color</code> - Focus ring color</li>
 				</ul>
@@ -632,9 +632,9 @@ picker.style.setProperty('--drp-accent-color', '#10b981');`}
 					codeContent={`/* Customize input using CSS variables */
 web-daterangepicker {
   --drp-input-background: #f9fafb;
-  --drp-input-border-color: #d1d5db;
-  --drp-input-border-color-hover: #10b981;
-  --drp-input-border-color-focus: #10b981;
+  --drp-input-border: 1px solid #d1d5db;
+  --drp-input-border-hover: 1px solid #10b981;
+  --drp-input-border-focus: 1px solid #10b981;
   --drp-input-focus-shadow-color: rgba(16, 185, 129, 0.1);
 }`}
 					languageType="css"

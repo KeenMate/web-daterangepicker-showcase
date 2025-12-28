@@ -597,16 +597,16 @@
 								<td>--drp-text-primary</td>
 							</tr>
 							<tr>
-								<td><code>--drp-input-border-color</code></td>
-								<td>--base-input-border-color</td>
+								<td><code>--drp-input-border</code></td>
+								<td>--base-input-border</td>
 							</tr>
 							<tr>
-								<td><code>--drp-input-border-color-hover</code></td>
-								<td>--base-input-border-color-hover</td>
+								<td><code>--drp-input-border-hover</code></td>
+								<td>--base-input-border-hover</td>
 							</tr>
 							<tr>
-								<td><code>--drp-input-border-color-focus</code></td>
-								<td>--base-input-border-color-focus</td>
+								<td><code>--drp-input-border-focus</code></td>
+								<td>--base-input-border-focus</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-placeholder-color</code></td>
