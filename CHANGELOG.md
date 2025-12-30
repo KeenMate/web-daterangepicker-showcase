@@ -2,6 +2,30 @@
 
 All notable changes to the web-daterangepicker-showcase documentation site will be documented in this file.
 
+## 2025-12-29
+
+### Changed
+- Updated `@keenmate/web-daterangepicker` to v1.9.3
+
+### Fixed (web-daterangepicker v1.9.3 documentation)
+- **BREAKING: Variable Naming Consistency** - Updated all documentation to reflect v1.9.3 renames:
+
+  **background → bg:**
+  | Old | New |
+  |-----|-----|
+  | `--drp-dropdown-background` | `--drp-dropdown-bg` |
+  | `--drp-tooltip-background` | `--drp-tooltip-bg` |
+  | `--drp-loading-overlay-background` | `--drp-loading-overlay-bg` |
+  | `--drp-input-background` | `--drp-input-bg` |
+  | `--drp-input-background-disabled` | `--drp-input-bg-disabled` |
+
+  **Added -color suffix:**
+  | Old | New |
+  |-----|-----|
+  | `--drp-text-on-accent` | `--drp-text-color-on-accent` |
+
+- Updated pages: API Reference, Custom Styling, Getting Started, Theming
+
 ## 2025-12-28
 
 ### Changed

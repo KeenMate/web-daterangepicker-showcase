@@ -481,7 +481,7 @@ web-daterangepicker.scale-lg {
 				<div class="prose">
 					<h6>Base Color Variables</h6>
 					<ul class="small">
-						<li><code>--drp-dropdown-background</code> - Calendar background (#ffffff)</li>
+						<li><code>--drp-dropdown-bg</code> - Calendar background (#ffffff)</li>
 						<li><code>--drp-accent-color</code> - Primary accent (#3b82f6)</li>
 						<li><code>--drp-accent-color-hover</code> - Accent hover (#2563eb)</li>
 						<li><code>--drp-text-primary</code> - Primary text (#111827)</li>
@@ -493,7 +493,7 @@ web-daterangepicker.scale-lg {
 
 					<h6>Component-Specific Variables</h6>
 					<ul class="small">
-						<li><strong>Input:</strong> <code>--drp-input-background</code>, <code>--drp-input-color</code>, <code>--drp-input-border</code>, and 9 more</li>
+						<li><strong>Input:</strong> <code>--drp-input-bg</code>, <code>--drp-input-color</code>, <code>--drp-input-border</code>, and 9 more</li>
 						<li><strong>Buttons:</strong> <code>--drp-button-today-color</code>, <code>--drp-button-apply-bg</code>, and 8 more</li>
 						<li><strong>Day Cells:</strong> <code>--drp-day-text-color</code>, <code>--drp-day-selected-bg</code>, and 10 more</li>
 						<li><strong>Header/Nav:</strong> <code>--drp-header-text-color</code>, <code>--drp-nav-bg-hover</code>, and 14 more</li>
@@ -526,7 +526,7 @@ web-daterangepicker {
 
 /* Dark theme */
 web-daterangepicker.dark-theme {
-  --drp-dropdown-background: #1e293b;
+  --drp-dropdown-bg: #1e293b;
   --drp-text-primary: #f1f5f9;
   --drp-text-secondary: #cbd5e1;
   --drp-border-color: #334155;
@@ -608,7 +608,7 @@ picker.style.setProperty('--drp-accent-color', '#10b981');`}
 
 				<h6>Input Variables</h6>
 				<ul class="small">
-					<li><code>--drp-input-background</code> - Input background color</li>
+					<li><code>--drp-input-bg</code> - Input background color</li>
 					<li><code>--drp-input-color</code> - Input text color</li>
 					<li><code>--drp-input-border</code> - Full border (e.g., 1px solid #e5e7eb)</li>
 					<li><code>--drp-input-border-hover</code> - Border on hover</li>
@@ -631,7 +631,7 @@ picker.style.setProperty('--drp-accent-color', '#10b981');`}
 				<CodeBlock
 					codeContent={`/* Customize input using CSS variables */
 web-daterangepicker {
-  --drp-input-background: #f9fafb;
+  --drp-input-bg: #f9fafb;
   --drp-input-border: 1px solid #d1d5db;
   --drp-input-border-hover: 1px solid #10b981;
   --drp-input-border-focus: 1px solid #10b981;

@@ -425,7 +425,7 @@
 								<td>#2563eb</td>
 							</tr>
 							<tr>
-								<td><code>--drp-text-on-accent</code></td>
+								<td><code>--drp-text-color-on-accent</code></td>
 								<td>#ffffff</td>
 							</tr>
 							<tr>
@@ -433,7 +433,7 @@
 								<td>#e5e7eb</td>
 							</tr>
 							<tr>
-								<td><code>--drp-dropdown-background</code></td>
+								<td><code>--drp-dropdown-bg</code></td>
 								<td>#ffffff</td>
 							</tr>
 							<tr>
@@ -589,8 +589,8 @@
 						</thead>
 						<tbody class="small">
 							<tr>
-								<td><code>--drp-input-background</code></td>
-								<td>--drp-dropdown-background</td>
+								<td><code>--drp-input-bg</code></td>
+								<td>--drp-dropdown-bg</td>
 							</tr>
 							<tr>
 								<td><code>--drp-input-color</code></td>
@@ -613,7 +613,7 @@
 								<td>--drp-text-secondary</td>
 							</tr>
 							<tr>
-								<td><code>--drp-input-background-disabled</code></td>
+								<td><code>--drp-input-bg-disabled</code></td>
 								<td>--drp-primary-bg</td>
 							</tr>
 						</tbody>
@@ -768,7 +768,7 @@
 							</tr>
 							<tr>
 								<td><code>--drp-day-selected-color</code></td>
-								<td>--drp-text-on-accent</td>
+								<td>--drp-text-color-on-accent</td>
 							</tr>
 						</tbody>
 					</table>
@@ -791,7 +791,7 @@
 							</tr>
 							<tr>
 								<td><code>--drp-day-range-color</code></td>
-								<td>--drp-text-on-accent</td>
+								<td>--drp-text-color-on-accent</td>
 							</tr>
 						</tbody>
 					</table>
@@ -910,7 +910,7 @@
 							</tr>
 							<tr>
 								<td><code>--drp-rolling-item-color-selected</code></td>
-								<td>--drp-text-on-accent</td>
+								<td>--drp-text-color-on-accent</td>
 							</tr>
 						</tbody>
 					</table>
@@ -1062,7 +1062,7 @@
 							</tr>
 							<tr>
 								<td><code>--drp-badge-number-color</code></td>
-								<td>--drp-text-on-accent</td>
+								<td>--drp-text-color-on-accent</td>
 								<td>Number badge text</td>
 							</tr>
 							<tr>

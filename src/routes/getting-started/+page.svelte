@@ -136,7 +136,7 @@ web-daterangepicker {
   --drp-border-radius: 0.5rem;
 
   /* Input-specific variables */
-  --drp-input-background: #f9fafb;
+  --drp-input-bg: #f9fafb;
   --drp-input-border: 1px solid #d1d5db;
   --drp-input-border-focus: 1px solid #10b981;
 }
