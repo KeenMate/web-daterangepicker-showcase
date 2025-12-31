@@ -5,6 +5,12 @@ All notable changes to the web-daterangepicker-showcase documentation site will 
 ## 2025-12-31
 
 ### Changed
+- **Version Badge Implementation** - Switched to compile-time constant via Vite's `define` option (matching svelte-treeview-showcase pattern)
+  - Version now read from `package-lock.json` at build time
+  - Handles both normal npm installs and `file:` links for local development
+  - Removed runtime package.json import from `+layout.server.ts`
+  - Simpler, more reliable implementation
+
 - **API Reference Page Updated to v1.9.3** - Comprehensive update to reflect current API:
   - Removed outdated "Version 1.3.0" reference and "New in v1.3.0" labels from all sections
   - Added missing callback: `getMonthHeaderCallback` (custom individual month header text)

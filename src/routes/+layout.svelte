@@ -1,39 +1,30 @@
 <script lang="ts">
 	import { ConfigProvider } from '@keenmate/svelte-docs';
 	import type { DocsConfig } from '@keenmate/svelte-docs';
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	import '../app.scss';
+
+	// Compile-time constant from vite.config.ts
+	declare const __DATERANGEPICKER_VERSION__: string;
 
 	interface Props {
 		children: import('svelte').Snippet;
 		data: {
 			config: DocsConfig;
 			ssrStyles: string;
-			version: string;
 		};
 	}
 
 	let { children, data }: Props = $props();
-	let versionBadge: HTMLElement;
+	let versionBadge: HTMLDivElement;
 
-	onMount(async () => {
-		// Wait for children (DocLayout with navbar) to render
-		await tick();
-
-		const injectBadge = () => {
-			const navbarNav = document.querySelector('.navbar .navbar-nav.ms-auto');
-			if (navbarNav && versionBadge) {
-				// Insert badge before the navbar-nav (to the left of GitHub link)
-				navbarNav.parentElement?.insertBefore(versionBadge, navbarNav);
-				versionBadge.style.display = 'inline-flex';
-				return true;
-			}
-			return false;
-		};
-
-		// Try immediately after tick, retry with requestAnimationFrame if needed
-		if (!injectBadge()) {
-			requestAnimationFrame(() => injectBadge());
+	onMount(() => {
+		// Find the navbar actions container and inject version badge
+		const navbarNav = document.querySelector('.navbar .navbar-nav.ms-auto');
+		if (navbarNav && versionBadge) {
+			// Insert badge before the navbar-nav (to the left of GitHub link)
+			navbarNav.parentElement?.insertBefore(versionBadge, navbarNav);
+			versionBadge.style.display = 'inline-flex';
 		}
 	});
 </script>
@@ -49,7 +40,7 @@
 
 <!-- Version Badge (will be moved to navbar by JS) -->
 <div bind:this={versionBadge} class="version-badge" style="display: none;">
-	v{data.version}
+	v{__DATERANGEPICKER_VERSION__}
 </div>
 
 <ConfigProvider ssrConfig={data.config}>
