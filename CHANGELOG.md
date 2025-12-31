@@ -2,6 +2,19 @@
 
 All notable changes to the web-daterangepicker-showcase documentation site will be documented in this file.
 
+## 2025-12-31
+
+### Changed
+- **API Reference Page Updated to v1.9.3** - Comprehensive update to reflect current API:
+  - Removed outdated "Version 1.3.0" reference and "New in v1.3.0" labels from all sections
+  - Added missing callback: `getMonthHeaderCallback` (custom individual month header text)
+  - Added missing attributes: `enable-transitions`, `show-debug-info`
+  - Added missing methods: `setMonthNames()`, `setRollingItemAlignment()`
+  - Added new "Loading & Tooltip Variables" section with CSS variables:
+    - Loading: `--drp-loading-overlay-bg`, `--drp-loading-spinner-color`, `--drp-loading-spinner-accent`, `--drp-loading-spinner-size`, `--drp-loading-spinner-border-width`
+    - Tooltip: `--drp-tooltip-bg`, `--drp-tooltip-text-color`, `--drp-tooltip-max-width`
+  - Added missing CSS variables: `--drp-badge-row-height`, `--drp-border`
+
 ## 2025-12-29
 
 ### Changed

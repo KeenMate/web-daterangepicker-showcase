@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ConfigProvider } from '@keenmate/svelte-docs';
 	import type { DocsConfig } from '@keenmate/svelte-docs';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import '../app.scss';
 
 	interface Props {
@@ -16,13 +16,24 @@
 	let { children, data }: Props = $props();
 	let versionBadge: HTMLElement;
 
-	onMount(() => {
-		// Find the navbar actions container and inject version badge
-		const navbarNav = document.querySelector('.navbar .navbar-nav.ms-auto');
-		if (navbarNav && versionBadge) {
-			// Insert badge before the navbar-nav (to the left of GitHub link)
-			navbarNav.parentElement?.insertBefore(versionBadge, navbarNav);
-			versionBadge.style.display = 'inline-flex';
+	onMount(async () => {
+		// Wait for children (DocLayout with navbar) to render
+		await tick();
+
+		const injectBadge = () => {
+			const navbarNav = document.querySelector('.navbar .navbar-nav.ms-auto');
+			if (navbarNav && versionBadge) {
+				// Insert badge before the navbar-nav (to the left of GitHub link)
+				navbarNav.parentElement?.insertBefore(versionBadge, navbarNav);
+				versionBadge.style.display = 'inline-flex';
+				return true;
+			}
+			return false;
+		};
+
+		// Try immediately after tick, retry with requestAnimationFrame if needed
+		if (!injectBadge()) {
+			requestAnimationFrame(() => injectBadge());
 		}
 	});
 </script>

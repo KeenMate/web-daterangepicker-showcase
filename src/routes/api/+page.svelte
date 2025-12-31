@@ -108,6 +108,11 @@
 								<td>-</td>
 							</tr>
 							<tr>
+								<td><code>enable-transitions</code></td>
+								<td>boolean</td>
+								<td>false</td>
+							</tr>
+							<tr>
 								<td><code>display-format-mask</code></td>
 								<td>string</td>
 								<td>-</td>
@@ -186,6 +191,11 @@
 								<td><code>show-clear-button</code></td>
 								<td>boolean</td>
 								<td>true</td>
+							</tr>
+							<tr>
+								<td><code>show-debug-info</code></td>
+								<td>boolean</td>
+								<td>false</td>
 							</tr>
 							<tr>
 								<td><code>show-today-button</code></td>
@@ -272,6 +282,16 @@
 								<td><code>setInputValue(value)</code></td>
 								<td>void</td>
 								<td>Set input value</td>
+							</tr>
+							<tr>
+								<td><code>setMonthNames(names)</code></td>
+								<td>void</td>
+								<td>Set custom month names</td>
+							</tr>
+							<tr>
+								<td><code>setRollingItemAlignment(alignment)</code></td>
+								<td>void</td>
+								<td>Set rolling selector alignment</td>
 							</tr>
 							<tr>
 								<td><code>show()</code></td>
@@ -361,6 +381,11 @@
 								<td>Return DateInfo for custom styling</td>
 							</tr>
 							<tr>
+								<td><code>getMonthHeaderCallback</code></td>
+								<td>Function</td>
+								<td>Custom individual month header text</td>
+							</tr>
+							<tr>
 								<td><code>getUnifiedHeaderCallback</code></td>
 								<td>Function</td>
 								<td>Custom unified header text</td>
@@ -390,8 +415,8 @@
 		<section class="mt-5 mb-5">
 			<h2 class="mb-4">CSS Custom Properties</h2>
 			<p class="lead mb-4">
-				Version 1.3.0 includes 90+ CSS custom properties for complete theming control. Variables are
-				organized into base variables (foundation) and semantic component-specific variables.
+				Complete CSS custom properties for theming control. Variables are organized into base
+				variables (foundation) and semantic component-specific variables.
 			</p>
 		</section>
 
@@ -545,6 +570,10 @@
 								<td>1px</td>
 							</tr>
 							<tr>
+								<td><code>--drp-border</code></td>
+								<td>1px solid --drp-border-color</td>
+							</tr>
+							<tr>
 								<td><code>--drp-shadow-xl</code></td>
 								<td>0 20px 25px...</td>
 							</tr>
@@ -569,10 +598,10 @@
 			{/snippet}
 		</ShowcaseSection>
 
-		<!-- Input Variables (v1.3.0) -->
+		<!-- Input Variables -->
 		<ShowcaseSection
 			titleText="Input Variables"
-			subtitleText="New in v1.3.0 - Complete input element styling control"
+			subtitleText="Complete input element styling control"
 			col1Title="Input Colors"
 			col2Title="Input Sizes"
 			col3Title="Input States"
@@ -687,7 +716,7 @@
 		<!-- Day Cell Variables -->
 		<ShowcaseSection
 			titleText="Day Cell Variables"
-			subtitleText="New in v1.3.0 - Day cell colors, states, and interactions"
+			subtitleText="Day cell colors, states, and interactions"
 			col1Title="Basic States"
 			col2Title="Selection States"
 			col3Title="Range States"
@@ -802,7 +831,7 @@
 		<!-- Header & Navigation Variables -->
 		<ShowcaseSection
 			titleText="Header & Navigation Variables"
-			subtitleText="New in v1.3.0 - Header, navigation buttons, and rolling selector"
+			subtitleText="Header, navigation buttons, and rolling selector"
 			col1Title="Header"
 			col2Title="Navigation Buttons"
 			col3Title="Rolling Selector"
@@ -921,7 +950,7 @@
 		<!-- Button & Summary Variables -->
 		<ShowcaseSection
 			titleText="Button & Summary Variables"
-			subtitleText="New in v1.3.0 - Action buttons and summary section"
+			subtitleText="Action buttons and summary section"
 			col1Title="Button States"
 			col2Title="Button Types"
 			col3Title="Summary"
@@ -1040,7 +1069,7 @@
 		<!-- Badge Variables -->
 		<ShowcaseSection
 			titleText="Badge Variables"
-			subtitleText="New in v1.3.0 - Badge styling for special dates"
+			subtitleText="Badge styling for special dates"
 			col1Title="Badge Types"
 			columnCount={1}
 		>
@@ -1084,6 +1113,82 @@
 								<td><code>--drp-badge-text-color</code></td>
 								<td>#ffffff</td>
 								<td>Text badge text</td>
+							</tr>
+							<tr>
+								<td><code>--drp-badge-row-height</code></td>
+								<td>16px</td>
+								<td>Badge row height</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			{/snippet}
+		</ShowcaseSection>
+
+		<!-- Loading & Tooltip Variables -->
+		<ShowcaseSection
+			titleText="Loading & Tooltip Variables"
+			subtitleText="Loading overlay and tooltip styling"
+			col1Title="Loading Overlay"
+			col2Title="Tooltip"
+			columnCount={2}
+		>
+			{#snippet demoContent()}
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered api-table">
+						<thead>
+							<tr>
+								<th>Variable</th>
+								<th>Default</th>
+							</tr>
+						</thead>
+						<tbody class="small">
+							<tr>
+								<td><code>--drp-loading-overlay-bg</code></td>
+								<td>rgba(255, 255, 255, 0.8)</td>
+							</tr>
+							<tr>
+								<td><code>--drp-loading-spinner-color</code></td>
+								<td>--drp-border-color</td>
+							</tr>
+							<tr>
+								<td><code>--drp-loading-spinner-accent</code></td>
+								<td>--drp-accent-color</td>
+							</tr>
+							<tr>
+								<td><code>--drp-loading-spinner-size</code></td>
+								<td>40px</td>
+							</tr>
+							<tr>
+								<td><code>--drp-loading-spinner-border-width</code></td>
+								<td>4px</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			{/snippet}
+
+			{#snippet controlsContent()}
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered api-table">
+						<thead>
+							<tr>
+								<th>Variable</th>
+								<th>Default</th>
+							</tr>
+						</thead>
+						<tbody class="small">
+							<tr>
+								<td><code>--drp-tooltip-bg</code></td>
+								<td>#1f2937</td>
+							</tr>
+							<tr>
+								<td><code>--drp-tooltip-text-color</code></td>
+								<td>#ffffff</td>
+							</tr>
+							<tr>
+								<td><code>--drp-tooltip-max-width</code></td>
+								<td>200px</td>
 							</tr>
 						</tbody>
 					</table>
