@@ -25,6 +25,7 @@ const config: PartialDocsConfig = {
 		main: [
 			{ label: 'Home', href: '/', icon: '🏠' },
 			{ label: 'Getting Started', href: '/getting-started', icon: '🚀' },
+			{ label: 'Security', href: '/api/security', icon: '🔒' },
 			{
 				label: 'Features',
 				href: '/features/selection-modes',
@@ -41,6 +42,7 @@ const config: PartialDocsConfig = {
 					{ label: 'Bulk Metadata Loading', href: '/features/bulk-metadata-loading' },
 					{ label: 'Custom Month Headers', href: '/features/custom-month-headers' },
 					{ label: 'Event Callbacks', href: '/features/event-callbacks' },
+					{ label: 'Messages & Custom Actions', href: '/features/messages-custom-actions' },
 					{ label: 'Custom Rendering (Slots)', href: '/features/custom-rendering' },
 					{ label: 'Range Disabled Handling', href: '/features/range-disabled-handling' },
 					{ label: 'Positioning Modes', href: '/features/positioning-modes' },
