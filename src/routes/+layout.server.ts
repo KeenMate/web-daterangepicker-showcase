@@ -66,7 +66,12 @@ const config: PartialDocsConfig = {
 		breadcrumbs: true,
 		tableOfContents: true,
 		analyticsScripts: [
-			'<script defer data-domain="web-daterangepicker.keenmate.dev" src="https://stats.keenmate.services/js/plausible.js"></script>'
+			`<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://stats.keenmate.services/js/pa-ppZl_Tr8hNQHe_7rqa9Sj.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>`
 		]
 	}
 };
