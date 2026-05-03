@@ -163,8 +163,18 @@
 								<td>-</td>
 							</tr>
 							<tr>
+								<td><code>mobile-modal-breakpoint</code></td>
+								<td>CSS length</td>
+								<td>-</td>
+							</tr>
+							<tr>
+								<td><code>mobile-modal-min-height</code></td>
+								<td>CSS length</td>
+								<td>-</td>
+							</tr>
+							<tr>
 								<td><code>positioning-mode</code></td>
-								<td>floating | inline</td>
+								<td>floating | inline | modal</td>
 								<td>floating</td>
 							</tr>
 							<tr>
@@ -196,6 +206,11 @@
 								<td><code>show-debug-info</code></td>
 								<td>boolean</td>
 								<td>false</td>
+							</tr>
+							<tr>
+								<td><code>show-summary</code></td>
+								<td>boolean</td>
+								<td>true</td>
 							</tr>
 							<tr>
 								<td><code>show-today-button</code></td>
@@ -331,6 +346,16 @@
 								<td><code>calendar-show</code></td>
 								<td>CustomEvent</td>
 								<td>Fired when calendar opens</td>
+							</tr>
+							<tr>
+								<td><code>change</code></td>
+								<td>CustomEvent</td>
+								<td>Alias of <code>date-select</code></td>
+							</tr>
+							<tr>
+								<td><code>custom-action</code></td>
+								<td>CustomEvent</td>
+								<td>Fired by <code>action: 'custom'</code> buttons (see Messages & Custom Actions)</td>
 							</tr>
 							<tr>
 								<td><code>date-change</code></td>

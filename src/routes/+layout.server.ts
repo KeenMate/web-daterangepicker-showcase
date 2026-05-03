@@ -46,6 +46,7 @@ const config: PartialDocsConfig = {
 					{ label: 'Custom Rendering (Slots)', href: '/features/custom-rendering' },
 					{ label: 'Range Disabled Handling', href: '/features/range-disabled-handling' },
 					{ label: 'Positioning Modes', href: '/features/positioning-modes' },
+					{ label: 'Responsive Behavior', href: '/features/responsive-behavior' },
 					{ label: 'Input Masking', href: '/features/input-masking' },
 					{ label: 'Keyboard Navigation', href: '/features/keyboard-navigation' },
 					{ label: 'Custom Summary Formatting', href: '/features/custom-summary' },
