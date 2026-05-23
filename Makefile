@@ -1,11 +1,11 @@
-# Svelte Treeview Showcase - Makefile
+# Web Date Range Picker Showcase - Makefile
 # Development and build commands for the showcase project
 
 # === Configuration ===
 # Docker image settings
-DOCKER_IMAGE_NAME = registry.km8.es/svelte-treeview-showcase
+DOCKER_IMAGE_NAME = registry.km8.es/web-daterangepicker-showcase
 DOCKER_TAG = production
-DOCKER_CONTAINER_NAME = svelte-treeview-showcase
+DOCKER_CONTAINER_NAME = web-daterangepicker-showcase
 DOCKER_PORT = 8080
 
 # Development settings
@@ -18,11 +18,15 @@ OUTPUT_DIR = .svelte-kit
 NODE_MODULES = node_modules
 PACKAGE_LOCK = package-lock.json
 
+# Library being documented
+LIB_DIR = ../web-daterangepicker
+LIB_PACKAGE = @keenmate/web-daterangepicker
+
 .PHONY: help install dev build preview clean link-lib package deploy docker-build docker-run docker-stop
 
 # Default target
 help: ## Show this help message
-	@echo "Svelte Treeview Showcase - Available Commands:"
+	@echo "Web Date Range Picker Showcase - Available Commands:"
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
@@ -30,15 +34,15 @@ help: ## Show this help message
 install: ## Install dependencies
 	npm install
 
-link-lib: ## Link the @keenmate/svelte-treeview library from ../svelte-treeview
-	cd ../svelte-treeview && npm link
-	npm link @keenmate/svelte-treeview
+link-lib: ## Link the local @keenmate/web-daterangepicker library from $(LIB_DIR)
+	cd $(LIB_DIR) && npm link
+	npm link $(LIB_PACKAGE)
 
-unlink-lib: ## Unlink the @keenmate/svelte-treeview library
-	npm unlink @keenmate/svelte-treeview
+unlink-lib: ## Unlink the local @keenmate/web-daterangepicker library
+	npm unlink $(LIB_PACKAGE)
 
-install-published: ## Install published version of @keenmate/svelte-treeview
-	npm install @keenmate/svelte-treeview@latest
+install-published: ## Install the published version of @keenmate/web-daterangepicker
+	npm install $(LIB_PACKAGE)@latest
 
 dev: ## Start development server
 	npm run dev
@@ -63,11 +67,11 @@ lint: ## Run linting (if configured)
 	@echo "Linting not configured yet"
 
 # Library development helpers
-build-lib: ## Build the linked svelte-treeview library
-	cd ../svelte-treeview && npm run package
+build-lib: ## Build the linked web-daterangepicker library
+	cd $(LIB_DIR) && npm run build
 
 rebuild-lib: ## Rebuild and relink the library
-	cd ../svelte-treeview && npm run package
+	cd $(LIB_DIR) && npm run build
 	$(MAKE) link-lib
 
 # Cleanup
@@ -113,23 +117,27 @@ setup-dev: install link-lib ## Setup for development with linked library
 fresh-start: clean install dev ## Clean setup and start development
 
 # Documentation helpers
-docs-check: ## Check if all documentation pages are accessible
-	@echo "Checking documentation pages..."
-	@echo "Pages to verify:"
+docs-check: ## Print a checklist of the main documentation pages
+	@echo "Documentation pages to verify (dev server on port $(DEV_PORT)):"
 	@echo "- http://localhost:$(DEV_PORT)/ (Homepage)"
 	@echo "- http://localhost:$(DEV_PORT)/getting-started"
-	@echo "- http://localhost:$(DEV_PORT)/examples/basic"
-	@echo "- http://localhost:$(DEV_PORT)/examples/search"
-	@echo "- http://localhost:$(DEV_PORT)/examples/drag-drop"
-	@echo "- http://localhost:$(DEV_PORT)/examples/context-menu"
-	@echo "- http://localhost:$(DEV_PORT)/examples/custom-styling"
-	@echo "- http://localhost:$(DEV_PORT)/examples/drag-highlight"
-	@echo "- http://localhost:$(DEV_PORT)/examples/performance"
-	@echo "- http://localhost:$(DEV_PORT)/examples/data-structure"
-	@echo "- http://localhost:$(DEV_PORT)/api/tree"
-	@echo "- http://localhost:$(DEV_PORT)/api/properties"
-	@echo "- http://localhost:$(DEV_PORT)/api/events"
-	@echo "- http://localhost:$(DEV_PORT)/api/styling"
+	@echo "- http://localhost:$(DEV_PORT)/api (API Reference)"
+	@echo "- http://localhost:$(DEV_PORT)/api/security"
+	@echo "- http://localhost:$(DEV_PORT)/features/selection-modes"
+	@echo "- http://localhost:$(DEV_PORT)/features/date-restrictions"
+	@echo "- http://localhost:$(DEV_PORT)/features/range-disabled-handling"
+	@echo "- http://localhost:$(DEV_PORT)/features/special-dates"
+	@echo "- http://localhost:$(DEV_PORT)/features/positioning-modes"
+	@echo "- http://localhost:$(DEV_PORT)/features/responsive-behavior"
+	@echo "- http://localhost:$(DEV_PORT)/features/internationalization"
+	@echo "- http://localhost:$(DEV_PORT)/features/input-masking"
+	@echo "- http://localhost:$(DEV_PORT)/features/custom-styling"
+	@echo "- http://localhost:$(DEV_PORT)/features/theming"
+	@echo "- http://localhost:$(DEV_PORT)/features/bulk-metadata-loading"
+	@echo "- http://localhost:$(DEV_PORT)/features/custom-rendering"
+	@echo "- http://localhost:$(DEV_PORT)/features/custom-summary"
+	@echo "- http://localhost:$(DEV_PORT)/features/event-callbacks"
+	@echo "- http://localhost:$(DEV_PORT)/features/messages-custom-actions"
 
 # Testing helpers
 test: ## Run tests (when implemented)
@@ -191,11 +199,11 @@ docker-deploy: docker-build docker-run ## Build and run Docker container
 
 # Information
 status: ## Show project status
-	@echo "Svelte Treeview Showcase Status:"
+	@echo "Web Date Range Picker Showcase Status:"
 	@echo "Node version: $(shell node --version)"
 	@echo "NPM version: $(shell npm --version)"
 	@echo "Project directory: $(shell pwd)"
-	@echo "Library linked: $(shell npm list @keenmate/svelte-treeview 2>/dev/null | grep @keenmate/svelte-treeview || echo 'Not linked')"
+	@echo "Library linked: $(shell npm list $(LIB_PACKAGE) 2>/dev/null | grep $(LIB_PACKAGE) || echo 'Not linked')"
 	@echo "Dependencies installed: $(shell test -d $(NODE_MODULES) && echo "✓" || echo "✗")"
 	@echo "Build exists: $(shell test -d $(BUILD_DIR) && echo "✓" || echo "✗")"
 

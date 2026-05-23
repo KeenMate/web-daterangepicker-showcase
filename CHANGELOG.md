@@ -2,6 +2,62 @@
 
 All notable changes to the web-daterangepicker-showcase documentation site will be documented in this file.
 
+## 2026-05-23
+
+### Security
+- **`npm audit` now reports `found 0 vulnerabilities`** (was 18: 1 low, 10 moderate, 7 high). Applied the upgrade set recommended in `@keenmate/svelte-docs`'s README:
+  - Bumped `@keenmate/svelte-docs` from `^1.0.0-rc09` to `^1.0.0-rc11` (rc11 brought security fixes for `cookie` and `uuid` advisories via `@sveltejs/kit` / `mermaid` transitives)
+  - Bumped `@sveltejs/kit` from `^2.47.1` to `^2.58.0` (direct-dep advisory — overrides can't fix this one)
+  - Bumped `svelte` from `^5.41.0` to `^5.55.5` (direct-dep XSS advisories: SSR `<option>`, `bind:innerText`/`bind:textContent`, spread attributes, DOM clobbering)
+  - Bumped `vite` from `^7.1.10` to `^7.3.2` (direct-dep path-traversal advisories in optimized deps `.map` handling, `server.fs.deny` bypass, dev-server WebSocket arbitrary file read)
+  - Added the `overrides` block from svelte-docs README — pins transitives `cookie`, `uuid`, `picomatch`, `devalue`, `dompurify`, `immutable`, `lodash-es`, `postcss`, `rollup` to patched versions
+
+### Changed
+- **Makefile rewritten** — replaced all `svelte-treeview` leftovers (forked project name from the original treeview showcase) with `web-daterangepicker` equivalents. `LIB_DIR` and `LIB_PACKAGE` parameterised at the top; Docker image name, container name, status output, header comments, and `link-lib` / `rebuild-lib` / `build-lib` targets all point at the right library now. `docs-check` rewritten to list real daterangepicker showcase pages instead of the old treeview examples.
+- `CLAUDE.md` — Local Library Development and Deployment sections updated to match the cleaned-up Makefile.
+
+### Removed
+- `nul` stray file in repo root (Windows shell artifact from a prior session).
+
+## 2026-05-22
+
+### Changed
+- Updated `@keenmate/web-daterangepicker` to **v1.13.0**
+- **API Reference: removed non-existent surface** (these were never dispatched/exposed by the library; documenting them was actively misleading):
+  - DOM events: `calendar-show`, `calendar-hide`, `date-change`
+  - Methods: `destroy()`, `getSelectedDate()`, `getSelectedRange()`
+  - Callback property: `onSelect`
+- **API Reference: added missing HTML attributes** to the attributes table:
+  - `input-size` (was present since v1.4.0 but never listed)
+  - `disabled-dates` (new in v1.13)
+  - `date-member`, `badge-text-member`, `badge-class-member`, `badge-tooltip-member`, `day-class-member`, `day-tooltip-member`, `is-disabled-member` (all new in v1.13 — full attribute parity with the `*Member` JS properties)
+
+### Added (showcase docs for v1.13.0)
+- **API Reference: new "Properties (Complex Data & State)" section** documenting:
+  - Complex-data property setters: `specialDates`, `disabledDates`, `actionButtons`, `customStrings`, `monthNames`, the seven `*Member` mappings
+  - Reactive selection state: `selectedDate`, `selectedDates`, `selectedRanges`, `isOpen`, `value`
+  - **Property-wins precedence rule** when both an attribute and a property are set
+  - Note about v1.11 non-destructive `updateOptions()` routing
+- **API Reference: ~50 missing CSS custom properties** added, including:
+  - `--drp-rem` — the global scale knob (most important theming hook)
+  - v1.13 hover-preview opacities (`--drp-day-hover-preview-bg-opacity`, `--drp-day-hover-preview-invalid-bg-opacity`)
+  - v1.12 modal mode (`--drp-modal-gap`, `--drp-modal-backdrop-bg`, `--drp-modal-transition`, `--drp-modal-width-xs/sm/md/lg`)
+  - Message colors (4 types × bg/color/border = 12 variables)
+  - Z-index layers, opacity tokens, calendar dimensions
+  - Day cell modifiers: range hover, drag preview, drag invalid, focused outline width/offset, selected hover color, disabled bg/pattern opacity
+  - Typography scale completion: `--drp-font-size-2xs/xl/2xl`, three line-height tokens
+  - Tooltip line-height + arrow-size
+- **API Reference: "Weekend & Weekday Hooks (v1.13)" section** documenting the new `.drp-date-picker__day--weekend` modifier and per-day `[data-weekday]` attribute (pure theming surface; no defaults shipped)
+- **Range Disabled Handling page**: new RDH08 section documenting **live hover preview** — the v1.13 flagship feature. Shows per-mode behavior (`allow` / `prevent` / `block` / `split`), CSS theming hooks, cleanup triggers, and the start-day legibility fix
+- **Internationalization page (INT04)** rewritten: `customStrings` and `monthNames` are now property setters on the web component (no longer "JavaScript API only" — v1.13 lifted that limitation). Added pre-upgrade assignment guidance.
+- **Date Restrictions page (DR03)** updated: documents the new declarative `disabled-dates="…"` HTML attribute (v1.13) alongside the existing JS-property path. Property-wins precedence noted.
+- **Special Dates page (SD04)** updated: documents the seven new `*-member` HTML attributes (v1.13) — full declarative parity with the JS `*Member` setters
+- **Input Masking page (IM06)** added: documents the v1.13 separator change (`" to "` → `" - "`) and the new accepted compact form (`2026-06-10-2026-06-15`). Includes migration note for tests/scripts.
+- **Auto-Close page (AC04)** updated: documents the v1.12 `show-summary` attribute for hiding the days/nights line in range mode.
+
+### Removed
+- `CHANGES_NEEDED.md` (root) — the multi-tier hotel pricing TODO it described was already applied to `/features/bulk-metadata-loading` in a prior pass.
+
 ## 2025-12-31
 
 ### Changed

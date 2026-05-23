@@ -566,9 +566,80 @@ const picker = new DateRangePicker(input, {
 			{/snippet}
 		</ShowcaseSection>
 
+		<!-- Range Typing Separator (v1.13) -->
+		<ShowcaseSection
+			titleText="IM06 Range Typing — Single-Input Separator (v1.13)"
+			subtitleText="In single-input range mode, the separator between start and end is &quot; - &quot;"
+			col1Title="What works"
+			col2Title="Examples"
+			col3Title="Migration"
+		>
+
+			{#snippet demoContent()}
+				<div class="prose">
+					<p>
+						When the picker is configured in range mode with a single input (the
+						default), typing in the start/end values is accepted in two shapes:
+					</p>
+					<ul>
+						<li>
+							<strong>Spaced</strong> — <code>2026-06-10 - 2026-06-15</code> (the
+							canonical form, also what the picker writes back on commit).
+						</li>
+						<li>
+							<strong>Compact</strong> — <code>2026-06-10-2026-06-15</code> (paste
+							or fast typing with no spaces; auto-normalized).
+						</li>
+					</ul>
+					<p>
+						The mask figures out which side of the separator the cursor is on and
+						applies per-field formatting / progressive calendar updates the same
+						way as the spaced form.
+					</p>
+				</div>
+			{/snippet}
+
+			{#snippet controlsContent()}
+				<CodeBlock
+					codeContent={`# Spaced (canonical, what the picker emits on commit)
+2026-06-10 - 2026-06-15
+
+# Compact (e.g. pasted, no spaces) — auto-normalized to the spaced form
+2026-06-10-2026-06-15
+
+# Both produce: start = 2026-06-10, end = 2026-06-15`}
+					languageType="text"
+					titleText="Accepted forms"
+				/>
+			{/snippet}
+
+			{#snippet descriptionContent()}
+				<div class="prose">
+					<h5>Migration from older versions</h5>
+					<p>
+						Prior to v1.13 the separator was the literal word <code>" to "</code>.
+						v1.13 switched to <code>" - "</code> so the separator round-trips with
+						the committed value, and so the parser doesn't depend on an
+						English-specific word.
+					</p>
+					<p>
+						<strong>If you have e2e tests or scripts that drove the input by
+						typing <code>"… to …"</code>, switch them to <code>"… - …"</code>.</strong>
+					</p>
+
+					<h5>Why two forms?</h5>
+					<p>
+						Position-based fallback: when the separator can't be located by
+						pattern, the parser splits on the midpoint of the field length so a
+						bare <code>YYYY-MM-DD-YYYY-MM-DD</code> still parses correctly.
+					</p>
+				</div>
+			{/snippet}
+		</ShowcaseSection>
+
 		<!-- Best Practices -->
 		<ShowcaseSection
-			titleText="IM06 Best Practices"
+			titleText="IM07 Best Practices"
 			subtitleText="Getting the most from input masking"
 			col1Title="Recommendations"
 			col2Title="Common Patterns"

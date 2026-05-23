@@ -313,7 +313,18 @@ const picker2 = new DateRangePicker(input2, {
 
 			{#snippet controlsContent()}
 				<CodeBlock
-					codeContent={`<!-- Set via JavaScript (no attribute for arrays) -->
+					codeContent={`<!-- v1.13+: declarative HTML attribute (comma-separated ISO dates) -->
+<web-daterangepicker
+  selection-mode="single"
+  disabled-dates="2026-12-25, 2026-12-26, 2027-01-01"
+  placeholder="Holidays disabled">
+</web-daterangepicker>`}
+					languageType="html"
+					titleText="HTML attribute (v1.13+)"
+				/>
+
+				<CodeBlock
+					codeContent={`<!-- Property setter — needed for Date objects or dynamic lists -->
 <web-daterangepicker id="picker"></web-daterangepicker>
 
 <script>
@@ -322,32 +333,22 @@ const picker2 = new DateRangePicker(input2, {
   const thisYear = today.getFullYear();
   const thisMonth = today.getMonth();
 
-  // Disable specific dates in current month
   picker.disabledDates = [
-    new Date(thisYear, thisMonth, 5),   // 5th
-    new Date(thisYear, thisMonth, 15),  // 15th
-    new Date(thisYear, thisMonth, 25)   // 25th
+    new Date(thisYear, thisMonth, 5),
+    new Date(thisYear, thisMonth, 15),
+    new Date(thisYear, thisMonth, 25)
   ];
 </script>`}
 					languageType="html"
-					titleText="HTML + JavaScript"
+					titleText="JS property (for Date[] or dynamic data)"
 				/>
 
 				<CodeBlock
 					codeContent={`// JavaScript API
 import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
-const today = new Date();
-const thisYear = today.getFullYear();
-const thisMonth = today.getMonth();
-
-// Disable specific dates in current month
 const picker = new DateRangePicker(inputElement, {
-  disabledDates: [
-    new Date(thisYear, thisMonth, 5),
-    new Date(thisYear, thisMonth, 15),
-    new Date(thisYear, thisMonth, 25)
-  ]
+  disabledDates: ['2026-12-25', '2026-12-26', '2027-01-01']
 });
 
 // Dynamic loading from API
@@ -357,14 +358,14 @@ fetch('/api/holidays')
     picker.disabledDates = holidays;
   });`}
 					languageType="javascript"
-					titleText="JavaScript"
+					titleText="JavaScript API"
 				/>
 			{/snippet}
 
 			{#snippet descriptionContent()}
 				<div class="prose">
 					<h5>When to Use</h5>
-					<p>Use <code>disabledDates</code> array when you have a <strong>fixed list</strong> of specific dates to disable:</p>
+					<p>Use <code>disabledDates</code> when you have a <strong>fixed list</strong> of specific dates to disable:</p>
 					<ul>
 						<li>Company holidays</li>
 						<li>Maintenance dates</li>
@@ -372,14 +373,27 @@ fetch('/api/holidays')
 						<li>Blackout dates</li>
 					</ul>
 
-					<h5>Format</h5>
+					<h5>Two Paths (v1.13+)</h5>
 					<ul>
-						<li>Array of ISO date strings: <code>['2025-01-01', '2025-12-25']</code></li>
-						<li>Array of Date objects: <code>[new Date(2025, 0, 1), ...]</code></li>
+						<li>
+							<strong>HTML attribute</strong> —
+							<code>disabled-dates="2026-12-25, 2026-12-26"</code>. Comma-separated
+							ISO strings; whitespace tolerated; invalid entries silently dropped.
+							Best for static, known-in-advance lists.
+						</li>
+						<li>
+							<strong>JS property</strong> — <code>el.disabledDates = […]</code>.
+							Required when you have <code>Date</code> objects or load the list
+							dynamically. <strong>Property wins</strong> over the attribute when
+							both are set.
+						</li>
 					</ul>
 
-					<h5>No Attribute Support</h5>
-					<p>Due to limitations of web component attributes (can't pass arrays), you must set <code>disabledDates</code> via JavaScript property.</p>
+					<h5>Format</h5>
+					<ul>
+						<li>Array of ISO date strings: <code>['2026-01-01', '2026-12-25']</code></li>
+						<li>Array of Date objects: <code>[new Date(2026, 0, 1), ...]</code></li>
+					</ul>
 
 					<h5>Performance</h5>
 					<p>Efficient for moderate lists (100s of dates). For larger datasets or complex logic, use <code>getDateMetadataCallback</code> callback instead.</p>

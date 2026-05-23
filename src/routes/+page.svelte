@@ -95,6 +95,27 @@
 						icon="📘"
 					/>
 				</div>
+				<div class="col-md-6 col-lg-4">
+					<FeatureCard
+						titleText="Live Hover Preview"
+						descriptionText="In range mode, hovering after the first click paints the would-be range live, with per-mode behavior for disabled dates (v1.13)"
+						icon="✨"
+					/>
+				</div>
+				<div class="col-md-6 col-lg-4">
+					<FeatureCard
+						titleText="Modal Positioning"
+						descriptionText="Centered overlay with backdrop, container-query inner layout, and auto-engage on small viewports (v1.12)"
+						icon="📱"
+					/>
+				</div>
+				<div class="col-md-6 col-lg-4">
+					<FeatureCard
+						titleText="Bulk Metadata Loading"
+						descriptionText="Fetch a whole month of pricing/availability in one call via beforeMonthChangedCallback — 30–40× faster than per-day callbacks"
+						icon="⚡"
+					/>
+				</div>
 			</div>
 		</section>
 
@@ -129,9 +150,9 @@
 
 			<p class="lead mt-4 mb-3">Or use the JavaScript API:</p>
 			<CodeBlock
-				codeContent={`import { PureDatePicker } from '@keenmate/web-daterangepicker';
+				codeContent={`import { DateRangePicker } from '@keenmate/web-daterangepicker';
 
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   selectionMode: 'range',
   visibleMonthsCount: 2,
   onSelect: (dateRange) => {

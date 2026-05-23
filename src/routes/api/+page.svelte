@@ -98,6 +98,11 @@
 								<td>false</td>
 							</tr>
 							<tr>
+								<td><code>disabled-dates</code></td>
+								<td>string (comma-sep ISO dates)</td>
+								<td>-</td>
+							</tr>
+							<tr>
 								<td><code>disabled-dates-handling</code></td>
 								<td>allow | prevent | block | split | individual</td>
 								<td>allow</td>
@@ -136,6 +141,11 @@
 								<td><code>initial-date</code></td>
 								<td>string (YYYY-MM-DD)</td>
 								<td>today</td>
+							</tr>
+							<tr>
+								<td><code>input-size</code></td>
+								<td>xs | sm | md | lg | xl</td>
+								<td>md</td>
 							</tr>
 							<tr>
 								<td><code>locale</code></td>
@@ -247,6 +257,46 @@
 								<td>auto | 0-6</td>
 								<td>auto</td>
 							</tr>
+							<tr>
+								<td colspan="3" class="table-secondary fw-bold">
+									Member-mapping attributes (override <code>specialDates</code> property names)
+								</td>
+							</tr>
+							<tr>
+								<td><code>date-member</code></td>
+								<td>string</td>
+								<td>date</td>
+							</tr>
+							<tr>
+								<td><code>badge-text-member</code></td>
+								<td>string</td>
+								<td>badgeText</td>
+							</tr>
+							<tr>
+								<td><code>badge-class-member</code></td>
+								<td>string</td>
+								<td>badgeClass</td>
+							</tr>
+							<tr>
+								<td><code>badge-tooltip-member</code></td>
+								<td>string</td>
+								<td>badgeTooltip</td>
+							</tr>
+							<tr>
+								<td><code>day-class-member</code></td>
+								<td>string</td>
+								<td>dayClass</td>
+							</tr>
+							<tr>
+								<td><code>day-tooltip-member</code></td>
+								<td>string</td>
+								<td>dayTooltip</td>
+							</tr>
+							<tr>
+								<td><code>is-disabled-member</code></td>
+								<td>string</td>
+								<td>isDisabled</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -269,24 +319,9 @@
 								<td>Clear current selection</td>
 							</tr>
 							<tr>
-								<td><code>destroy()</code></td>
-								<td>void</td>
-								<td>Destroy picker instance</td>
-							</tr>
-							<tr>
 								<td><code>getInputValue()</code></td>
 								<td>string</td>
 								<td>Get input value as string</td>
-							</tr>
-							<tr>
-								<td><code>getSelectedDate()</code></td>
-								<td>Date | null</td>
-								<td>Get selected date (single mode)</td>
-							</tr>
-							<tr>
-								<td><code>getSelectedRange()</code></td>
-								<td>DateRange | null</td>
-								<td>Get selected range (range mode)</td>
 							</tr>
 							<tr>
 								<td><code>hide()</code></td>
@@ -294,14 +329,22 @@
 								<td>Hide the calendar popup</td>
 							</tr>
 							<tr>
+								<td><code>hideMessage()</code></td>
+								<td>void</td>
+								<td>Hide the message overlay</td>
+							</tr>
+							<tr>
 								<td><code>setInputValue(value)</code></td>
 								<td>void</td>
 								<td>Set input value</td>
 							</tr>
 							<tr>
-								<td><code>setMonthNames(names)</code></td>
+								<td>
+									<code>setMonthNames(names)</code>
+									<span class="badge bg-warning text-dark ms-1">deprecated</span>
+								</td>
 								<td>void</td>
-								<td>Set custom month names</td>
+								<td>Use the <code>monthNames</code> property setter instead</td>
 							</tr>
 							<tr>
 								<td><code>setRollingItemAlignment(alignment)</code></td>
@@ -314,9 +357,26 @@
 								<td>Show the calendar popup</td>
 							</tr>
 							<tr>
+								<td><code>showMessage(html, type?, autoHide?)</code></td>
+								<td>void</td>
+								<td>
+									Display message overlay. <code>type</code>:
+									<code>error | warning | info | success</code>;
+									<code>autoHide</code>: milliseconds
+								</td>
+							</tr>
+							<tr>
 								<td><code>toggle()</code></td>
 								<td>void</td>
 								<td>Toggle calendar visibility</td>
+							</tr>
+							<tr>
+								<td colspan="3" class="small text-muted">
+									Selection state is exposed as <strong>properties</strong>, not
+									methods: read/write <code>selectedDate</code>,
+									<code>selectedDates</code>, <code>selectedRanges</code>,
+									<code>isOpen</code>, <code>value</code>.
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -338,34 +398,38 @@
 								<td colspan="3" class="table-secondary fw-bold">DOM Events</td>
 							</tr>
 							<tr>
-								<td><code>calendar-hide</code></td>
+								<td><code>date-select</code></td>
 								<td>CustomEvent</td>
-								<td>Fired when calendar closes</td>
-							</tr>
-							<tr>
-								<td><code>calendar-show</code></td>
-								<td>CustomEvent</td>
-								<td>Fired when calendar opens</td>
+								<td>
+									Fired when a date is selected (single mode) or a range is
+									committed (range/multiple mode, after Apply if shown). Detail
+									shape varies by selection mode and
+									<code>disabled-dates-handling</code>.
+								</td>
 							</tr>
 							<tr>
 								<td><code>change</code></td>
 								<td>CustomEvent</td>
-								<td>Alias of <code>date-select</code></td>
+								<td>Alias of <code>date-select</code> — fires alongside it with identical detail.</td>
 							</tr>
 							<tr>
 								<td><code>custom-action</code></td>
 								<td>CustomEvent</td>
-								<td>Fired by <code>action: 'custom'</code> buttons (see Messages & Custom Actions)</td>
+								<td>
+									Fired by any button with <code>data-action="custom"</code> (action
+									buttons or buttons inside <code>showMessage()</code> HTML). Detail
+									contains the button's <code>data-*</code> attributes as camelCase
+									keys.
+								</td>
 							</tr>
 							<tr>
-								<td><code>date-change</code></td>
-								<td>CustomEvent</td>
-								<td>Fired when selection changes</td>
-							</tr>
-							<tr>
-								<td><code>date-select</code></td>
-								<td>CustomEvent</td>
-								<td>Fired when date(s) selected</td>
+								<td colspan="3" class="small text-muted">
+									Note: there are no <code>calendar-show</code>,
+									<code>calendar-hide</code>, <code>date-change</code>, apply, or
+									cancel events. Use <code>isOpen</code> for visibility state, listen
+									for <code>date-select</code> for commits, and use
+									<code>beforeDateSelectCallback</code> to gate selection.
+								</td>
 							</tr>
 							<tr>
 								<td colspan="3" class="table-secondary fw-bold">Callback Properties</td>
@@ -416,11 +480,6 @@
 								<td>Custom unified header text</td>
 							</tr>
 							<tr>
-								<td><code>onSelect</code></td>
-								<td>Function</td>
-								<td>Called on date selection</td>
-							</tr>
-							<tr>
 								<td><code>renderDayCallback</code></td>
 								<td>Function</td>
 								<td>Full custom day cell rendering</td>
@@ -436,6 +495,152 @@
 			{/snippet}
 		</ShowcaseSection>
 
+		<!-- Properties (complex data + reactive state) -->
+		<ShowcaseSection
+			titleText="Properties (Complex Data & State)"
+			subtitleText="JavaScript-only setters for arrays, objects, and reactive selection state"
+			col1Title="Complex Data (property-wins)"
+			col2Title="Reactive Selection State"
+			col3Title="Precedence Rule"
+			columnCount={3}
+		>
+			{#snippet demoContent()}
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered api-table">
+						<thead>
+							<tr>
+								<th>Property</th>
+								<th>Type</th>
+							</tr>
+						</thead>
+						<tbody class="small">
+							<tr>
+								<td><code>specialDates</code></td>
+								<td>DecoratedDate[]</td>
+							</tr>
+							<tr>
+								<td><code>disabledDates</code></td>
+								<td>(Date | string)[]</td>
+							</tr>
+							<tr>
+								<td><code>actionButtons</code></td>
+								<td>ActionButton[]</td>
+							</tr>
+							<tr>
+								<td><code>customStrings</code></td>
+								<td>Partial&lt;LocaleStrings&gt;</td>
+							</tr>
+							<tr>
+								<td><code>monthNames</code></td>
+								<td>string[] (length 12)</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="table-secondary fw-bold">
+									Member-mapping (also available as HTML attributes)
+								</td>
+							</tr>
+							<tr>
+								<td><code>dateMember</code></td>
+								<td>string</td>
+							</tr>
+							<tr>
+								<td><code>badgeTextMember</code></td>
+								<td>string</td>
+							</tr>
+							<tr>
+								<td><code>badgeClassMember</code></td>
+								<td>string</td>
+							</tr>
+							<tr>
+								<td><code>badgeTooltipMember</code></td>
+								<td>string</td>
+							</tr>
+							<tr>
+								<td><code>dayClassMember</code></td>
+								<td>string</td>
+							</tr>
+							<tr>
+								<td><code>dayTooltipMember</code></td>
+								<td>string</td>
+							</tr>
+							<tr>
+								<td><code>isDisabledMember</code></td>
+								<td>string</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			{/snippet}
+
+			{#snippet controlsContent()}
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered api-table">
+						<thead>
+							<tr>
+								<th>Property</th>
+								<th>Type</th>
+								<th>Notes</th>
+							</tr>
+						</thead>
+						<tbody class="small">
+							<tr>
+								<td><code>selectedDate</code></td>
+								<td>Date | null</td>
+								<td>Single mode; get/set</td>
+							</tr>
+							<tr>
+								<td><code>selectedDates</code></td>
+								<td>Date[]</td>
+								<td>Multiple mode; get/set</td>
+							</tr>
+							<tr>
+								<td><code>selectedRanges</code></td>
+								<td>DateRange[]</td>
+								<td>Range mode; get/set</td>
+							</tr>
+							<tr>
+								<td><code>isOpen</code></td>
+								<td>boolean</td>
+								<td>Calendar visibility; get/set</td>
+							</tr>
+							<tr>
+								<td><code>value</code></td>
+								<td>string</td>
+								<td>Formatted input value; get/set</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			{/snippet}
+
+			{#snippet descriptionContent()}
+				<div class="small">
+					<p>
+						Complex-data properties accept values that can't fit in an HTML
+						attribute (objects, callbacks, <code>Date</code> instances).
+					</p>
+					<p class="mb-2"><strong>Precedence:</strong></p>
+					<ol class="mb-2 ps-3">
+						<li>If a property is set in JavaScript, the attribute is ignored.</li>
+						<li>
+							If only the HTML attribute is set (e.g.
+							<code>disabled-dates="2026-12-25"</code>), it is parsed and used.
+						</li>
+						<li>
+							Property setters survive across attribute changes — the element
+							re-applies them on every re-init.
+						</li>
+					</ol>
+					<p class="mb-0">
+						As of v1.11.0 most setters route through <code>updateOptions()</code>
+						and preserve selection / scroll / focus state. Structural changes
+						(<code>positioningMode</code>, <code>selectionMode</code>,
+						<code>visibleMonthsCount</code>, layout) still trigger a full rebuild.
+					</p>
+				</div>
+			{/snippet}
+		</ShowcaseSection>
+
 		<!-- CSS Custom Properties -->
 		<section class="mt-5 mb-5">
 			<h2 class="mb-4">CSS Custom Properties</h2>
@@ -443,6 +648,13 @@
 				Complete CSS custom properties for theming control. Variables are organized into base
 				variables (foundation) and semantic component-specific variables.
 			</p>
+			<div class="alert alert-info">
+				<strong>Global scale:</strong> set
+				<code>--drp-rem</code> (default <code>10px</code>) on the host element to
+				rescale the entire calendar. Every spacing and font token is
+				<code>calc(N * var(--drp-rem))</code>.
+				<pre class="mb-0 mt-2"><code>&lt;web-daterangepicker style="--drp-rem: 12px"&gt;&lt;/web-daterangepicker&gt;</code></pre>
+			</div>
 		</section>
 
 		<!-- Base Variables: Colors & Typography | Spacing & Other -->
@@ -506,6 +718,18 @@
 								<td colspan="2" class="table-secondary fw-bold">Typography</td>
 							</tr>
 							<tr>
+								<td><code>--drp-font-size-2xs</code></td>
+								<td>10px</td>
+							</tr>
+							<tr>
+								<td><code>--drp-font-size-xs</code></td>
+								<td>0.75rem</td>
+							</tr>
+							<tr>
+								<td><code>--drp-font-size-sm</code></td>
+								<td>0.875rem</td>
+							</tr>
+							<tr>
 								<td><code>--drp-font-size-base</code></td>
 								<td>1rem</td>
 							</tr>
@@ -514,24 +738,36 @@
 								<td>1.125rem</td>
 							</tr>
 							<tr>
-								<td><code>--drp-font-size-sm</code></td>
-								<td>0.875rem</td>
+								<td><code>--drp-font-size-xl</code></td>
+								<td>20px</td>
 							</tr>
 							<tr>
-								<td><code>--drp-font-size-xs</code></td>
-								<td>0.75rem</td>
-							</tr>
-							<tr>
-								<td><code>--drp-font-weight-medium</code></td>
-								<td>500</td>
+								<td><code>--drp-font-size-2xl</code></td>
+								<td>24px</td>
 							</tr>
 							<tr>
 								<td><code>--drp-font-weight-normal</code></td>
 								<td>400</td>
 							</tr>
 							<tr>
+								<td><code>--drp-font-weight-medium</code></td>
+								<td>500</td>
+							</tr>
+							<tr>
 								<td><code>--drp-font-weight-semibold</code></td>
 								<td>600</td>
+							</tr>
+							<tr>
+								<td><code>--drp-line-height-tight</code></td>
+								<td>1.25</td>
+							</tr>
+							<tr>
+								<td><code>--drp-line-height-normal</code></td>
+								<td>1.5</td>
+							</tr>
+							<tr>
+								<td><code>--drp-line-height-relaxed</code></td>
+								<td>1.75</td>
 							</tr>
 						</tbody>
 					</table>
@@ -813,6 +1049,14 @@
 								<td>--drp-accent-color</td>
 							</tr>
 							<tr>
+								<td><code>--drp-day-focused-outline-width</code></td>
+								<td>2px</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-focused-outline-offset</code></td>
+								<td>2px</td>
+							</tr>
+							<tr>
 								<td><code>--drp-day-selected-bg</code></td>
 								<td>--drp-accent-color</td>
 							</tr>
@@ -823,6 +1067,18 @@
 							<tr>
 								<td><code>--drp-day-selected-color</code></td>
 								<td>--drp-text-color-on-accent</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-selected-color-hover</code></td>
+								<td>--drp-day-selected-color</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-disabled-bg</code></td>
+								<td>transparent</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-disabled-pattern-opacity</code></td>
+								<td>0.1</td>
 							</tr>
 						</tbody>
 					</table>
@@ -844,7 +1100,67 @@
 								<td>--drp-accent-color</td>
 							</tr>
 							<tr>
+								<td><code>--drp-day-range-bg-hover</code></td>
+								<td>--drp-accent-color-hover</td>
+							</tr>
+							<tr>
 								<td><code>--drp-day-range-color</code></td>
+								<td>--drp-text-color-on-accent</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-range-color-hover</code></td>
+								<td>--drp-day-range-color</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-in-range-bg-opacity</code></td>
+								<td>0.15</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-in-range-hover-bg-opacity</code></td>
+								<td>0.25</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="table-secondary fw-bold">
+									Hover Preview (v1.13)
+								</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-hover-preview-bg-opacity</code></td>
+								<td>0.18</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-hover-preview-invalid-bg-opacity</code></td>
+								<td>0.18</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="table-secondary fw-bold">Drag &amp; Invalid</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-drag-preview-bg-opacity</code></td>
+								<td>0.30</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-drag-preview-edge-bg-opacity</code></td>
+								<td>0.60</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-dragging-scale</code></td>
+								<td>1.1</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-drag-invalid-bg</code></td>
+								<td>#ef4444</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-drag-invalid-bg-opacity</code></td>
+								<td>0.20</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-invalid-range-bg</code></td>
+								<td>--drp-message-error-border</td>
+							</tr>
+							<tr>
+								<td><code>--drp-day-invalid-range-color</code></td>
 								<td>--drp-text-color-on-accent</td>
 							</tr>
 						</tbody>
@@ -1212,11 +1528,332 @@
 								<td>#ffffff</td>
 							</tr>
 							<tr>
+								<td><code>--drp-tooltip-line-height</code></td>
+								<td>1.4</td>
+							</tr>
+							<tr>
 								<td><code>--drp-tooltip-max-width</code></td>
 								<td>200px</td>
 							</tr>
+							<tr>
+								<td><code>--drp-tooltip-arrow-size</code></td>
+								<td>8px</td>
+							</tr>
 						</tbody>
 					</table>
+				</div>
+			{/snippet}
+		</ShowcaseSection>
+
+		<!-- Modal Mode Variables (v1.12) -->
+		<ShowcaseSection
+			titleText="Modal Mode Variables"
+			subtitleText="Centered overlay with backdrop (v1.12 — positioning-mode='modal')"
+			col1Title="Sizing & Backdrop"
+			col2Title="Per-Tier Widths"
+			columnCount={2}
+		>
+			{#snippet demoContent()}
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered api-table">
+						<thead>
+							<tr>
+								<th>Variable</th>
+								<th>Default</th>
+							</tr>
+						</thead>
+						<tbody class="small">
+							<tr>
+								<td><code>--drp-modal-gap</code></td>
+								<td>16px</td>
+							</tr>
+							<tr>
+								<td><code>--drp-modal-backdrop-bg</code></td>
+								<td>rgba(0, 0, 0, 0.45)</td>
+							</tr>
+							<tr>
+								<td><code>--drp-modal-transition</code></td>
+								<td>150ms ease-out</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			{/snippet}
+
+			{#snippet controlsContent()}
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered api-table">
+						<thead>
+							<tr>
+								<th>Variable</th>
+								<th>Default</th>
+								<th>Viewport</th>
+							</tr>
+						</thead>
+						<tbody class="small">
+							<tr>
+								<td><code>--drp-modal-width-xs</code></td>
+								<td>calc(100vw − 2× gap)</td>
+								<td>≤ 480px</td>
+							</tr>
+							<tr>
+								<td><code>--drp-modal-width-sm</code></td>
+								<td>calc(100vw − 2× gap)</td>
+								<td>481–768px</td>
+							</tr>
+							<tr>
+								<td><code>--drp-modal-width-md</code></td>
+								<td>900px</td>
+								<td>769–1200px</td>
+							</tr>
+							<tr>
+								<td><code>--drp-modal-width-lg</code></td>
+								<td>1100px</td>
+								<td>≥ 1201px</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			{/snippet}
+		</ShowcaseSection>
+
+		<!-- Message Variables -->
+		<ShowcaseSection
+			titleText="Message Variables"
+			subtitleText="Inline message overlay colors (error / warning / info / success)"
+			col1Title="Error & Warning"
+			col2Title="Info & Success"
+			columnCount={2}
+		>
+			{#snippet demoContent()}
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered api-table">
+						<thead>
+							<tr>
+								<th>Variable</th>
+								<th>Default</th>
+							</tr>
+						</thead>
+						<tbody class="small">
+							<tr>
+								<td><code>--drp-message-error-bg</code></td>
+								<td>#fef2f2</td>
+							</tr>
+							<tr>
+								<td><code>--drp-message-error-color</code></td>
+								<td>#991b1b</td>
+							</tr>
+							<tr>
+								<td><code>--drp-message-error-border</code></td>
+								<td>#fecaca</td>
+							</tr>
+							<tr>
+								<td><code>--drp-message-warning-bg</code></td>
+								<td>#fffbeb</td>
+							</tr>
+							<tr>
+								<td><code>--drp-message-warning-color</code></td>
+								<td>#92400e</td>
+							</tr>
+							<tr>
+								<td><code>--drp-message-warning-border</code></td>
+								<td>#fde68a</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			{/snippet}
+
+			{#snippet controlsContent()}
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered api-table">
+						<thead>
+							<tr>
+								<th>Variable</th>
+								<th>Default</th>
+							</tr>
+						</thead>
+						<tbody class="small">
+							<tr>
+								<td><code>--drp-message-info-bg</code></td>
+								<td>#eff6ff</td>
+							</tr>
+							<tr>
+								<td><code>--drp-message-info-color</code></td>
+								<td>#1e40af</td>
+							</tr>
+							<tr>
+								<td><code>--drp-message-info-border</code></td>
+								<td>#bfdbfe</td>
+							</tr>
+							<tr>
+								<td><code>--drp-message-success-bg</code></td>
+								<td>#f0fdf4</td>
+							</tr>
+							<tr>
+								<td><code>--drp-message-success-color</code></td>
+								<td>#166534</td>
+							</tr>
+							<tr>
+								<td><code>--drp-message-success-border</code></td>
+								<td>#bbf7d0</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			{/snippet}
+		</ShowcaseSection>
+
+		<!-- Layout / Z-Index / Opacity -->
+		<ShowcaseSection
+			titleText="Layout, Z-Index &amp; Opacity"
+			subtitleText="Calendar dimensions, stacking layers, and opacity tokens"
+			col1Title="Calendar Dimensions"
+			col2Title="Z-Index Layers"
+			col3Title="Opacity Tokens"
+			columnCount={3}
+		>
+			{#snippet demoContent()}
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered api-table">
+						<thead>
+							<tr>
+								<th>Variable</th>
+								<th>Default</th>
+							</tr>
+						</thead>
+						<tbody class="small">
+							<tr>
+								<td><code>--drp-month-min-width</code></td>
+								<td>280px</td>
+							</tr>
+							<tr>
+								<td><code>--drp-month-min-width-inline</code></td>
+								<td>250px</td>
+							</tr>
+							<tr>
+								<td><code>--drp-calendar-max-width</code></td>
+								<td>calc(100vw − 2rem)</td>
+							</tr>
+							<tr>
+								<td><code>--drp-grid-columns</code></td>
+								<td>3</td>
+							</tr>
+							<tr>
+								<td><code>--drp-grid-rows</code></td>
+								<td>2</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			{/snippet}
+
+			{#snippet controlsContent()}
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered api-table">
+						<thead>
+							<tr>
+								<th>Variable</th>
+								<th>Default</th>
+							</tr>
+						</thead>
+						<tbody class="small">
+							<tr>
+								<td><code>--drp-z-index-dropdown</code></td>
+								<td>9500</td>
+							</tr>
+							<tr>
+								<td><code>--drp-z-index-modal-backdrop</code></td>
+								<td>9700</td>
+							</tr>
+							<tr>
+								<td><code>--drp-z-index-modal</code></td>
+								<td>9800</td>
+							</tr>
+							<tr>
+								<td><code>--drp-z-index-tooltip</code></td>
+								<td>9999</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			{/snippet}
+
+			{#snippet descriptionContent()}
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered api-table">
+						<thead>
+							<tr>
+								<th>Variable</th>
+								<th>Default</th>
+							</tr>
+						</thead>
+						<tbody class="small">
+							<tr>
+								<td><code>--drp-opacity-disabled</code></td>
+								<td>0.6</td>
+							</tr>
+							<tr>
+								<td><code>--drp-opacity-other-month</code></td>
+								<td>0.5</td>
+							</tr>
+							<tr>
+								<td><code>--drp-opacity-hover</code></td>
+								<td>0.8</td>
+							</tr>
+							<tr>
+								<td><code>--drp-opacity-dragging</code></td>
+								<td>0.7</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			{/snippet}
+		</ShowcaseSection>
+
+		<!-- Weekend hooks (v1.13) -->
+		<ShowcaseSection
+			titleText="Weekend &amp; Weekday Hooks (v1.13)"
+			subtitleText="No defaults shipped — pure theming surface for weekend / per-day styling"
+			col1Title="CSS Hooks"
+			columnCount={1}
+		>
+			{#snippet demoContent()}
+				<div class="small">
+					<p>
+						Every day cell carries a numeric weekday attribute and Sat/Sun get an
+						additional modifier class. These have <strong>no shipped styling</strong>;
+						they exist so you can target weekends or specific days from your own
+						stylesheet (via <code>customStylesCallback</code>).
+					</p>
+					<div class="table-responsive">
+						<table class="table table-sm table-bordered api-table">
+							<thead>
+								<tr>
+									<th>Selector</th>
+									<th>Matches</th>
+								</tr>
+							</thead>
+							<tbody class="small">
+								<tr>
+									<td><code>.drp-date-picker__day--weekend</code></td>
+									<td>Saturday and Sunday cells</td>
+								</tr>
+								<tr>
+									<td><code>.drp-date-picker__day[data-weekday="0"]</code></td>
+									<td>
+										Sunday (matches
+										<code>Date.prototype.getDay()</code> values 0–6)
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<pre class="mb-0"><code>{`// Highlight Sundays in red, Saturdays in dimmed text
+el.customStylesCallback = () => \`
+  .drp-date-picker__day[data-weekday="0"] { color: #dc2626; }
+  .drp-date-picker__day[data-weekday="6"] { color: #6b7280; }
+\`;`}</code></pre>
 				</div>
 			{/snippet}
 		</ShowcaseSection>

@@ -165,12 +165,12 @@ web-daterangepicker input {
 			<p>For more control, use the JavaScript API:</p>
 
 			<CodeBlock
-				codeContent={`import { PureDatePicker } from '@keenmate/web-daterangepicker';
+				codeContent={`import { DateRangePicker } from '@keenmate/web-daterangepicker';
 import '@keenmate/web-daterangepicker/dist/style.css';
 
 const inputElement = document.querySelector('#myInput');
 
-const picker = new PureDatePicker(inputElement, {
+const picker = new DateRangePicker(inputElement, {
   selectionMode: 'single',
   dateFormatMask: 'YYYY-MM-DD',
   onSelect: (date) => {

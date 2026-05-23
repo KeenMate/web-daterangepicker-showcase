@@ -226,8 +226,8 @@ const picker = new DateRangePicker(input, {
 
 		<!-- Button Visibility -->
 		<ShowcaseSection
-			titleText="AC04 Button Visibility Control"
-			subtitleText="Customize which buttons appear in the calendar footer"
+			titleText="AC04 Button & Summary Visibility Control"
+			subtitleText="Customize which buttons and the days/nights summary appear in the calendar footer"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
 			col3Title="Details">
@@ -256,7 +256,7 @@ const picker = new DateRangePicker(input, {
 					</web-daterangepicker>
 				</div>
 
-				<div>
+				<div class="mb-3">
 					<label class="small text-muted d-block mb-1">No buttons:</label>
 					<web-daterangepicker
 						selection-mode="range"
@@ -265,6 +265,17 @@ const picker = new DateRangePicker(input, {
 						show-clear-button="false"
 						show-apply-button="false"
 						placeholder="No buttons">
+					</web-daterangepicker>
+				</div>
+
+				<div>
+					<label class="small text-muted d-block mb-1">
+						Range mode without the days/nights summary (v1.12):
+					</label>
+					<web-daterangepicker
+						selection-mode="range"
+						show-summary="false"
+						placeholder="No summary line">
 					</web-daterangepicker>
 				</div>
 			{/snippet}
@@ -292,6 +303,12 @@ const picker = new DateRangePicker(input, {
   show-today-button="false"
   show-clear-button="false"
   show-apply-button="false">
+</web-daterangepicker>
+
+<!-- Hide the range days/nights summary (v1.12+) -->
+<web-daterangepicker
+  selection-mode="range"
+  show-summary="false">
 </web-daterangepicker>`}
 					languageType="html"
 					titleText="HTML"
@@ -304,7 +321,12 @@ const picker = new DateRangePicker(input, {
 					<ul>
 						<li><code>show-today-button</code> - Jump to today (default: true)</li>
 						<li><code>show-clear-button</code> - Clear selection (default: true)</li>
-						<li><code>show-apply-button</code> - Confirm/close (default: false)</li>
+						<li><code>show-apply-button</code> - Confirm/close (default: true for range/multiple)</li>
+						<li>
+							<code>show-summary</code> <span class="badge bg-info text-dark">v1.12</span> -
+							Days/nights summary line in range mode (default: true). Set to
+							<code>false</code> to remove the line entirely (no empty-div height jump).
+						</li>
 					</ul>
 
 					<h5>Common Patterns</h5>

@@ -932,6 +932,28 @@ picker.isDisabledMember = 'unavailable';    // Default: 'isDisabled'`}
 					languageType="javascript"
 					titleText="All Member Properties"
 				/>
+
+				<CodeBlock
+					codeContent={`<!-- v1.13+: all seven member overrides are HTML attributes -->
+<web-daterangepicker
+  id="bookings"
+  selection-mode="range"
+  date-member="event_date"
+  badge-text-member="event_name"
+  badge-class-member="event_type"
+  badge-tooltip-member="badge_tip"
+  day-class-member="cell_class"
+  day-tooltip-member="cell_tip"
+  is-disabled-member="unavailable">
+</web-daterangepicker>
+
+<script>
+  // specialDates still has to be a JS property (it's an array of objects)
+  document.getElementById('bookings').specialDates = apiResponse;
+</script>`}
+					languageType="html"
+					titleText="HTML attributes (v1.13+)"
+				/>
 			{/snippet}
 
 			{#snippet descriptionContent()}
@@ -958,6 +980,17 @@ picker.isDisabledMember = 'unavailable';    // Default: 'isDisabled'`}
 						<li><code>badgeTooltip</code>, <code>dayClass</code>, <code>dayTooltip</code></li>
 						<li><code>isDisabled</code></li>
 					</ul>
+
+					<h5>Two Paths (v1.13+)</h5>
+					<p>
+						All seven mappings are reachable as <strong>HTML attributes</strong>
+						(<code>date-member</code>, <code>badge-text-member</code>,
+						<code>badge-class-member</code>, <code>badge-tooltip-member</code>,
+						<code>day-class-member</code>, <code>day-tooltip-member</code>,
+						<code>is-disabled-member</code>) <em>or</em> as JS property setters
+						(<code>el.dateMember = …</code>). Setting both is fine — the JS
+						property wins.
+					</p>
 				</div>
 			{/snippet}
 		</ShowcaseSection>

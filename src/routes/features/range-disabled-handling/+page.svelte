@@ -877,9 +877,141 @@ const picker2 = new DateRangePicker(input2, {
 			{/snippet}
 		</ShowcaseSection>
 
+		<!-- Live Hover Preview (v1.13) -->
+		<ShowcaseSection
+			titleText="RDH08 Live Hover Preview (v1.13)"
+			subtitleText="After the first click in range mode, hovering paints the would-be range — mode-aware"
+			col1Title="Try it"
+			col2Title="Per-mode behavior"
+			col3Title="Theming"
+		>
+
+			{#snippet demoContent()}
+				<div class="row g-3">
+					<div class="col-md-6">
+						<h6>allow</h6>
+						<web-daterangepicker
+							selection-mode="range"
+							disabled-weekdays="0,6"
+							disabled-dates-handling="allow"
+							placeholder="Click a start, hover">
+						</web-daterangepicker>
+					</div>
+					<div class="col-md-6">
+						<h6>prevent</h6>
+						<web-daterangepicker
+							selection-mode="range"
+							disabled-weekdays="0,6"
+							disabled-dates-handling="prevent"
+							placeholder="Hover across a weekend">
+						</web-daterangepicker>
+					</div>
+					<div class="col-md-6">
+						<h6>block</h6>
+						<web-daterangepicker
+							selection-mode="range"
+							disabled-weekdays="0,6"
+							disabled-dates-handling="block"
+							placeholder="Watch the preview snap">
+						</web-daterangepicker>
+					</div>
+					<div class="col-md-6">
+						<h6>split</h6>
+						<web-daterangepicker
+							selection-mode="range"
+							disabled-weekdays="0,6"
+							disabled-dates-handling="split"
+							placeholder="Disabled days stay bare">
+						</web-daterangepicker>
+					</div>
+				</div>
+				<p class="mt-3 small text-muted">
+					Click any weekday to set a start date, then move your mouse to see the
+					live preview. Move past the weekend to see how each mode treats
+					Saturday/Sunday.
+				</p>
+			{/snippet}
+
+			{#snippet controlsContent()}
+				<div class="prose small">
+					<dl>
+						<dt><code>allow</code></dt>
+						<dd>
+							Full range painted from start to hovered day, including disabled
+							cells. Disabled days keep their disabled overlay on top of the
+							preview tint.
+						</dd>
+
+						<dt><code>prevent</code></dt>
+						<dd>
+							If hovering across a disabled cell would cause the click to be
+							rejected, the entire preview is painted with the
+							<em>invalid</em> variant (red tint). If the hover stays within a
+							contiguous enabled span, the normal preview is used. Acts as a
+							"this click will fail" signal.
+						</dd>
+
+						<dt><code>block</code></dt>
+						<dd>
+							Preview snaps backward to the last enabled day before the first
+							disabled cell in the path. Days past the gap are not painted.
+						</dd>
+
+						<dt><code>split</code></dt>
+						<dd>
+							Enabled days in the range get painted; disabled days stay bare
+							to visually show the gaps.
+						</dd>
+
+						<dt><code>individual</code></dt>
+						<dd>
+							Same paint policy as <code>allow</code> (preview is informational
+							— commit produces a flat array of enabled dates).
+						</dd>
+					</dl>
+					<p class="mb-0">
+						The preview also <strong>auto-swaps direction</strong>: hovering
+						<em>before</em> the committed start paints from the hovered day to
+						the start, so you can grow the range either way.
+					</p>
+				</div>
+			{/snippet}
+
+			{#snippet descriptionContent()}
+				<div class="prose">
+					<h5>CSS Hooks</h5>
+					<ul>
+						<li><code>--drp-day-hover-preview-bg-opacity</code> — default <code>0.18</code></li>
+						<li><code>--drp-day-hover-preview-invalid-bg-opacity</code> — default <code>0.18</code></li>
+					</ul>
+					<p>
+						Background colour is derived from
+						<code>--drp-day-range-bg</code> (preview) and
+						<code>--drp-day-invalid-range-bg</code> (invalid preview).
+					</p>
+
+					<h5>When the Preview Clears</h5>
+					<ul>
+						<li>You commit the range (second click)</li>
+						<li>You move the mouse outside the calendar</li>
+						<li>The calendar hides or is destroyed</li>
+						<li>A drag-to-adjust gesture starts</li>
+					</ul>
+
+					<h5>Committed start day stays solid</h5>
+					<p>
+						The committed start day keeps its <code>--range-start</code> solid
+						background and on-accent text — the preview class is explicitly
+						<em>not</em> applied to it so the text stays legible (this was a
+						v1.13 bugfix for low-contrast themes).
+					</p>
+				</div>
+			{/snippet}
+		</ShowcaseSection>
+
 		<!-- Decision Guide -->
 		<ShowcaseSection
-			titleText="RDH08 Decision Guide"
+			titleText="RDH09 Decision Guide"
 			subtitleText="Choose the right mode for your use case"
 			col1Title="Use Case"
 			col2Title="Recommended Mode"
