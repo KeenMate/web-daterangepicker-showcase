@@ -62,11 +62,11 @@
 
 					// Add custom styles for the demo
 					metadataDemo.customStylesCallback = () => `
-						.drp-date-picker__day-cell.fully-booked {
+						.drp-date-picker__day.fully-booked {
 							background: #f8d7da !important;
 							color: #721c24 !important;
 						}
-						.drp-date-picker__day-cell.limited-availability {
+						.drp-date-picker__day.limited-availability {
 							background: #fff3cd !important;
 							color: #856404 !important;
 						}
@@ -610,11 +610,11 @@ const picker = new DateRangePicker(inputElement, {
 
 // Add custom styles for availability states
 picker.customStylesCallback = () => \`
-  .drp-date-picker__day-cell.fully-booked {
+  .drp-date-picker__day.fully-booked {
     background: #f8d7da !important;
     color: #721c24 !important;
   }
-  .drp-date-picker__day-cell.limited-availability {
+  .drp-date-picker__day.limited-availability {
     background: #fff3cd !important;
     color: #856404 !important;
   }
@@ -693,24 +693,19 @@ const picker = new DateRangePicker(inputElement, {
 						<tbody>
 							<tr>
 								<td><code>getDateMetadataCallback</code></td>
-								<td>Simple, focused</td>
-								<td>Separate from styling</td>
+								<td>Dynamic; returns disabling + class + badge in one place</td>
+								<td>Called per visible cell on every render</td>
 							</tr>
 							<tr>
 								<td><code>specialDates</code></td>
-								<td>Static data</td>
-								<td>Not dynamic</td>
-							</tr>
-							<tr>
-								<td><code>getDateMetadata</code></td>
-								<td>Single source, dynamic</td>
-								<td>Slightly more complex</td>
+								<td>Static data; declarative</td>
+								<td>No runtime computation</td>
 							</tr>
 						</tbody>
 					</table>
 
 					<h5>Performance</h5>
-					<p>Called once per visible date cell, just like <code>getDateMetadataCallback</code>. Keep logic efficient.</p>
+					<p>Called once per visible date cell on every render. Keep the logic efficient — see Bulk Metadata Loading for the per-month-batch alternative.</p>
 				</div>
 			{/snippet}
 		</ShowcaseSection>
@@ -802,8 +797,7 @@ const picker = new DateRangePicker(inputElement, {
 						<li>Use <code>minDate</code>/<code>maxDate</code> for hard boundaries</li>
 						<li>Use <code>disabledWeekdays</code> for day-of-week patterns</li>
 						<li>Use <code>disabledDates</code> for fixed lists (holidays, blackout dates)</li>
-						<li>Use <code>getDateMetadataCallback</code> for complex or dynamic logic</li>
-						<li>Use <code>getDateMetadata</code> when you need styling + disabling</li>
+						<li>Use <code>getDateMetadataCallback</code> for complex or dynamic logic — also the path for combining <code>isDisabled</code> with custom styling/classes/badges in one place</li>
 					</ul>
 
 					<h5>Performance Consideration</h5>
@@ -844,11 +838,7 @@ const picker = new DateRangePicker(inputElement, {
 							</tr>
 							<tr>
 								<td><code>getDateMetadataCallback</code></td>
-								<td>Complex logic</td>
-							</tr>
-							<tr>
-								<td><code>getDateMetadata</code></td>
-								<td>Disable + styling</td>
+								<td>Complex logic; disable + styling + badges in one callback</td>
 							</tr>
 						</tbody>
 					</table>

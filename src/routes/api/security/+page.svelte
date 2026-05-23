@@ -124,13 +124,13 @@
 							<td><span class="badge bg-success">Safe</span></td>
 						</tr>
 						<tr>
-							<td><code>onSelect</code></td>
-							<td>Event handler</td>
+							<td><code>onSelect</code> <span class="text-muted">(JS API only)</span></td>
+							<td>Constructor callback — receives selection data</td>
 							<td><span class="badge bg-success">Safe</span></td>
 						</tr>
 						<tr>
-							<td><code>onChange</code></td>
-							<td>Event handler</td>
+							<td><code>date-select</code> / <code>change</code> events</td>
+							<td>DOM events on the web component — read e.detail</td>
 							<td><span class="badge bg-success">Safe</span></td>
 						</tr>
 						<tr>

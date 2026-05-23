@@ -1018,24 +1018,32 @@ picker.isDisabledMember = 'unavailable';    // Default: 'isDisabled'`}
 
 			{#snippet controlsContent()}
 				<CodeBlock
-					codeContent={`// Disable specific dates
+					codeContent={`// Disable specific dates — using helpers relative to today so
+// the example survives across calendar years.
+const today = new Date();
+const dayOffset = (n) => {
+  const d = new Date(today);
+  d.setDate(today.getDate() + n);
+  return d;
+};
+
 picker.specialDates = [
   {
-    date: '2025-04-10',
+    date: dayOffset(10),       // Date object also fine, not just ISO string
     badgeText: '✓',
     badgeClass: 'available',
     badgeTooltip: '5 rooms available',
     isDisabled: false  // Explicitly available
   },
   {
-    date: '2025-04-15',
+    date: dayOffset(15),
     badgeText: '✕',
     badgeClass: 'unavailable',
     badgeTooltip: 'Fully booked',
     isDisabled: true   // Cannot select
   },
   {
-    date: '2025-04-20',
+    date: dayOffset(20),
     badgeText: '!',
     badgeClass: 'limited',
     badgeTooltip: 'Only 2 left'
@@ -1046,14 +1054,21 @@ picker.specialDates = [
 				/>
 
 				<CodeBlock
-					codeContent={`// Dynamic availability from API
+					codeContent={`// Dynamic availability from API — keyed by local-midnight ISO date.
+// Avoid date.toISOString() here: it shifts to UTC and can flip a day
+// in non-UTC timezones (see ⚠️ Working with Dates section in the README).
+const toLocalISO = (d) => \`\${d.getFullYear()}-\${String(d.getMonth() + 1).padStart(2, '0')}-\${String(d.getDate()).padStart(2, '0')}\`;
+
+const today = new Date();
+const dayOffset = (n) => { const d = new Date(today); d.setDate(today.getDate() + n); return d; };
+
 const availability = {
-  '2025-04-15': 0,  // Sold out
-  '2025-04-20': 2   // Limited
+  [toLocalISO(dayOffset(15))]: 0,  // Sold out
+  [toLocalISO(dayOffset(20))]: 2   // Limited
 };
 
 picker.getDateMetadataCallback = (date) => {
-  const key = date.toISOString().split('T')[0];
+  const key = toLocalISO(date);
   const rooms = availability[key];
 
   if (rooms === 0) {

@@ -2,8 +2,80 @@
 	import { DocLayout, ShowcaseSection, CodeBlock } from '@keenmate/svelte-docs';
 	import { onMount } from 'svelte';
 
-	onMount(() => {
-		import('@keenmate/web-daterangepicker');
+	// Local-midnight ISO key — avoids the toISOString() UTC-shift trap that
+	// can flip dates by ±1 day in non-UTC timezones (see README's Working
+	// with Dates section).
+	const toLocalISO = (d: Date) =>
+		`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+	function wireOutputPane(
+		demoId: string,
+		outputId: string,
+		render: (detail: any) => string
+	) {
+		const picker = document.getElementById(demoId) as any;
+		const output = document.getElementById(outputId);
+		if (!picker || !output) return;
+		const code = output.querySelector('code');
+		picker.addEventListener('date-select', (e: any) => {
+			if (!code) return;
+			output.style.display = 'block';
+			code.textContent = render(e.detail);
+		});
+	}
+
+	onMount(async () => {
+		await import('@keenmate/web-daterangepicker');
+		await customElements.whenDefined('web-daterangepicker');
+
+		// RDH02–RDH06 — event-detail output panes for each disabled-handling
+		// mode. Wired here (not via inline <script> in the snippets) so they
+		// survive SvelteKit's client-side route transitions; inline scripts
+		// in injected HTML only execute on direct page load.
+
+		wireOutputPane('allow-demo', 'allow-output', ({ dateRange, disabledDates, getTotalDays, getEnabledDateCount }) =>
+			JSON.stringify({
+				dateRange: { start: toLocalISO(dateRange.start), end: toLocalISO(dateRange.end) },
+				totalDays: getTotalDays(),
+				enabledCount: getEnabledDateCount(),
+				disabledCount: disabledDates.length
+			}, null, 2)
+		);
+
+		// 'prevent' mode: date-select fires only on valid selections. When a
+		// blocked attempt happens no event fires, so we just hide the pane on
+		// any successful selection (replacing whatever was last shown).
+		const preventPicker = document.getElementById('prevent-demo');
+		const preventOutput = document.getElementById('prevent-output');
+		if (preventPicker && preventOutput) {
+			preventPicker.addEventListener('date-select', () => {
+				preventOutput.style.display = 'none';
+			});
+		}
+
+		wireOutputPane('block-demo', 'block-output', ({ dateRange }) =>
+			JSON.stringify({
+				dateRange: { start: toLocalISO(dateRange.start), end: toLocalISO(dateRange.end) },
+				note: 'End date automatically adjusted to last enabled date'
+			}, null, 2)
+		);
+
+		wireOutputPane('split-demo', 'split-output', ({ dateRanges, dates }) =>
+			JSON.stringify({
+				rangeCount: dateRanges.length,
+				ranges: dateRanges.map((r: any) => ({ start: toLocalISO(r.start), end: toLocalISO(r.end) })),
+				totalDates: dates.length
+			}, null, 2)
+		);
+
+		wireOutputPane('individual-demo', 'individual-output', ({ dates, formattedValue }) =>
+			JSON.stringify({
+				dateCount: dates.length,
+				dates: dates.slice(0, 3).map((d: Date) => toLocalISO(d)),
+				moreCount: Math.max(0, dates.length - 3),
+				formattedValue: formattedValue.length > 100 ? formattedValue.substring(0, 100) + '...' : formattedValue
+			}, null, 2)
+		);
 	});
 </script>
 
@@ -132,26 +204,6 @@
 					<h6>Event Detail:</h6>
 					<pre class="mb-0"><code></code></pre>
 				</div>
-				<script>
-					if (typeof window !== 'undefined') {
-						setTimeout(() => {
-							const picker = document.getElementById('allow-demo');
-							const output = document.getElementById('allow-output');
-							if (picker && output) {
-								picker.addEventListener('date-select', (e) => {
-									const { dateRange, enabledDates, disabledDates, getTotalDays, getEnabledDateCount } = e.detail;
-									output.style.display = 'block';
-									output.querySelector('code').textContent = JSON.stringify({
-										dateRange: { start: dateRange.start.toISOString().split('T')[0], end: dateRange.end.toISOString().split('T')[0] },
-										totalDays: getTotalDays(),
-										enabledCount: getEnabledDateCount(),
-										disabledCount: disabledDates.length
-									}, null, 2);
-								});
-							}
-						}, 100);
-					}
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}
@@ -259,23 +311,6 @@ const picker = new DateRangePicker(input, {
 				<div id="prevent-output" class="mt-3 p-3 bg-light rounded" style="display:none;">
 					<p class="text-danger mb-0"><strong>Selection prevented:</strong> Range crosses disabled dates</p>
 				</div>
-				<script>
-					if (typeof window !== 'undefined') {
-						setTimeout(() => {
-							const picker = document.getElementById('prevent-demo');
-							const output = document.getElementById('prevent-output');
-							if (picker && output) {
-								let lastAttempt = null;
-								picker.addEventListener('date-select', (e) => {
-									output.style.display = 'none';
-									lastAttempt = null;
-								});
-								// Note: 'prevent' mode doesn't fire date-select if blocked
-								// You would see this in console logs with showDebugInfo
-							}
-						}, 100);
-					}
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}
@@ -377,27 +412,6 @@ const picker = new DateRangePicker(input, {
 					<h6>Event Detail:</h6>
 					<pre class="mb-0"><code></code></pre>
 				</div>
-				<script>
-					if (typeof window !== 'undefined') {
-						setTimeout(() => {
-							const picker = document.getElementById('block-demo');
-							const output = document.getElementById('block-output');
-							if (picker && output) {
-								picker.addEventListener('date-select', (e) => {
-									const { dateRange } = e.detail;
-									output.style.display = 'block';
-									output.querySelector('code').textContent = JSON.stringify({
-										dateRange: {
-											start: dateRange.start.toISOString().split('T')[0],
-											end: dateRange.end.toISOString().split('T')[0]
-										},
-										note: 'End date automatically adjusted to last enabled date'
-									}, null, 2);
-								});
-							}
-						}, 100);
-					}
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}
@@ -507,28 +521,6 @@ const picker = new DateRangePicker(input, {
 					<h6>Event Detail:</h6>
 					<pre class="mb-0"><code></code></pre>
 				</div>
-				<script>
-					if (typeof window !== 'undefined') {
-						setTimeout(() => {
-							const picker = document.getElementById('split-demo');
-							const output = document.getElementById('split-output');
-							if (picker && output) {
-								picker.addEventListener('date-select', (e) => {
-									const { dateRanges, dates } = e.detail;
-									output.style.display = 'block';
-									output.querySelector('code').textContent = JSON.stringify({
-										rangeCount: dateRanges.length,
-										ranges: dateRanges.map(r => ({
-											start: r.start.toISOString().split('T')[0],
-											end: r.end.toISOString().split('T')[0]
-										})),
-										totalDates: dates.length
-									}, null, 2);
-								});
-							}
-						}, 100);
-					}
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}
@@ -655,26 +647,6 @@ picker.input.addEventListener('date-select', (e) => {
 					<h6>Event Detail:</h6>
 					<pre class="mb-0"><code></code></pre>
 				</div>
-				<script>
-					if (typeof window !== 'undefined') {
-						setTimeout(() => {
-							const picker = document.getElementById('individual-demo');
-							const output = document.getElementById('individual-output');
-							if (picker && output) {
-								picker.addEventListener('date-select', (e) => {
-									const { dates, formattedValue } = e.detail;
-									output.style.display = 'block';
-									output.querySelector('code').textContent = JSON.stringify({
-										dateCount: dates.length,
-										dates: dates.slice(0, 3).map(d => d.toISOString().split('T')[0]),
-										moreCount: dates.length - 3,
-										formattedValue: formattedValue.substring(0, 100) + '...'
-									}, null, 2);
-								});
-							}
-						}, 100);
-					}
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}

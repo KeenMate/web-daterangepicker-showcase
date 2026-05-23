@@ -122,8 +122,8 @@ import { DateRangePicker } from '@keenmate/web-daterangepicker';
 const picker = new DateRangePicker(inputElement, {
   selectionMode: 'range',
   visibleMonthsCount: 2,
-  onSelect: (startDate, endDate) => {
-    console.log('Range:', startDate, 'to', endDate);
+  onSelect: (dateRange) => {
+    console.log('Range:', dateRange.start, 'to', dateRange.end);
   }
 });`}
 					languageType="javascript"
@@ -192,19 +192,19 @@ picker.addEventListener('date-select', (e) => {
 				<CodeBlock
 					codeContent={`const picker = document.querySelector('web-daterangepicker');
 
-picker.addEventListener('range-select', (e) => {
-  console.log('Start date:', e.detail.startDate);
-  console.log('End date:', e.detail.endDate);
-  
+// Range mode reuses the same date-select event — payload shape changes.
+picker.addEventListener('date-select', (e) => {
+  const { start, end } = e.detail.dateRange;
+  console.log('Start date:', start);
+  console.log('End date:', end);
+
   // Calculate duration
-  const diffTime = e.detail.endDate - e.detail.startDate;
+  const diffTime = end - start;
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   console.log('Duration:', diffDays, 'days');
-  
-  // Format range
-  const start = e.detail.startDate.toLocaleDateString();
-  const end = e.detail.endDate.toLocaleDateString();
-  console.log('Range:', start, '-', end);
+
+  // Formatted string is on e.detail.formattedValue
+  console.log('Formatted:', e.detail.formattedValue);
 });`}
 					languageType="javascript"
 					titleText="Range Mode"

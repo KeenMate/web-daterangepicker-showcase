@@ -376,8 +376,11 @@ const picker = new DateRangePicker(input, {
 
 			{#snippet demoContent()}
 				<CodeBlock
-					codeContent={`// Custom preset button example
-picker.actionButtons = [
+					codeContent={`// Custom preset button example — uses the public selectedRanges
+// setter which handles re-render + focus reset internally.
+const el = document.querySelector('web-daterangepicker');
+
+el.actionButtons = [
   {
     action: 'custom',
     text: 'Last Week',
@@ -391,16 +394,10 @@ picker.actionButtons = [
       const lastSunday = new Date(lastMonday);
       lastSunday.setDate(lastMonday.getDate() + 6);
 
-      // Set dates
-      picker.selectedStartDate = lastMonday;
-      picker.selectedEndDate = lastSunday;
-
-      // Clear focus state (important!)
-      picker.focusedDayIndex = null;
-
-      // Re-render
-      picker.renderCalendar();
-      picker.updateSummary();
+      // One reactive assignment — the setter updates state and re-renders.
+      // (Reach for picker.selectedStartDate / selectedEndDate only when
+      // you also need to bypass validation, which is rare.)
+      el.selectedRanges = [{ start: lastMonday, end: lastSunday }];
     }
   },
   { action: 'apply', text: 'Apply' }
@@ -414,17 +411,27 @@ picker.actionButtons = [
 				<div class="prose">
 					<h5>Required Steps</h5>
 					<ol>
-						<li>Set <code>selectedStartDate</code> and <code>selectedEndDate</code></li>
-						<li>Clear <code>focusedDayIndex = null</code> to remove old focus indicator</li>
-						<li>Call <code>renderCalendar()</code> to update display</li>
-						<li>Call <code>updateSummary()</code> to update the summary text</li>
+						<li>
+							Assign <code>el.selectedRanges = [&#123; start, end &#125;]</code> on
+							the web component element. The reactive setter merges the new range
+							into picker state and triggers a re-render — no manual
+							<code>renderCalendar()</code> or focus-reset needed.
+						</li>
+						<li>
+							Use <code>el.selectedDate = date</code> for single mode and
+							<code>el.selectedDates = [dates]</code> for multiple mode.
+						</li>
 					</ol>
 
-					<h5>Why Clear focusedDayIndex?</h5>
+					<h5>When to reach for internals</h5>
 					<p class="small text-muted">
-						If a user clicks a date before using a preset button, the focus indicator
-						(dotted border) remains on that date. Setting <code>focusedDayIndex = null</code>
-						clears this visual state so only the new range is highlighted.
+						The lower-level <code>picker.selectedStartDate</code> /
+						<code>picker.selectedEndDate</code> fields plus
+						<code>picker.renderCalendar()</code> / <code>picker.updateSummary()</code>
+						still exist on the core class. Use them only when you specifically need to
+						bypass the setter's validation (e.g. setting a transient preview range that
+						won't pass <code>beforeDateSelectCallback</code>). For ordinary preset
+						buttons, the public <code>selectedRanges</code> setter is the right tool.
 					</p>
 				</div>
 			{/snippet}

@@ -2,6 +2,29 @@
 
 All notable changes to the web-daterangepicker-showcase documentation site will be documented in this file.
 
+## 2026-05-23 (later that day) — demo/code-snippet sync pass
+
+Cross-checked every live `<web-daterangepicker>` demo against the `CodeBlock` shown next to it across all feature pages, plus the API/security pages. Found ~10 places where the code shown to readers referenced events, methods, callbacks, or CSS classes that don't exist in v1.13.0 — copy-pasting any of them would silently fail. Also found 6 sections wiring DOM listeners via inline `<script>` tags inside `{#snippet ...}`, which work on direct page load but don't re-execute on SvelteKit's client-side route transitions.
+
+### Fixed (wrong API surface — code shown was misleading or broken)
+- **`features/selection-modes` SM03** — replaced phantom `range-select` event with the actual `date-select` event, fixed `e.detail` shape (`e.detail.dateRange.start/.end`, not `e.detail.startDate/.endDate`)
+- **`features/selection-modes` SM02** — `onSelect` callback signature corrected from two-arg `(startDate, endDate)` to single-arg `(dateRange)` with `.start`/`.end` access
+- **`features/bulk-metadata-loading` BML01** — dropped a non-firing `addEventListener('monthchanged', …)` from the per-day demo (no such event exists); added comment explaining why per-day pickers have no separate event hook (the call counter inside `getDateMetadataCallback` is the only signal)
+- **`features/date-restrictions` DR05** — `.drp-date-picker__day-cell.{class}` selectors corrected to `.drp-date-picker__day.{class}` in both the live demo's `customStylesCallback` and the code shown to readers (the badge selector `__badge-cell` was already correct)
+- **`features/date-restrictions`** — removed ghost `getDateMetadata` callback name from the DR05 comparison table and the page-bottom Quick Reference (only `getDateMetadataCallback` exists); rewrote the surrounding strategy bullet to mention the real callback covers the combined disable + styling case
+- **`api/security`** — removed ghost `onChange` callback row from the Safe Callbacks table; replaced with a real `date-select` / `change` events row and clarified that `onSelect` is JS-API-only (constructor option, not a web component property)
+
+### Fixed (inline-script SPA-navigation fix)
+- **`features/unified-navigation` UN03** — moved the `getUnifiedHeaderCallback` wiring from an inline `<script>` inside the snippet into the page's `onMount` (with `customElements.whenDefined` gate)
+- **`features/input-masking` IM03** — moved the "typed vs displayed" output-pane listener into `onMount`, properly typed for TypeScript
+- **`features/range-disabled-handling` RDH02–RDH06** — extracted five inline `<script>` blocks into a single `onMount` block with a `wireOutputPane(demoId, outputId, render)` helper. Also introduced a `toLocalISO()` helper to replace `date.toISOString().split('T')[0]` calls, which were carrying the same UTC-shift bug v1.11 had cleaned out of the library examples.
+
+### Changed (cosmetic / clarity)
+- **`features/positioning-modes`** — renumbered duplicate `PM03`: Modal Mode is now `PM04`, Auto-Engage on Small Viewports is now `PM05`
+- **`features/auto-close` AC05** — preset-button example rewritten to use the public `el.selectedRanges = [{ start, end }]` setter instead of reaching into internals (`picker.selectedStartDate`, `focusedDayIndex = null`, manual `renderCalendar()` + `updateSummary()`). Added a "when to reach for internals" note for the bypass-validation edge case.
+- **`features/bulk-metadata-loading` BML02** — added comment in the HTML CodeBlock pointing back at the JavaScript block readers also need to wire up
+- **`features/special-dates` SD05** — replaced hardcoded `2025-04-XX` example dates with `dayOffset(N)` helpers so the example stays meaningful across years; the dynamic-availability code block also gained `toLocalISO()` instead of `toISOString().split('T')[0]`
+
 ## 2026-05-23
 
 ### Security

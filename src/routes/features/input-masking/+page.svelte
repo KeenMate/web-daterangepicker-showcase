@@ -2,8 +2,39 @@
 	import { DocLayout, ShowcaseSection, CodeBlock } from '@keenmate/svelte-docs';
 	import { onMount } from 'svelte';
 
-	onMount(() => {
-		import('@keenmate/web-daterangepicker');
+	onMount(async () => {
+		await import('@keenmate/web-daterangepicker');
+		await customElements.whenDefined('web-daterangepicker');
+
+		// IM03 — wire the "typed vs displayed" output pane. Lives here (not
+		// inline inside the snippet) so it survives SvelteKit's client-side
+		// route transitions; inline <script> tags in injected HTML only
+		// execute on direct page load.
+		const picker = document.getElementById('separator-demo') as any;
+		const output = document.getElementById('separator-output');
+		if (picker && output) {
+			const input = picker.shadowRoot?.querySelector('input');
+			if (input) {
+				let typed = '';
+				input.addEventListener('input', () => {
+					const newVal = input.value;
+					if (newVal.length > typed.length) {
+						const diff = newVal.replace(/[^0-9]/g, '').substring(typed.replace(/[^0-9]/g, '').length);
+						typed = typed.replace(/[^0-9]/g, '') + diff;
+					} else {
+						typed = newVal.replace(/[^0-9]/g, '');
+					}
+
+					output.style.display = 'block';
+					const code = output.querySelector('code');
+					if (code) {
+						code.textContent =
+							`Typed (numbers only): ${typed}\n` +
+							`Displayed (formatted): ${newVal}`;
+					}
+				});
+			}
+		}
 	});
 </script>
 
@@ -275,35 +306,6 @@ const picker3 = new DateRangePicker(input3, {
 					<h6>What you typed vs what you see:</h6>
 					<pre class="mb-0"><code></code></pre>
 				</div>
-				<script>
-					if (typeof window !== 'undefined') {
-						setTimeout(() => {
-							const picker = document.getElementById('separator-demo');
-							const output = document.getElementById('separator-output');
-							if (picker) {
-								const input = picker.shadowRoot?.querySelector('input');
-								if (input) {
-									let typed = '';
-									input.addEventListener('input', (e) => {
-										const newVal = input.value;
-										// Try to detect what was actually typed
-										if (newVal.length > typed.length) {
-											const diff = newVal.replace(/[^0-9]/g, '').substring(typed.replace(/[^0-9]/g, '').length);
-											typed = typed.replace(/[^0-9]/g, '') + diff;
-										} else {
-											typed = newVal.replace(/[^0-9]/g, '');
-										}
-
-										output.style.display = 'block';
-										output.querySelector('code').textContent =
-											`Typed (numbers only): ${typed}\n` +
-											`Displayed (formatted): ${newVal}`;
-									});
-								}
-							}
-						}, 100);
-					}
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}

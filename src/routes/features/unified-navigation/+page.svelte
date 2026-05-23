@@ -2,8 +2,19 @@
 	import { DocLayout, ShowcaseSection, CodeBlock } from '@keenmate/svelte-docs';
 	import { onMount } from 'svelte';
 
-	onMount(() => {
-		import('@keenmate/web-daterangepicker');
+	onMount(async () => {
+		await import('@keenmate/web-daterangepicker');
+		await customElements.whenDefined('web-daterangepicker');
+
+		// UN03 — wire the custom unified-header callback once the element upgrades.
+		// Lives here (not inline inside the snippet) so it survives SvelteKit's
+		// client-side route transitions; inline <script> tags in injected HTML
+		// only execute on direct page load.
+		const picker = document.getElementById('custom-header-demo') as any;
+		if (picker) {
+			picker.getUnifiedHeaderCallback = ({ anchorMonth, monthNames }: any) =>
+				`${monthNames[anchorMonth.getMonth()]} ${anchorMonth.getFullYear()}`;
+		}
 	});
 </script>
 
@@ -229,19 +240,8 @@ const picker = new DateRangePicker(inputElement, {
 				</web-daterangepicker>
 				<p class="mt-3 small text-muted">
 					Custom header shows only the center anchor month instead of full range
+					(callback wired in <code>onMount</code> — see top of file).
 				</p>
-
-				<script>
-					// Wait for component to load
-					setTimeout(() => {
-						const picker = document.getElementById('custom-header-demo');
-						if (picker) {
-							picker.getUnifiedHeaderCallback = ({ anchorMonth, monthNames }) => {
-								return `${monthNames[anchorMonth.getMonth()]} ${anchorMonth.getFullYear()}`;
-							};
-						}
-					}, 100);
-				</script>
 			{/snippet}
 
 			{#snippet controlsContent()}

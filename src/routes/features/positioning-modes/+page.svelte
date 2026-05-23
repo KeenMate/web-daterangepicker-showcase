@@ -222,7 +222,7 @@ const picker = new DateRangePicker(inputElement, {
 		</ShowcaseSection>
 
 		<ShowcaseSection
-			titleText="PM03 Modal Mode"
+			titleText="PM04 Modal Mode"
 			subtitleText="Centered overlay with backdrop scrim — solves the small-screen overflow problem"
 			col1Title="Live Demo"
 			col2Title="Code Examples"
@@ -309,7 +309,7 @@ document.querySelector('web-daterangepicker').isOpen = true;`}
 		</ShowcaseSection>
 
 		<ShowcaseSection
-			titleText="PM04 Auto-Engage on Small Viewports"
+			titleText="PM05 Auto-Engage on Small Viewports"
 			subtitleText="Float on desktop, modal on mobile — flip automatically based on viewport size"
 			col1Title="Live Demo"
 			col2Title="Code Examples"

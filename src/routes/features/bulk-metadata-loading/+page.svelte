@@ -82,10 +82,10 @@
 				}
 			};
 
-			// Track when calendar opens/navigates
-			perDayPicker.addEventListener('monthchanged', showPerDayLoader);
-
-			// Show loader on first open (when input receives focus)
+			// Show loader on first open (when input receives focus). On subsequent
+			// month navigation the call counter inside getDateMetadataCallback drives
+			// the visible status text — there is no separate "month changed" event
+			// for per-day-callback pickers; that's the price of the per-day approach.
 			const input = perDayPicker.querySelector('input');
 			if (input) {
 				input.addEventListener('focus', showPerDayLoader, { once: true });
@@ -651,7 +651,9 @@ picker.formatSummaryCallback = (data) => {
 				/>
 
 				<CodeBlock
-					codeContent={`<!-- HTML with current month dates -->
+					codeContent={`<!-- HTML markup — needs the JavaScript block above wired in onMount /
+     after customElements.whenDefined to attach the callbacks. The plain
+     markup alone renders a standard range picker with no pricing. -->
 <web-daterangepicker
   id="hotel-booking"
   selection-mode="range"
